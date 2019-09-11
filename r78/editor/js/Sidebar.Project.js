@@ -118,7 +118,7 @@ Sidebar.Project = function ( editor ) {
 
 	} );
 
-	debugRow.add( new UI.Text( "DebugMode" ).setWidth( "90px" ) );
+	debugRow.add( new UI.Text( "Debug" ).setWidth( "90px" ) );
 	debugRow.add( debugMode );
 
 	container.add( debugRow );

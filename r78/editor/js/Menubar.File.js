@@ -251,16 +251,31 @@ Menubar.File = function ( editor ) {
 			zip.file( 'index.html', content );
 
 		} );
+
 		loader.load( 'js/libs/app.js', function ( content ) {
 
 			zip.file( 'js/app.js', content );
 
 		} );
-		loader.load( '../build/three.min.js', function ( content ) {
+
+		loader.load( '/three/three.min.js', function ( content ) {
 
 			zip.file( 'js/three.min.js', content );
 
 		} );
+
+		loader.load( "/three/EditorControls.js", function ( content ) {
+
+			zip.file( "js/EditorControls.js", content );
+
+		} );
+
+		loader.load( "/js/signals.min.js", function ( content ) {
+
+			zip.file( "js/signals.min.js", content );
+
+		} );
+
 
 		if ( vr ) {
 

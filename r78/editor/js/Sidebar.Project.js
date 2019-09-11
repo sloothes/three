@@ -109,6 +109,18 @@ Sidebar.Project = function ( editor ) {
 
 	container.add( vrRow );
 
+    // DebugMode.
+    
+    var debugRow = new UI.Row();
+	var debugMode = new UI.Checkbox( config.getKey( "project/debugMode" ) ).setLeft( "100px" ).onChange( function () {
+
+		config.setKey( "project/debugMode", this.getValue() );
+
+	} );
+
+	debugRow.add( new UI.Text( "DebugMode" ).setWidth( "90px" ) );
+	debugRow.add( debugMode );
+
 	//
 
 	function updateRenderer() {

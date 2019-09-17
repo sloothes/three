@@ -368,14 +368,14 @@
 			var isLoadingFromHash = false;
 			var hash = window.location.hash;
 
-			if ( hash.substr( 1, 5 ) === 'file=' ) {
+			if ( hash.substr( 1, 5 ) === "file=" ) {
 
 				var file = hash.substr( 6 );
 
-				if ( confirm( 'Any unsaved data will be lost. Are you sure?' ) ) {
+				if ( confirm( "Any unsaved data will be lost. Are you sure?" ) ) {
 
 					var loader = new THREE.XHRLoader();
-					loader.crossOrigin = '';
+					loader.crossOrigin = "";  // important!
 					loader.load( file, function ( text ) {
 
 						editor.clear();
@@ -389,14 +389,14 @@
 
 			}
 
-			/*
+		/*
 			window.addEventListener( 'message', function ( event ) {
 
 				editor.clear();
 				editor.fromJSON( event.data );
 
 			}, false );
-			*/
+		*/
 
 		</script>
 	</body>

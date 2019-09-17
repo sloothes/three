@@ -17,16 +17,21 @@ var Viewport = function ( editor ) {
 
 	var objects = [];
 
-//	helpers.
+//	Helpers.
 
 	var grid = new THREE.GridHelper( 30, 1 );
 	sceneHelpers.add( grid );
 
-	//
+//	Camera.
 
 	var camera = editor.camera;
 
-	//
+//	Default directional light.
+
+    var lights = editor.lights;
+	sceneHelpers.add( lights );
+
+//
 
 	var selectionBox = new THREE.BoxHelper();
 	selectionBox.material.depthTest = false;

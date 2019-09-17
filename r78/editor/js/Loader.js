@@ -194,7 +194,8 @@ var Loader = function ( editor ) {
 
 					var contents = event.target.result;
 
-					// 2.0
+                /*
+					//  v2.0.
 
 					if ( contents.indexOf( "postMessage" ) !== - 1 ) {
 
@@ -215,8 +216,9 @@ var Loader = function ( editor ) {
 						return;
 
 					}
+                */
 
-					// >= 3.0
+				//  version >= v3.0.
 
 					var data;
 

@@ -162,10 +162,12 @@ var APP = {
 			this.width = width;
 			this.height = height;
 
-			camera.aspect = this.width / this.height;
-			camera.updateProjectionMatrix();
+            if ( camera ) {
+                camera.aspect = this.width / this.height;
+                camera.updateProjectionMatrix();
+            }
 
-			renderer.setSize( width, height );
+			if ( renderer ) renderer.setSize( width, height );
 
 		};
 

@@ -7,8 +7,8 @@ var Viewport = function ( editor ) {
 	var signals = editor.signals;
 
 	var container = new UI.Panel();
-	container.setId( 'viewport' );
-	container.setPosition( 'absolute' );
+	container.setId( "viewport" );
+	container.setPosition( "absolute" );
 
 	container.add( new Viewport.Info( editor ) );
 
@@ -17,7 +17,7 @@ var Viewport = function ( editor ) {
 
 	var objects = [];
 
-	// helpers
+//	helpers.
 
 	var grid = new THREE.GridHelper( 30, 1 );
 	sceneHelpers.add( grid );
@@ -39,7 +39,7 @@ var Viewport = function ( editor ) {
 	var objectScaleOnDown = null;
 
 	var transformControls = new THREE.TransformControls( camera, container.dom );
-	transformControls.addEventListener( 'change', function () {
+	transformControls.addEventListener( "change", function () {
 
 		var object = transformControls.object;
 
@@ -59,8 +59,9 @@ var Viewport = function ( editor ) {
 
 		render();
 
-	} );
-	transformControls.addEventListener( 'mouseDown', function () {
+	});
+
+	transformControls.addEventListener( "mouseDown", function () {
 
 		var object = transformControls.object;
 
@@ -70,8 +71,9 @@ var Viewport = function ( editor ) {
 
 		controls.enabled = false;
 
-	} );
-	transformControls.addEventListener( 'mouseUp', function () {
+	});
+
+	transformControls.addEventListener( "mouseUp", function () {
 
 		var object = transformControls.object;
 
@@ -79,7 +81,7 @@ var Viewport = function ( editor ) {
 
 			switch ( transformControls.getMode() ) {
 
-				case 'translate':
+				case "translate":
 
 					if ( ! objectPositionOnDown.equals( object.position ) ) {
 
@@ -89,7 +91,7 @@ var Viewport = function ( editor ) {
 
 					break;
 
-				case 'rotate':
+				case "rotate":
 
 					if ( ! objectRotationOnDown.equals( object.rotation ) ) {
 
@@ -99,7 +101,7 @@ var Viewport = function ( editor ) {
 
 					break;
 
-				case 'scale':
+				case "scale":
 
 					if ( ! objectScaleOnDown.equals( object.scale ) ) {
 
@@ -115,7 +117,7 @@ var Viewport = function ( editor ) {
 
 		controls.enabled = true;
 
-	} );
+	});
 
 	sceneHelpers.add( transformControls );
 

@@ -4,6 +4,8 @@
 
 var Loader = function ( editor ) {
 
+    var debugMode = true;
+
 	var scope = this;
 	var signals = editor.signals;
 
@@ -195,7 +197,7 @@ var Loader = function ( editor ) {
 					var contents = event.target.result;
 
                 /*
-					//  v2.0.
+					//  v2.0. (conflicts the "app.json" case)
 
 					if ( contents.indexOf( "postMessage" ) !== - 1 ) {
 
@@ -461,7 +463,7 @@ var Loader = function ( editor ) {
 
 		}
 
-        console.log( "metadata:", data.metadata ); // debug.
+        debugMode && console.log( "metadata:", data.metadata ); // debug.
 
 		switch ( data.metadata.type.toLowerCase() ) {
 
@@ -470,7 +472,9 @@ var Loader = function ( editor ) {
                 if ( confirm( "Any unsaved data will be lost. Are you sure?" ) ) {
 
                     editor.clear();
-                    console.log( "data:", data ); // debug.
+
+                    debugMode && console.log( "data:", data ); // debug.
+
                     editor.fromJSON( data );
 
                 }

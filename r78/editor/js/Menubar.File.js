@@ -33,6 +33,39 @@ Menubar.File = function ( editor ) {
 
 	options.add( option );
 
+//  Save
+
+	var option = new UI.Row();
+	option.setClass( "option" );
+	option.setTextContent( "Save" );
+	option.onClick( function () {
+
+    //  saveState.
+
+        var timeout;
+
+    //  if ( editor.config.getKey( "autosave" ) === true ) return;
+
+        clearTimeout( timeout );
+
+        timeout = setTimeout( function () {
+
+            editor.signals.savingStarted.dispatch();
+
+            timeout = setTimeout( function () {
+
+                editor.storage.set( editor.toJSON() );
+
+                editor.signals.savingFinished.dispatch();
+
+            }, 100 );
+
+        }, 1000 );
+
+	});
+
+	options.add( option );
+
 //
 
 	options.add( new UI.HorizontalRule() );
@@ -207,43 +240,6 @@ Menubar.File = function ( editor ) {
 	options.add( option );
 
 // 
-
-	options.add( new UI.HorizontalRule() );
-
-//  Save
-
-	var option = new UI.Row();
-	option.setClass( "option" );
-	option.setTextContent( "Save" );
-	option.onClick( function () {
-
-    //  saveState.
-
-        var timeout;
-
-    //  if ( editor.config.getKey( "autosave" ) === true ) return;
-
-        clearTimeout( timeout );
-
-        timeout = setTimeout( function () {
-
-            editor.signals.savingStarted.dispatch();
-
-            timeout = setTimeout( function () {
-
-                editor.storage.set( editor.toJSON() );
-
-                editor.signals.savingFinished.dispatch();
-
-            }, 100 );
-
-        }, 1000 );
-
-	});
-
-	options.add( option );
-
-//
 
 	options.add( new UI.HorizontalRule() );
 

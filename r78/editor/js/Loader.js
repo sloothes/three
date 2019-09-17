@@ -4,7 +4,7 @@
 
 var Loader = function ( editor ) {
 
-	var debugMode = editor.config.getKey( "project/debugMode" ),;
+	var debugMode = editor.config.getKey( "project/debugMode" );
 
 	var scope = this;
 	var signals = editor.signals;

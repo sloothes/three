@@ -8,28 +8,28 @@ UI.Texture = function ( mapping ) {
 
 	var scope = this;
 
-	var dom = document.createElement( 'span' );
+	var dom = document.createElement( "span" );
 
-	var input = document.createElement( 'input' );
-	input.type = 'file';
-	input.addEventListener( 'change', function ( event ) {
+	var input = document.createElement( "input" );
+	input.type = "file";
+	input.addEventListener( "change", function ( event ) {
 
 		loadFile( event.target.files[ 0 ] );
 
 	} );
 
-	var canvas = document.createElement( 'canvas' );
+	var canvas = document.createElement( "canvas" );
 	canvas.width = 32;
 	canvas.height = 16;
-	canvas.style.cursor = 'pointer';
-	canvas.style.marginRight = '5px';
-	canvas.style.border = '1px solid #888';
-	canvas.addEventListener( 'click', function ( event ) {
+	canvas.style.cursor = "pointer";
+	canvas.style.marginRight = "5px";
+	canvas.style.border = "1px solid #888";
+	canvas.addEventListener( "click", function ( event ) {
 
 		input.click();
 
 	}, false );
-	canvas.addEventListener( 'drop', function ( event ) {
+	canvas.addEventListener( "drop", function ( event ) {
 
 		event.preventDefault();
 		event.stopPropagation();
@@ -38,21 +38,21 @@ UI.Texture = function ( mapping ) {
 	}, false );
 	dom.appendChild( canvas );
 
-	var name = document.createElement( 'input' );
+	var name = document.createElement( "input" );
 	name.disabled = true;
-	name.style.width = '64px';
-	name.style.border = '1px solid #ccc';
+	name.style.width = "64px";
+	name.style.border = "1px solid #ccc";
 	dom.appendChild( name );
 
 	var loadFile = function ( file ) {
 
-		if ( file.type.match( 'image.*' ) ) {
+		if ( file.type.match( "image.*" ) ) {
 
 			var reader = new FileReader();
 
-			if ( file.type === 'image/targa' ) {
+			if ( file.type === "image/targa" ) {
 
-				reader.addEventListener( 'load', function ( event ) {
+				reader.addEventListener( "load", function ( event ) {
 
 					var canvas = new THREE.TGALoader().parse( event.target.result );
 
@@ -69,10 +69,10 @@ UI.Texture = function ( mapping ) {
 
 			} else {
 
-				reader.addEventListener( 'load', function ( event ) {
+				reader.addEventListener( "load", function ( event ) {
 
-					var image = document.createElement( 'img' );
-					image.addEventListener( 'load', function( event ) {
+					var image = document.createElement( "img" );
+					image.addEventListener( "load", function( event ) {
 
 						var texture = new THREE.Texture( this, mapping );
 						texture.sourceFile = file.name;
@@ -117,7 +117,7 @@ UI.Texture.prototype.setValue = function ( texture ) {
 
 	var canvas = this.dom.children[ 0 ];
 	var name = this.dom.children[ 1 ];
-	var context = canvas.getContext( '2d' );
+	var context = canvas.getContext( "2d" );
 
 	if ( texture !== null ) {
 
@@ -132,18 +132,18 @@ UI.Texture.prototype.setValue = function ( texture ) {
 
 		} else {
 
-			name.value = texture.sourceFile + ' (error)';
+			name.value = texture.sourceFile + " (error)";
 			context.clearRect( 0, 0, canvas.width, canvas.height );
 
 		}
 
 	} else {
 
-		name.value = '';
+		name.value = "";
 
 		if ( context !== null ) {
 
-			// Seems like context can be null if the canvas is not visible
+		//	Seems like context can be null if the canvas is not visible.
 
 			context.clearRect( 0, 0, canvas.width, canvas.height );
 
@@ -175,10 +175,10 @@ UI.Outliner = function ( editor ) {
 	dom.className = 'Outliner';
 	dom.tabIndex = 0;	// keyup event is ignored without setting tabIndex
 
-	// hack
-	this.scene = editor.scene;
+	this.scene = editor.scene;  // hack.
 
-	// Prevent native scroll behavior
+//	Prevent native scroll behavior.
+
 	dom.addEventListener( 'keydown', function ( event ) {
 
 		switch ( event.keyCode ) {
@@ -191,7 +191,8 @@ UI.Outliner = function ( editor ) {
 
 	}, false );
 
-	// Keybindings to support arrow navigation
+//	Keybindings to support arrow navigation.
+
 	dom.addEventListener( 'keyup', function ( event ) {
 
 		switch ( event.keyCode ) {

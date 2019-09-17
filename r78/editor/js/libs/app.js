@@ -39,7 +39,6 @@ var APP = {
 
 			this.setScene( loader.parse( json.scene ) );
 			this.setCamera( loader.parse( json.camera ) );
-			this.setLight( loader.parse( json.lights ) );
 
 			events = {
 				init: [],
@@ -155,12 +154,6 @@ var APP = {
 			scene = value;
 
 		};
-
-        this.setLight = function( value ) {
-
-            lights = value;
-
-        };
 
 		this.setSize = function ( width, height ) {
 

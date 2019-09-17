@@ -358,7 +358,7 @@ Editor.prototype = {
 
 		this.selected = object;
 
-		this.config.setKey( 'selected', uuid );
+		this.config.setKey( "selected", uuid );
 		this.signals.objectSelected.dispatch( object );
 
 	},
@@ -458,12 +458,12 @@ Editor.prototype = {
 		this.camera.aspect = this.DEFAULT_CAMERA.aspect;
 		this.camera.updateProjectionMatrix();
 
-		this.setLight( loader.parse( json.lights ) );  // me.
-
 		this.history.fromJSON( json.history );
 		this.scripts = json.scripts;
 
 		this.setScene( loader.parse( json.scene ) );
+
+		this.lights.copy( this.DEFAULT_DIRECTIONAL_LIGHT ); // me.
 
 	},
 
@@ -500,7 +500,6 @@ Editor.prototype = {
 			},
 
 			camera: this.camera.toJSON(),
-			lights: this.lights.toJSON(),
 			scene: this.scene.toJSON(),
 			scripts: this.scripts,
 			history: this.history.toJSON()

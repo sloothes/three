@@ -121,7 +121,7 @@ var Viewport = function ( editor ) {
 
 	sceneHelpers.add( transformControls );
 
-	// fog
+//	fog.
 
 	var oldFogType = "None";
 	var oldFogColor = 0xaaaaaa;
@@ -129,12 +129,12 @@ var Viewport = function ( editor ) {
 	var oldFogFar = 5000;
 	var oldFogDensity = 0.00025;
 
-	// object picking
+//	object picking.
 
 	var raycaster = new THREE.Raycaster();
 	var mouse = new THREE.Vector2();
 
-	// events
+//	events.
 
 	function getIntersects( point, objects ) {
 
@@ -169,7 +169,7 @@ var Viewport = function ( editor ) {
 
 				if ( object.userData.object !== undefined ) {
 
-					// helper
+				//	helper.
 
 					editor.select( object.userData.object );
 
@@ -198,7 +198,7 @@ var Viewport = function ( editor ) {
 		var array = getMousePosition( container.dom, event.clientX, event.clientY );
 		onDownPosition.fromArray( array );
 
-		document.addEventListener( 'mouseup', onMouseUp, false );
+		document.addEventListener( "mouseup", onMouseUp, false );
 
 	}
 
@@ -209,7 +209,7 @@ var Viewport = function ( editor ) {
 
 		handleClick();
 
-		document.removeEventListener( 'mouseup', onMouseUp, false );
+		document.removeEventListener( "mouseup", onMouseUp, false );
 
 	}
 
@@ -220,7 +220,7 @@ var Viewport = function ( editor ) {
 		var array = getMousePosition( container.dom, touch.clientX, touch.clientY );
 		onDownPosition.fromArray( array );
 
-		document.addEventListener( 'touchend', onTouchEnd, false );
+		document.addEventListener( "touchend", onTouchEnd, false );
 
 	}
 
@@ -233,7 +233,7 @@ var Viewport = function ( editor ) {
 
 		handleClick();
 
-		document.removeEventListener( 'touchend', onTouchEnd, false );
+		document.removeEventListener( "touchend", onTouchEnd, false );
 
 	}
 
@@ -254,29 +254,29 @@ var Viewport = function ( editor ) {
 
 	}
 
-	container.dom.addEventListener( 'mousedown', onMouseDown, false );
-	container.dom.addEventListener( 'touchstart', onTouchStart, false );
-	container.dom.addEventListener( 'dblclick', onDoubleClick, false );
+	container.dom.addEventListener( "mousedown", onMouseDown, false );
+	container.dom.addEventListener( "touchstart", onTouchStart, false );
+	container.dom.addEventListener( "dblclick", onDoubleClick, false );
 
-	// controls need to be added *after* main logic,
-	// otherwise controls.enabled doesn't work.
+//	controls need to be added *after* main logic,
+//	otherwise controls.enabled doesn't work.
 
 	var controls = new THREE.EditorControls( camera, container.dom );
-	controls.addEventListener( 'change', function () {
+	controls.addEventListener( "change", function () {
 
 		transformControls.update();
 		signals.cameraChanged.dispatch( camera );
 
-	} );
+	});
 
-	// signals
+//	signals
 
 	signals.editorCleared.add( function () {
 
 		controls.center.set( 0, 0, 0 );
 		render();
 
-	} );
+	});
 
 	var clearColor;
 
@@ -284,13 +284,13 @@ var Viewport = function ( editor ) {
 
 		switch ( value ) {
 
-			case 'css/light.css':
+			case "css/light.css":
 				sceneHelpers.remove( grid );
 				grid = new THREE.GridHelper( 30, 1, 0x444444, 0x888888 );
 				sceneHelpers.add( grid );
 				clearColor = 0xaaaaaa;
 				break;
-			case 'css/dark.css':
+			case "css/dark.css":
 				sceneHelpers.remove( grid );
 				grid = new THREE.GridHelper( 30, 1, 0xbbbbbb, 0x888888 );
 				sceneHelpers.add( grid );
@@ -303,25 +303,25 @@ var Viewport = function ( editor ) {
 
 		render();
 
-	} );
+	});
 
 	signals.transformModeChanged.add( function ( mode ) {
 
 		transformControls.setMode( mode );
 
-	} );
+	});
 
 	signals.snapChanged.add( function ( dist ) {
 
 		transformControls.setTranslationSnap( dist );
 
-	} );
+	});
 
 	signals.spaceChanged.add( function ( space ) {
 
 		transformControls.setSpace( space );
 
-	} );
+	});
 
 	signals.rendererChanged.add( function ( newRenderer ) {
 
@@ -343,13 +343,13 @@ var Viewport = function ( editor ) {
 
 		render();
 
-	} );
+	});
 
 	signals.sceneGraphChanged.add( function () {
 
 		render();
 
-	} );
+	});
 
 	var saveTimeout;
 
@@ -357,7 +357,7 @@ var Viewport = function ( editor ) {
 
 		render();
 
-	} );
+	});
 
 	signals.objectSelected.add( function ( object ) {
 
@@ -379,13 +379,13 @@ var Viewport = function ( editor ) {
 
 		render();
 
-	} );
+	});
 
 	signals.objectFocused.add( function ( object ) {
 
 		controls.focus( object );
 
-	} );
+	});
 
 	signals.geometryChanged.add( function ( object ) {
 
@@ -397,7 +397,7 @@ var Viewport = function ( editor ) {
 
 		render();
 
-	} );
+	});
 
 	signals.objectAdded.add( function ( object ) {
 
@@ -405,9 +405,9 @@ var Viewport = function ( editor ) {
 
 			objects.push( child );
 
-		} );
+		});
 
-	} );
+	});
 
 	signals.objectChanged.add( function ( object ) {
 
@@ -432,7 +432,7 @@ var Viewport = function ( editor ) {
 
 		render();
 
-	} );
+	});
 
 	signals.objectRemoved.add( function ( object ) {
 
@@ -440,27 +440,27 @@ var Viewport = function ( editor ) {
 
 			objects.splice( objects.indexOf( child ), 1 );
 
-		} );
+		});
 
-	} );
+	});
 
 	signals.helperAdded.add( function ( object ) {
 
-		objects.push( object.getObjectByName( 'picker' ) );
+		objects.push( object.getObjectByName( "picker" ) );
 
-	} );
+	});
 
 	signals.helperRemoved.add( function ( object ) {
 
-		objects.splice( objects.indexOf( object.getObjectByName( 'picker' ) ), 1 );
+		objects.splice( objects.indexOf( object.getObjectByName( "picker" ) ), 1 );
 
-	} );
+	});
 
 	signals.materialChanged.add( function ( material ) {
 
 		render();
 
-	} );
+	});
 
 	signals.fogTypeChanged.add( function ( fogType ) {
 
@@ -486,7 +486,7 @@ var Viewport = function ( editor ) {
 
 		render();
 
-	} );
+	});
 
 	signals.fogColorChanged.add( function ( fogColor ) {
 
@@ -496,7 +496,7 @@ var Viewport = function ( editor ) {
 
 		render();
 
-	} );
+	});
 
 	signals.fogParametersChanged.add( function ( near, far, density ) {
 
@@ -508,11 +508,11 @@ var Viewport = function ( editor ) {
 
 		render();
 
-	} );
+	});
 
 	signals.windowResize.add( function () {
 
-		// TODO: Move this out?
+	//	TODO: Move this out?
 
 		editor.DEFAULT_CAMERA.aspect = container.dom.offsetWidth / container.dom.offsetHeight;
 		editor.DEFAULT_CAMERA.updateProjectionMatrix();
@@ -524,14 +524,14 @@ var Viewport = function ( editor ) {
 
 		render();
 
-	} );
+	});
 
 	signals.showGridChanged.add( function ( showGrid ) {
 
 		grid.visible = showGrid;
 		render();
 
-	} );
+	});
 
 	//
 
@@ -559,9 +559,9 @@ var Viewport = function ( editor ) {
 
 		requestAnimationFrame( animate );
 
-		/*
+/*
 
-		// animations
+	//	animations
 
 		if ( THREE.AnimationHandler.animations.length > 0 ) {
 
@@ -583,7 +583,7 @@ var Viewport = function ( editor ) {
 
 		}
 
-		*/
+*/
 
 	}
 

@@ -19,8 +19,8 @@ Menubar.File = function ( editor ) {
 //  New.
 
 	var option = new UI.Row();
-	option.setClass( 'option' );
-	option.setTextContent( 'New' );
+	option.setClass( "option" );
+	option.setTextContent( "New" );
 	option.onClick( function () {
 
 		if ( confirm( "Any unsaved data will be lost. Are you sure?" ) ) {
@@ -35,11 +35,11 @@ Menubar.File = function ( editor ) {
 
 //  Open.
 
-	var fileInput = document.createElement( "input" );
-	fileInput.type = "file";
-	fileInput.addEventListener( "change", function ( event ) {
+	var appFileInput = document.createElement( "input" );
+	appFileInput.type = "file";
+	appFileInput.addEventListener( "change", function ( event ) {
 
-        var file = fileInput.files[ 0 ];
+        var file = appFileInput.files[ 0 ];
 
         var reader = new FileReader();
 
@@ -61,8 +61,8 @@ Menubar.File = function ( editor ) {
 
 		if ( confirm( "Any unsaved data will be lost. Are you sure?" ) ) {
 
-            fileInput.value = "";
-            fileInput.click();
+            appFileInput.value = "";
+            appFileInput.click();
 
         }
 

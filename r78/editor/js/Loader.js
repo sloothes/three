@@ -459,9 +459,21 @@ var Loader = function ( editor ) {
 
 		}
 
-        console.log( "metadata:", data.metadata ); // degugMode.
+        console.log( "metadata:", data.metadata ); // debug.
 
 		switch ( data.metadata.type.toLowerCase() ) {
+
+			case "app":
+
+                if ( confirm( "Any unsaved data will be lost. Are you sure?" ) ) {
+
+                    editor.clear();
+                    console.log( "data:", data ); // debug.
+                    editor.fromJSON( data );
+
+                }
+
+				break;
 
 			case "buffergeometry":
 
@@ -552,14 +564,6 @@ var Loader = function ( editor ) {
 					editor.execute( new SetSceneCommand( result.scene ) );
 
 				}, "" );
-
-				break;
-
-			case "app":
-
-                editor.clear(); // important!
-
-				editor.fromJSON( data );
 
 				break;
 

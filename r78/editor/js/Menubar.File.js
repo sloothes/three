@@ -213,8 +213,8 @@ Menubar.File = function ( editor ) {
 //  Save
 
 	var option = new UI.Row();
-	option.setClass( 'option' );
-	option.setTextContent( 'Save' );
+	option.setClass( "option" );
+	option.setTextContent( "Save" );
 	option.onClick( function () {
 
     //  saveState.
@@ -240,6 +240,8 @@ Menubar.File = function ( editor ) {
         }, 1000 );
 
 	});
+
+	options.add( option );
 
 //
 

@@ -271,7 +271,7 @@ Editor.prototype = {
 
 			} else {
 
-				// no helper for this object type
+			//  no helper for this object type.
 				return;
 
 			}

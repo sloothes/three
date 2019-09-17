@@ -16,7 +16,7 @@ Menubar.File = function ( editor ) {
 	options.setClass( 'options' );
 	container.add( options );
 
-	// New
+//  New
 
 	var option = new UI.Row();
 	option.setClass( 'option' );
@@ -29,14 +29,15 @@ Menubar.File = function ( editor ) {
 
 		}
 
-	} );
+	});
+
 	options.add( option );
 
-	//
+//
 
 	options.add( new UI.HorizontalRule() );
 
-	// Import
+//  Import
 
 	var fileInput = document.createElement( 'input' );
 	fileInput.type = 'file';
@@ -44,7 +45,7 @@ Menubar.File = function ( editor ) {
 
 		editor.loader.loadFile( fileInput.files[ 0 ] );
 
-	} );
+	});
 
 	var option = new UI.Row();
 	option.setClass( 'option' );
@@ -53,14 +54,15 @@ Menubar.File = function ( editor ) {
 
 		fileInput.click();
 
-	} );
+	});
+
 	options.add( option );
 
-	//
+//
 
 	options.add( new UI.HorizontalRule() );
 
-	// Export Geometry
+//  Export Geometry
 
 	var option = new UI.Row();
 	option.setClass( 'option' );
@@ -100,10 +102,11 @@ Menubar.File = function ( editor ) {
 
 		saveString( output, 'geometry.json' );
 
-	} );
+	});
+
 	options.add( option );
 
-	// Export Object
+//  Export Object
 
 	var option = new UI.Row();
 	option.setClass( 'option' );
@@ -134,10 +137,11 @@ Menubar.File = function ( editor ) {
 
 		saveString( output, 'model.json' );
 
-	} );
+	});
+
 	options.add( option );
 
-	// Export Scene
+//  Export Scene
 
 	var option = new UI.Row();
 	option.setClass( 'option' );
@@ -159,10 +163,11 @@ Menubar.File = function ( editor ) {
 
 		saveString( output, 'scene.json' );
 
-	} );
+	});
+
 	options.add( option );
 
-	// Export OBJ
+//  Export OBJ
 
 	var option = new UI.Row();
 	option.setClass( 'option' );
@@ -182,10 +187,11 @@ Menubar.File = function ( editor ) {
 
 		saveString( exporter.parse( object ), 'model.obj' );
 
-	} );
+	});
+
 	options.add( option );
 
-	// Export STL
+//  Export STL
 
 	var option = new UI.Row();
 	option.setClass( 'option' );
@@ -196,14 +202,77 @@ Menubar.File = function ( editor ) {
 
 		saveString( exporter.parse( editor.scene ), 'model.stl' );
 
-	} );
+	});
+
 	options.add( option );
 
-	//
+// 
 
 	options.add( new UI.HorizontalRule() );
 
-	// Publish
+//  Save
+
+	var option = new UI.Row();
+	option.setClass( 'option' );
+	option.setTextContent( 'Save' );
+	option.onClick( function () {
+
+    //  saveState.
+
+        var timeout;
+
+    //  if ( editor.config.getKey( "autosave" ) === true ) return;
+
+        clearTimeout( timeout );
+
+        timeout = setTimeout( function () {
+
+            editor.signals.savingStarted.dispatch();
+
+            timeout = setTimeout( function () {
+
+                editor.storage.set( editor.toJSON() );
+
+                editor.signals.savingFinished.dispatch();
+
+            }, 100 );
+
+        }, 1000 );
+
+	});
+
+//
+
+	options.add( new UI.HorizontalRule() );
+
+// Export project
+
+	var option = new UI.Row();
+	option.setClass( 'option' );
+	option.setTextContent( 'Export project' );
+	option.onClick( function () {
+
+		var output = editor.toJSON();
+		delete output.history;
+
+		try {
+
+			output = JSON.stringify( output, null, '\t' );
+			output = output.replace( /[\n\t]+([\d\.e\-\[\]]+)/g, '$1' );
+
+		} catch ( e ) {
+
+			output = JSON.stringify( output );
+
+		}
+
+		saveString( output, 'app.json' );
+
+	});
+
+	options.add( option );
+
+//  Publish
 
 	var option = new UI.Row();
 	option.setClass( 'option' );
@@ -212,7 +281,7 @@ Menubar.File = function ( editor ) {
 
 		var zip = new JSZip();
 
-		//
+	//
 
 		var output = editor.toJSON();
 		output.metadata.type = 'App';
@@ -225,13 +294,13 @@ Menubar.File = function ( editor ) {
 
 		zip.file( 'app.json', output );
 
-		//
+	//
 
 		var manager = new THREE.LoadingManager( function () {
 
 			save( zip.generate( { type: 'blob' } ), 'download.zip' );
 
-		} );
+		});
 
 		var loader = new THREE.XHRLoader( manager );
 		loader.load( 'js/libs/app/index.html', function ( content ) {
@@ -250,31 +319,31 @@ Menubar.File = function ( editor ) {
 
 			zip.file( 'index.html', content );
 
-		} );
+		});
 
 		loader.load( 'js/libs/app.js', function ( content ) {
 
 			zip.file( 'js/app.js', content );
 
-		} );
+		});
 
 		loader.load( '/three/three.min.js', function ( content ) {
 
 			zip.file( 'js/three.min.js', content );
 
-		} );
+		});
 
 		loader.load( "/three/EditorControls.js", function ( content ) {
 
 			zip.file( "js/EditorControls.js", content );
 
-		} );
+		});
 
 		loader.load( "/js/signals.min.js", function ( content ) {
 
 			zip.file( "js/signals.min.js", content );
 
-		} );
+		});
 
 
 		if ( vr ) {
@@ -283,26 +352,27 @@ Menubar.File = function ( editor ) {
 
 				zip.file( 'js/VRControls.js', content );
 
-			} );
+			});
 
 			loader.load( '../examples/js/effects/VREffect.js', function ( content ) {
 
 				zip.file( 'js/VREffect.js', content );
 
-			} );
+			});
 
 			loader.load( '../examples/js/WebVR.js', function ( content ) {
 
 				zip.file( 'js/WebVR.js', content );
 
-			} );
+			});
 
 		}
 
-	} );
+	});
+
 	options.add( option );
 
-	/*
+/*
 	// Publish (Dropbox)
 
 	var option = new UI.Row();
@@ -318,9 +388,10 @@ Menubar.File = function ( editor ) {
 
 		Dropbox.save( parameters );
 
-	} );
+	});
+
 	options.add( option );
-	*/
+*/
 
 
 	//
@@ -335,7 +406,7 @@ Menubar.File = function ( editor ) {
 		link.download = filename || 'data.json';
 		link.click();
 
-		// URL.revokeObjectURL( url ); breaks Firefox...
+	// URL.revokeObjectURL( url ); breaks Firefox...
 
 	}
 

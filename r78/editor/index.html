@@ -204,7 +204,7 @@
 
 			//
 
-			editor.setTheme( editor.config.getKey( 'theme' ) );
+			editor.setTheme( editor.config.getKey( "theme" ) );
 
 			editor.storage.init( function () {
 
@@ -218,7 +218,7 @@
 
 					}
 
-					var selected = editor.config.getKey( 'selected' );
+					var selected = editor.config.getKey( "selected" );
 
 					if ( selected !== undefined ) {
 
@@ -228,13 +228,13 @@
 
 				} );
 
-				//
+			//  Autosave.
 
 				var timeout;
 
 				function saveState( scene ) {
 
-					if ( editor.config.getKey( 'autosave' ) === false ) {
+					if ( editor.config.getKey( "autosave" ) === false ) {
 
 						return;
 

@@ -10,7 +10,7 @@ var Editor = function () {
 	this.DEFAULT_CAMERA.lookAt( new THREE.Vector3() );
 
     this.DEFAULT_DIRECTIONAL_LIGHT = new THREE.DirectionalLight( 0xffffff, 1 );
-    this.DEFAULT_DIRECTIONAL_LIGHT.position.set( 0, 10, -15 );
+    this.DEFAULT_DIRECTIONAL_LIGHT.position.set( 0, 100, 100 );
 
 	var Signal = signals.Signal;
 
@@ -84,6 +84,7 @@ var Editor = function () {
 
 	this.camera = this.DEFAULT_CAMERA.clone();
     this.lights = this.DEFAULT_DIRECTIONAL_LIGHT.clone();
+    this.lights.name = "Default Light";
 
 	this.scene = new THREE.Scene();
 	this.scene.name = "Scene";

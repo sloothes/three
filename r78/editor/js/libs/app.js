@@ -157,7 +157,7 @@ var APP = {
 
 		this.setSize = function ( width, height ) {
 
-			if ( renderer._fullScreen ) return;
+			if ( renderer && renderer._fullScreen ) return;
 
 			this.width = width;
 			this.height = height;

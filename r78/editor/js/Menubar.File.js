@@ -272,6 +272,10 @@ Menubar.File = function ( editor ) {
 
 	options.add( option );
 
+//
+
+	options.add( new UI.HorizontalRule() );
+
 //  Publish
 
 	var option = new UI.Row();

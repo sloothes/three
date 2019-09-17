@@ -16,14 +16,14 @@ Menubar.File = function ( editor ) {
 	options.setClass( 'options' );
 	container.add( options );
 
-//  New
+//  New.
 
 	var option = new UI.Row();
 	option.setClass( 'option' );
 	option.setTextContent( 'New' );
 	option.onClick( function () {
 
-		if ( confirm( 'Any unsaved data will be lost. Are you sure?' ) ) {
+		if ( confirm( "Any unsaved data will be lost. Are you sure?" ) ) {
 
 			editor.clear();
 
@@ -33,7 +33,44 @@ Menubar.File = function ( editor ) {
 
 	options.add( option );
 
-//  Save
+//  Open.
+
+	var fileInput = document.createElement( "input" );
+	fileInput.type = "file";
+	fileInput.addEventListener( "change", function ( event ) {
+
+        var file = fileInput.files[ 0 ];
+
+        var reader = new FileReader();
+
+        reader.addEventListener( "load", function ( event ) {
+
+            editor.clear();
+            editor.fromJSON( JSON.parse( reader.result ) );
+
+        });
+
+        reader.readAsText(file);
+
+	});
+
+	var option = new UI.Row();
+	option.setClass( "option" );
+	option.setTextContent( "Open" );
+	option.onClick( function () {
+
+		if ( confirm( "Any unsaved data will be lost. Are you sure?" ) ) {
+
+            fileInput.value = "";
+            fileInput.click();
+
+        }
+
+	});
+
+	options.add( option );
+
+//  Save.
 
 	var option = new UI.Row();
 	option.setClass( "option" );
@@ -66,25 +103,53 @@ Menubar.File = function ( editor ) {
 
 	options.add( option );
 
+//  Save As...
+
+	var option = new UI.Row();
+	option.setClass( "option" );
+	option.setTextContent( "Save As" );
+	option.onClick( function () {
+
+		var output = editor.toJSON();
+		delete output.history;
+
+		try {
+
+			output = JSON.stringify( output, null, "\t" );
+			output = output.replace( /[\n\t]+([\d\.e\-\[\]]+)/g, "$1" );
+
+		} catch ( e ) {
+
+			output = JSON.stringify( output );
+
+		}
+
+		saveString( output, "app.json" );
+
+	});
+
+	options.add( option );
+
 //
 
 	options.add( new UI.HorizontalRule() );
 
-//  Import
+//  Import.
 
-	var fileInput = document.createElement( 'input' );
-	fileInput.type = 'file';
-	fileInput.addEventListener( 'change', function ( event ) {
+	var fileInput = document.createElement( "input" );
+	fileInput.type = "file";
+	fileInput.addEventListener( "change", function ( event ) {
 
 		editor.loader.loadFile( fileInput.files[ 0 ] );
 
 	});
 
 	var option = new UI.Row();
-	option.setClass( 'option' );
-	option.setTextContent( 'Import' );
+	option.setClass( "option" );
+	option.setTextContent( "Import" );
 	option.onClick( function () {
 
+        fileInput.value = "";
 		fileInput.click();
 
 	});
@@ -95,7 +160,7 @@ Menubar.File = function ( editor ) {
 
 	options.add( new UI.HorizontalRule() );
 
-//  Export Geometry
+//  Export Geometry.
 
 	var option = new UI.Row();
 	option.setClass( 'option' );
@@ -139,7 +204,7 @@ Menubar.File = function ( editor ) {
 
 	options.add( option );
 
-//  Export Object
+//  Export Object.
 
 	var option = new UI.Row();
 	option.setClass( 'option' );
@@ -174,7 +239,7 @@ Menubar.File = function ( editor ) {
 
 	options.add( option );
 
-//  Export Scene
+//  Export Scene.
 
 	var option = new UI.Row();
 	option.setClass( 'option' );
@@ -200,7 +265,7 @@ Menubar.File = function ( editor ) {
 
 	options.add( option );
 
-//  Export OBJ
+//  Export OBJ.
 
 	var option = new UI.Row();
 	option.setClass( 'option' );
@@ -224,7 +289,7 @@ Menubar.File = function ( editor ) {
 
 	options.add( option );
 
-//  Export STL
+//  Export STL.
 
 	var option = new UI.Row();
 	option.setClass( 'option' );
@@ -239,42 +304,9 @@ Menubar.File = function ( editor ) {
 
 	options.add( option );
 
-// 
-
 	options.add( new UI.HorizontalRule() );
 
-// Export project
-
-	var option = new UI.Row();
-	option.setClass( 'option' );
-	option.setTextContent( 'Export project' );
-	option.onClick( function () {
-
-		var output = editor.toJSON();
-		delete output.history;
-
-		try {
-
-			output = JSON.stringify( output, null, '\t' );
-			output = output.replace( /[\n\t]+([\d\.e\-\[\]]+)/g, '$1' );
-
-		} catch ( e ) {
-
-			output = JSON.stringify( output );
-
-		}
-
-		saveString( output, 'app.json' );
-
-	});
-
-	options.add( option );
-
-//
-
-	options.add( new UI.HorizontalRule() );
-
-//  Publish
+//  Publish.
 
 	var option = new UI.Row();
 	option.setClass( 'option' );
@@ -421,3 +453,74 @@ Menubar.File = function ( editor ) {
 	return container;
 
 };
+
+
+/*
+//  Open.
+
+	var option = new UI.Row();
+	option.setClass( "option" );
+	option.setTextContent( "Open" );
+	option.onClick( function () {
+
+		if ( confirm( "Any unsaved data will be lost. Are you sure?" ) ) {
+
+            var input = document.createElement( "input" );
+            input.type = "file";
+            input.addEventListener( "change", function ( event ) {
+
+                var file = event.target.files[ 0 ];
+
+                var reader = new FileReader();
+
+                reader.addEventListener( "load", function ( event ) {
+
+                    editor.clear();
+                    editor.fromJSON( JSON.parse( reader.result ) );
+
+                });
+
+                reader.readAsText(file);
+
+            });
+
+            input.click();
+        }
+
+	});
+
+	options.add( option );
+
+*/
+
+/*
+
+// Export project.
+
+	var option = new UI.Row();
+	option.setClass( 'option' );
+	option.setTextContent( 'Export project' );
+	option.onClick( function () {
+
+		var output = editor.toJSON();
+		delete output.history;
+
+		try {
+
+			output = JSON.stringify( output, null, '\t' );
+			output = output.replace( /[\n\t]+([\d\.e\-\[\]]+)/g, '$1' );
+
+		} catch ( e ) {
+
+			output = JSON.stringify( output );
+
+		}
+
+		saveString( output, "app.json" );
+
+	});
+
+	options.add( option );
+
+*/
+

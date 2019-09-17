@@ -28,8 +28,8 @@ var Viewport = function ( editor ) {
 
 //	Default directional light.
 
-    var lights = editor.lights;
-	scene.add( lights );
+    var light = editor.lights;
+	scene.add( light );
 
 //
 

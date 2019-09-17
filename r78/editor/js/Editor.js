@@ -5,9 +5,12 @@
 var Editor = function () {
 
 	this.DEFAULT_CAMERA = new THREE.PerspectiveCamera( 50, 1, 0.1, 10000 );
-	this.DEFAULT_CAMERA.name = 'Camera';
+	this.DEFAULT_CAMERA.name = "Camera";
 	this.DEFAULT_CAMERA.position.set( 20, 10, 20 );
 	this.DEFAULT_CAMERA.lookAt( new THREE.Vector3() );
+
+    this.DEFAULT_DIRECTIONAL_LIGHT = new THREE.DirectionalLight( 0xffffff, 1 );
+    this.DEFAULT_DIRECTIONAL_LIGHT.position.set( 0, 10, -15 );
 
 	var Signal = signals.Signal;
 
@@ -74,17 +77,19 @@ var Editor = function () {
 
 	};
 
-	this.config = new Config( 'threejs-editor' );
+	this.config = new Config( "threejs-editor" );
 	this.history = new History( this );
 	this.storage = new Storage();
 	this.loader = new Loader( this );
 
 	this.camera = this.DEFAULT_CAMERA.clone();
+    this.lights = this.DEFAULT_DIRECTIONAL_LIGHT.clone();
 
 	this.scene = new THREE.Scene();
-	this.scene.name = 'Scene';
+	this.scene.name = "Scene";
 
 	this.sceneHelpers = new THREE.Scene();
+	this.sceneHelpers.name = "Helpers";
 
 	this.object = {};
 	this.geometries = {};
@@ -143,7 +148,7 @@ Editor.prototype = {
 
 			scope.addHelper( child );
 
-		} );
+		});
 
 		this.scene.add( object );
 
@@ -411,6 +416,7 @@ Editor.prototype = {
 		this.storage.clear();
 
 		this.camera.copy( this.DEFAULT_CAMERA );
+        this.lights.copy( this.DEFAULT_DIRECTIONAL_LIGHT );
 
 		var objects = this.scene.children;
 
@@ -437,7 +443,7 @@ Editor.prototype = {
 
 		var loader = new THREE.ObjectLoader();
 
-		// backwards
+	//  backwards.
 
 		if ( json.scene === undefined ) {
 
@@ -451,6 +457,8 @@ Editor.prototype = {
 		this.camera.copy( camera );
 		this.camera.aspect = this.DEFAULT_CAMERA.aspect;
 		this.camera.updateProjectionMatrix();
+
+		this.setLight( loader.parse( json.lights ) );  // me.
 
 		this.history.fromJSON( json.history );
 		this.scripts = json.scripts;
@@ -470,7 +478,7 @@ Editor.prototype = {
 
 			var script = scripts[ key ];
 
-			if ( script.length === 0 || scene.getObjectByProperty( 'uuid', key ) === undefined ) {
+			if ( script.length === 0 || scene.getObjectByProperty( "uuid", key ) === undefined ) {
 
 				delete scripts[ key ];
 
@@ -483,13 +491,16 @@ Editor.prototype = {
 		return {
 
 			metadata: {},
+
 			project: {
-				shadows: this.config.getKey( 'project/renderer/shadows' ),
-				editable: this.config.getKey( 'project/editable' ),
-				vr: this.config.getKey( 'project/vr' ),
-                debugMode: this.config.getKey( 'project/debugMode' ),
+				shadows: this.config.getKey( "project/renderer/shadows" ),
+				editable: this.config.getKey( "project/editable" ),
+				vr: this.config.getKey( "project/vr" ),
+				debugMode: this.config.getKey( "project/debugMode" ),
 			},
+
 			camera: this.camera.toJSON(),
+			lights: this.lights.toJSON(),
 			scene: this.scene.toJSON(),
 			scripts: this.scripts,
 			history: this.history.toJSON()
@@ -500,7 +511,7 @@ Editor.prototype = {
 
 	objectByUuid: function ( uuid ) {
 
-		return this.scene.getObjectByProperty( 'uuid', uuid, true );
+		return this.scene.getObjectByProperty( "uuid", uuid, true );
 
 	},
 

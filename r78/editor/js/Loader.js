@@ -4,7 +4,7 @@
 
 var Loader = function ( editor ) {
 
-    var debugMode = true;
+//	var debugMode = true;
 
 	var scope = this;
 	var signals = editor.signals;

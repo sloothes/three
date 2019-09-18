@@ -36,11 +36,28 @@ var APP = {
 			}
 
 			this.dom.appendChild( renderer.domElement );
-
 			this.setScene( loader.parse( json.scene ) );
 			this.setCamera( loader.parse( json.camera ) );
 
-			if ( !vr ) controls = new THREE.EditorControls( camera ); // "after" setCamera(); important!
+		//	Editor controls always "after" setCamera(); important!
+
+			if ( !vr ) {
+
+				controls = new THREE.EditorControls( camera, this.dom ); 
+				controls.addEventListener( "change", function () {
+
+                    try {
+
+						var light = scene.getObjectByName( editor.lights.name );
+						if ( light ) light.position.copy( camera.position );
+
+                    } catch(err){;}
+
+				});
+
+				camera.lookAt( controls.center );
+
+            }
 
 			events = {
 				init: [],

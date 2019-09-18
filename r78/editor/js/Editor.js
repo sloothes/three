@@ -467,7 +467,7 @@ Editor.prototype = {
 
 	toJSON: function () {
 
-		// scripts clean up
+	//	scripts clean up.
 
 		var scene = this.scene;
 		var scripts = this.scripts;
@@ -484,7 +484,7 @@ Editor.prototype = {
 
 		}
 
-		//
+	//
 
 		return {
 

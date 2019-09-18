@@ -29,7 +29,7 @@ Menubar.File = function ( editor ) {
 
 		//	light.
 
-			editor.scene.add( editor.lights );
+		//	editor.scene.add( editor.lights );
 
 		}
 

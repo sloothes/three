@@ -598,7 +598,7 @@ var Viewport = function ( editor ) {
 		sceneHelpers.updateMatrixWorld();
 		scene.updateMatrixWorld();
 
-        if ( light ) light.position.copy( camera.position );
+        editor.lights.position.copy( editor.camera.position );
 
 		renderer.clear();
 		renderer.render( scene, camera );

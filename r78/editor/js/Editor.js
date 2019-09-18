@@ -433,10 +433,6 @@ Editor.prototype = {
 
 		this.deselect();
 
-		this.lights.copy( this.DEFAULT_DIRECTIONAL_LIGHT );
-        this.lights.name = "Default Light";
-        this.scene.add( this.lights );
-
 		this.signals.editorCleared.dispatch();
 
 	},
@@ -466,10 +462,6 @@ Editor.prototype = {
 		this.scripts = json.scripts;
 
 		this.setScene( loader.parse( json.scene ) );
-
-		this.lights.copy( this.DEFAULT_DIRECTIONAL_LIGHT );
-        this.lights.name = "Default Light";
-        this.scene.add( this.lights );
 
 	},
 

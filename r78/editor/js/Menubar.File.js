@@ -27,6 +27,12 @@ Menubar.File = function ( editor ) {
 
 			editor.clear();
 
+		//	light.
+
+			editor.lights.copy( editor.DEFAULT_DIRECTIONAL_LIGHT );
+			editor.lights.name = "Default Light";
+			editor.scene.add( editor.lights );
+
 		}
 
 	});

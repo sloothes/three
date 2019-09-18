@@ -7,26 +7,31 @@ Sidebar.Geometry = function ( editor ) {
 	var signals = editor.signals;
 
 	var container = new UI.Panel();
-	container.setBorderTop( '0' );
-	container.setPaddingTop( '20px' );
+	container.setBorderTop( "0" );
+	container.setPaddingTop( "20px" );
 
-	// Actions
 
-	/*
-	var objectActions = new UI.Select().setPosition( 'absolute' ).setRight( '8px' ).setFontSize( '11px' );
-	objectActions.setOptions( {
+/*
 
-		'Actions': 'Actions',
-		'Center': 'Center',
-		'Convert': 'Convert',
-		'Flatten': 'Flatten'
+//	Actions.
 
-	} );
+	var objectActions = new UI.Select().setPosition( "absolute" ).setRight( "8px" ).setFontSize( "11px" );
+
+	objectActions.setOptions({
+
+		"Actions": "Actions",
+		"Center": "Center",
+		"Convert": "Convert",
+		"Flatten": "Flatten"
+
+	});
+
 	objectActions.onClick( function ( event ) {
 
-		event.stopPropagation(); // Avoid panel collapsing
+		event.stopPropagation(); // Avoid panel collapsing.
 
-	} );
+	});
+
 	objectActions.onChange( function ( event ) {
 
 		var action = this.getValue();
@@ -34,11 +39,11 @@ Sidebar.Geometry = function ( editor ) {
 		var object = editor.selected;
 		var geometry = object.geometry;
 
-		if ( confirm( action + ' ' + object.name + '?' ) === false ) return;
+		if ( confirm( action + " " + object.name + "?" ) === false ) return;
 
 		switch ( action ) {
 
-			case 'Center':
+			case "Center":
 
 				var offset = geometry.center();
 
@@ -50,7 +55,7 @@ Sidebar.Geometry = function ( editor ) {
 
 				break;
 
-			case 'Convert':
+			case "Convert":
 
 				if ( geometry instanceof THREE.Geometry ) {
 
@@ -60,7 +65,7 @@ Sidebar.Geometry = function ( editor ) {
 
 				break;
 
-			case 'Flatten':
+			case "Flatten":
 
 				var newGeometry = geometry.clone();
 				newGeometry.uuid = geometry.uuid;
@@ -77,13 +82,15 @@ Sidebar.Geometry = function ( editor ) {
 
 		}
 
-		this.setValue( 'Actions' );
+		this.setValue( "Actions" );
 
-	} );
+	});
+
 	container.addStatic( objectActions );
-	*/
 
-	// type
+*/
+
+//	Type.
 
 	var geometryTypeRow = new UI.Row();
 	var geometryType = new UI.Text();
@@ -93,7 +100,7 @@ Sidebar.Geometry = function ( editor ) {
 
 	container.add( geometryTypeRow );
 
-	// uuid
+//	Uuid.
 
 	var geometryUUIDRow = new UI.Row();
 	var geometryUUID = new UI.Input().setWidth( '115px' ).setFontSize( '12px' ).setDisabled( true );
@@ -111,35 +118,34 @@ Sidebar.Geometry = function ( editor ) {
 
 	container.add( geometryUUIDRow );
 
-	// name
+//	Name.
 
 	var geometryNameRow = new UI.Row();
-	var geometryName = new UI.Input().setWidth( '150px' ).setFontSize( '12px' ).onChange( function () {
+	var geometryName = new UI.Input().setWidth( "150px" ).setFontSize( "12px" ).onChange( function () {
 
-		editor.execute( new SetGeometryValueCommand( editor.selected, 'name', geometryName.getValue() ) );
+		editor.execute( new SetGeometryValueCommand( editor.selected, "name", geometryName.getValue() ) );
 
 	} );
 
-	geometryNameRow.add( new UI.Text( 'Name' ).setWidth( '90px' ) );
+	geometryNameRow.add( new UI.Text( "Name" ).setWidth( "90px" ) );
 	geometryNameRow.add( geometryName );
 
 	container.add( geometryNameRow );
 
-	// geometry
+//	Geometry.
 
 	container.add( new Sidebar.Geometry.Geometry( editor ) );
 
-	// buffergeometry
+//	Buffergeometry.
 
 	container.add( new Sidebar.Geometry.BufferGeometry( editor ) );
 
-	// parameters
+//	Parameters.
 
 	var parameters = new UI.Span();
 	container.add( parameters );
 
-
-	//
+//
 
 	function build() {
 
@@ -149,7 +155,7 @@ Sidebar.Geometry = function ( editor ) {
 
 			var geometry = object.geometry;
 
-			container.setDisplay( 'block' );
+			container.setDisplay( "block" );
 
 			geometryType.setValue( geometry.type );
 
@@ -160,7 +166,7 @@ Sidebar.Geometry = function ( editor ) {
 
 			parameters.clear();
 
-			if ( geometry.type === 'BufferGeometry' || geometry.type === 'Geometry' ) {
+			if ( geometry.type === "BufferGeometry" || geometry.type === "Geometry" ) {
 
 				parameters.add( new Sidebar.Geometry.Modifiers( editor, object ) );
 
@@ -172,7 +178,7 @@ Sidebar.Geometry = function ( editor ) {
 
 		} else {
 
-			container.setDisplay( 'none' );
+			container.setDisplay( "none" );
 
 		}
 

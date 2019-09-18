@@ -10,7 +10,7 @@ var Editor = function () {
 	this.DEFAULT_CAMERA.lookAt( new THREE.Vector3() );
 
     this.DEFAULT_DIRECTIONAL_LIGHT = new THREE.DirectionalLight( 0xffffff, 1 );
-    this.DEFAULT_DIRECTIONAL_LIGHT.position.set( 0, 100, 100 );
+    this.DEFAULT_DIRECTIONAL_LIGHT.position.set( 0, 50, 100 );
 
 	var Signal = signals.Signal;
 
@@ -433,8 +433,9 @@ Editor.prototype = {
 
 		this.deselect();
 
-        this.lights.copy( this.DEFAULT_DIRECTIONAL_LIGHT );
+		this.lights.copy( this.DEFAULT_DIRECTIONAL_LIGHT );
         this.lights.name = "Default Light";
+        this.scene.add( this.lights );
 
 		this.signals.editorCleared.dispatch();
 
@@ -466,7 +467,9 @@ Editor.prototype = {
 
 		this.setScene( loader.parse( json.scene ) );
 
-		this.lights.copy( this.DEFAULT_DIRECTIONAL_LIGHT ); // me.
+		this.lights.copy( this.DEFAULT_DIRECTIONAL_LIGHT );
+        this.lights.name = "Default Light";
+        this.scene.add( this.lights );
 
 	},
 

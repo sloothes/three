@@ -193,7 +193,7 @@ Editor.prototype = {
 
 		if ( object.parent === null ) return; // avoid deleting the camera or scene.
 
-        if ( object.id === this.lights.id ) return; // avoid deleting the camera light.
+        if ( object.name == this.lights.name ) return; // avoid deleting the camera light.
 
 		var scope = this;
 

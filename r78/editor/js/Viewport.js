@@ -264,12 +264,11 @@ var Viewport = function ( editor ) {
 	var controls = new THREE.EditorControls( camera, container.dom );
 	controls.addEventListener( "change", function () {
 
-		transformControls.update();
-
-	//	Update light position.
-        var light = scene.getObjectById( editor.lights.id );
+	//	Update light position (by name) important!
+        var light = scene.getObjectByName( editor.lights.name );
         if ( light ) light.position.copy( camera.position );
 
+		transformControls.update();
 		signals.cameraChanged.dispatch( camera );
 
 	});
@@ -282,7 +281,7 @@ var Viewport = function ( editor ) {
 
 	//	Camera directional light.
 		editor.addObject( editor.lights );
-	//	Update camera light position.
+	//	Update camera light position (by id) important!
         var light = scene.getObjectById( editor.lights.id );
         if ( light ) light.position.copy( camera.position );
 

@@ -365,19 +365,11 @@ var Viewport = function ( editor ) {
 	//	Update camera light position.
 		var name = editor.lights.name;
 		var light = editor.scene.getObjectByName( name );
-		light.position.copy( editor.camera.position );
+		if ( light ) light.position.copy( editor.camera.position );
 
 		render();
 
 	});
-
-/*
-	signals.cameraChanged.add( function () {
-
-		render();
-
-	});
-*/
 
 	signals.objectSelected.add( function ( object ) {
 

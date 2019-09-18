@@ -278,10 +278,12 @@ var Viewport = function ( editor ) {
 
 		controls.center.set( 0, 0, 0 );
 
-	//	Camera directional light.
+	//	Add camera directional light.
 		editor.addObject( editor.lights );
-	//	Update camera light position (by id) important!
-        var light = scene.getObjectById( editor.lights.id );
+
+	//	Update camera light position (by uuid) important!
+        var uuid = editor.lights.uuid;
+        var light = scene.getObjectByProperty("uuid", uuid);
         if ( light ) light.position.copy( camera.position );
 
 		render();

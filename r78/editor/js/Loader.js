@@ -498,9 +498,15 @@ var Loader = function ( editor ) {
 				loader.setTexturePath( scope.texturePath );
 
 				var result = loader.parse( data );
-				debugMode && console.log( result ); // debug!
 
 				var geometry = result.geometry;
+				geometry.computeFaceNormals();
+				geometry.computeVertexNormals();
+				geometry.computeBoundingBox();
+				geometry.computeBoundingSphere();
+				geometry.sourceType = "ascii";
+				geometry.sourceFile = file.name;
+
 				var material;
 
 				if ( result.materials !== undefined ) {
@@ -521,8 +527,7 @@ var Loader = function ( editor ) {
 
 				}
 
-				geometry.sourceType = "ascii";
-				geometry.sourceFile = file.name;
+				debugMode && console.log( result ); // debug!
 
 				var mesh;
 

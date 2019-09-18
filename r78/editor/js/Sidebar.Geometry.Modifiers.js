@@ -16,8 +16,6 @@ Sidebar.Geometry.Modifiers = function ( editor, object ) {
 
 	button.onClick( function () {
 
-		var geometry = object.geometry;
-
 		geometry.computeVertexNormals();
 
 		if ( geometry instanceof THREE.BufferGeometry ) {

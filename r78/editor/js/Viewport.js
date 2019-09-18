@@ -4,7 +4,7 @@
 
 var Viewport = function ( editor ) {
 
-//	var renderer = null;
+	renderer = editor.renderer;  //  null.
 
 	var signals = editor.signals;
 
@@ -587,7 +587,8 @@ var Viewport = function ( editor ) {
 
 	});
 
-	renderer = null;
+
+//	var renderer = null;
 
 	animate();
 

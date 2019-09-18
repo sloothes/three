@@ -397,6 +397,8 @@ var Viewport = function ( editor ) {
 
 	signals.objectFocused.add( function ( object ) {
 
+		if ( object === undefined ) return;
+
 		controls.focus( object );
 
 	});
@@ -415,6 +417,8 @@ var Viewport = function ( editor ) {
 
 	signals.objectAdded.add( function ( object ) {
 
+		if ( object === undefined ) return;
+
 		object.traverse( function ( child ) {
 
 			objects.push( child );
@@ -425,20 +429,20 @@ var Viewport = function ( editor ) {
 
 	signals.objectChanged.add( function ( object ) {
 
-		if ( editor.selected === object ) {
+		if ( object && editor.selected === object ) {
 
 			selectionBox.update( object );
 			transformControls.update();
 
 		}
 
-		if ( object instanceof THREE.PerspectiveCamera ) {
+		if ( object && object instanceof THREE.PerspectiveCamera ) {
 
 			object.updateProjectionMatrix();
 
 		}
 
-		if ( editor.helpers[ object.id ] !== undefined ) {
+		if ( object && editor.helpers[ object.id ] !== undefined ) {
 
 			editor.helpers[ object.id ].update();
 
@@ -449,6 +453,8 @@ var Viewport = function ( editor ) {
 	});
 
 	signals.objectRemoved.add( function ( object ) {
+
+		if ( object === undefined ) return;
 
 		object.traverse( function ( child ) {
 
@@ -500,11 +506,15 @@ var Viewport = function ( editor ) {
 
 	signals.helperAdded.add( function ( object ) {
 
+		if ( object === undefined ) return;
+
 		objects.push( object.getObjectByName( "picker" ) );
 
 	});
 
 	signals.helperRemoved.add( function ( object ) {
+
+		if ( object === undefined ) return;
 
 		objects.splice( objects.indexOf( object.getObjectByName( "picker" ) ), 1 );
 

@@ -258,7 +258,7 @@ var Viewport = function ( editor ) {
 	container.dom.addEventListener( "touchstart", onTouchStart, false );
 	container.dom.addEventListener( "dblclick", onDoubleClick, false );
 
-//	controls need to be added *after* main logic,
+//	Controls need to be added "after" main logic,
 //	otherwise controls.enabled doesn't work.
 
 	var controls = new THREE.EditorControls( camera, container.dom );
@@ -273,7 +273,7 @@ var Viewport = function ( editor ) {
 
 	});
 
-//	signals.
+//	Signals.
 
 	signals.editorCleared.add( function () {
 
@@ -584,13 +584,13 @@ var Viewport = function ( editor ) {
 
 	});
 
-	//
+//
 
 	var renderer = null;
 
 	animate();
 
-	//
+//
 
 	function updateFog( root ) {
 

@@ -9,7 +9,7 @@ var APP = {
 		var scope = this;
 
 		var loader = new THREE.ObjectLoader();
-		var camera, lights, scene, renderer;
+		var camera, scene, renderer;
 
 		var vr, controls, effect;
 
@@ -39,6 +39,8 @@ var APP = {
 
 			this.setScene( loader.parse( json.scene ) );
 			this.setCamera( loader.parse( json.camera ) );
+
+			if ( !vr ) controls = new THREE.EditorControls( camera ); // "after" setCamera(); important!
 
 			events = {
 				init: [],

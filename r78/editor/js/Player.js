@@ -11,7 +11,7 @@ var Player = function ( editor ) {
 	container.setPosition( "absolute" );
 	container.setDisplay( "none" );
 
-	//
+//
 
 	var player = new APP.Player();
 	container.dom.appendChild( player.dom );
@@ -20,7 +20,7 @@ var Player = function ( editor ) {
 
 		player.setSize( container.dom.clientWidth, container.dom.clientHeight );
 
-	} );
+	});
 
 	signals.startPlayer.add( function () {
 
@@ -30,7 +30,7 @@ var Player = function ( editor ) {
 		player.setSize( container.dom.clientWidth, container.dom.clientHeight );
 		player.play();
 
-	} );
+	});
 
 	signals.stopPlayer.add( function () {
 
@@ -39,7 +39,7 @@ var Player = function ( editor ) {
 		player.stop();
 		player.dispose();
 
-	} );
+	});
 
 	return container;
 

@@ -8,27 +8,27 @@ Sidebar.Geometry.Geometry = function ( editor ) {
 
 	var container = new UI.Row();
 
-	// vertices
+//	Vertices.
 
 	var verticesRow = new UI.Row();
 	var vertices = new UI.Text();
 
-	verticesRow.add( new UI.Text( 'Vertices' ).setWidth( '90px' ) );
+	verticesRow.add( new UI.Text( "Vertices" ).setWidth( "90px" ) );
 	verticesRow.add( vertices );
 
 	container.add( verticesRow );
 
-	// faces
+//	Faces.
 
 	var facesRow = new UI.Row();
 	var faces = new UI.Text();
 
-	facesRow.add( new UI.Text( 'Faces' ).setWidth( '90px' ) );
+	facesRow.add( new UI.Text( "Faces" ).setWidth( "90px" ) );
 	facesRow.add( faces );
 
 	container.add( facesRow );
 
-	//
+//
 
 	function update( object ) {
 
@@ -39,14 +39,14 @@ Sidebar.Geometry.Geometry = function ( editor ) {
 
 		if ( geometry instanceof THREE.Geometry ) {
 
-			container.setDisplay( 'block' );
+			container.setDisplay( "block" );
 
 			vertices.setValue( ( geometry.vertices.length ).format() );
 			faces.setValue( ( geometry.faces.length ).format() );
 
 		} else {
 
-			container.setDisplay( 'none' );
+			container.setDisplay( "none" );
 
 		}
 

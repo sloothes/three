@@ -417,7 +417,6 @@ Editor.prototype = {
 		this.storage.clear();
 
 		this.camera.copy( this.DEFAULT_CAMERA );
-        this.lights.copy( this.DEFAULT_DIRECTIONAL_LIGHT );
 
 		var objects = this.scene.children;
 
@@ -433,6 +432,9 @@ Editor.prototype = {
 		this.scripts = {};
 
 		this.deselect();
+
+        this.lights.copy( this.DEFAULT_DIRECTIONAL_LIGHT );
+        this.lights.name = "Default Light";
 
 		this.signals.editorCleared.dispatch();
 

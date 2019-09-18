@@ -6,13 +6,14 @@ Sidebar.Geometry.Modifiers = function ( editor, object ) {
 
 	var signals = editor.signals;
 
-	var container = new UI.Row().setPaddingLeft( '90px' );
+	var container = new UI.Row().setPaddingLeft( "90px" );
 
 	var geometry = object.geometry;
 
-	// Compute Vertex Normals
+//	Compute Vertex Normals.
 
-	var button = new UI.Button( 'Compute Vertex Normals' );
+	var button = new UI.Button( "Compute Vertex Normals" );
+
 	button.onClick( function () {
 
 		geometry.computeVertexNormals();
@@ -29,11 +30,11 @@ Sidebar.Geometry.Modifiers = function ( editor, object ) {
 
 		signals.geometryChanged.dispatch( object );
 
-	} );
+	});
 
 	container.add( button );
 
-	//
+//
 
 	return container;
 

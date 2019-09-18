@@ -4,6 +4,8 @@
 
 var Viewport = function ( editor ) {
 
+//	var renderer = null;
+
 	var signals = editor.signals;
 
 	var container = new UI.Panel();
@@ -587,7 +589,7 @@ var Viewport = function ( editor ) {
 
 //
 
-	var renderer = null;
+//	var renderer = null;
 
 	animate();
 

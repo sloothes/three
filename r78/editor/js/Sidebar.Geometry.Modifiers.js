@@ -16,15 +16,15 @@ Sidebar.Geometry.Modifiers = function ( editor, object ) {
 
 	button.onClick( function () {
 
-		object.geometry.computeVertexNormals();
+		geometry.computeVertexNormals();
 
-		if ( object.geometry instanceof THREE.BufferGeometry ) {
+		if ( geometry instanceof THREE.BufferGeometry ) {
 
-			object.geometry.attributes.normal.needsUpdate = true;
+			geometry.attributes.normal.needsUpdate = true;
 
 		} else {
 
-			object.geometry.normalsNeedUpdate = true;
+			geometry.normalsNeedUpdate = true;
 
 		}
 

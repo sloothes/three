@@ -279,7 +279,6 @@ var Viewport = function ( editor ) {
 
 		controls.center.set( 0, 0, 0 );
 		editor.execute( new AddObjectCommand( light ) );
-
 		render();
 
 	});
@@ -360,6 +359,8 @@ var Viewport = function ( editor ) {
 	var saveTimeout;
 
 	signals.cameraChanged.add( function () {
+
+		editor.lights.position.copy( editor.camera.position );
 
 		render();
 
@@ -598,7 +599,7 @@ var Viewport = function ( editor ) {
 		sceneHelpers.updateMatrixWorld();
 		scene.updateMatrixWorld();
 
-        editor.lights.position.copy( editor.camera.position );
+	//	editor.lights.position.copy( editor.camera.position );
 
 		renderer.clear();
 		renderer.render( scene, camera );

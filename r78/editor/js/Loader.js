@@ -526,9 +526,10 @@ var Loader = function ( editor ) {
 
 				var mesh;
 
-				 if ( geometry.bones || ( geometry.animation && geometry.animation.hierarchy ) ) {
+				if ( geometry.bones || ( geometry.animation && geometry.animation.hierarchy ) ) {
 
-					mesh = new THREE.SkinnedMesh( geometry, material );
+					mesh = new THREE.Mesh( geometry, material );
+				//	mesh = new THREE.SkinnedMesh( geometry, material ); // TODO.
 
 				} else {
 

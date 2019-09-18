@@ -178,7 +178,7 @@
 				return this.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 			};
 
-			//
+		//
 
 			var editor = new Editor();
 
@@ -203,7 +203,7 @@
 			var modal = new UI.Modal();
 			document.body.appendChild( modal.dom );
 
-			//
+		//
 
 			editor.setTheme( editor.config.getKey( "theme" ) );
 
@@ -227,7 +227,7 @@
 
 					}
 
-				} );
+				});
 
 			//  Autosave.
 
@@ -276,18 +276,18 @@
 
 				} );
 
-			} );
+			});
 
-			//
+		//
 
-			document.addEventListener( 'dragover', function ( event ) {
+			document.addEventListener( "dragover", function ( event ) {
 
 				event.preventDefault();
-				event.dataTransfer.dropEffect = 'copy';
+				event.dataTransfer.dropEffect = "copy";
 
 			}, false );
 
-			document.addEventListener( 'drop', function ( event ) {
+			document.addEventListener( "drop", function ( event ) {
 
 				event.preventDefault();
 
@@ -299,26 +299,26 @@
 
 			}, false );
 
-			document.addEventListener( 'keydown', function ( event ) {
+			document.addEventListener( "keydown", function ( event ) {
 
 				switch ( event.keyCode ) {
 
-					case 8: // backspace
+					case 8: // backspace.
 
-						event.preventDefault(); // prevent browser back
+						event.preventDefault(); // prevent browser back. important!
 
-					case 46: // delete
+					case 46: // delete.
 
 						var object = editor.selected;
 
-						if ( confirm( 'Delete ' + object.name + '?' ) === false ) return;
+						if ( confirm( "Delete " + object.name + "?" ) === false ) return;
 
 						var parent = object.parent;
 						if ( parent !== null ) editor.execute( new RemoveObjectCommand( object ) );
 
 						break;
 
-					case 90: // Register Ctrl-Z for Undo, Ctrl-Shift-Z for Redo
+					case 90: // Register Ctrl-Z for Undo, Ctrl-Shift-Z for Redo.
 
 						if ( event.ctrlKey && event.shiftKey ) {
 
@@ -332,21 +332,21 @@
 
 						break;
 
-					case 87: // Register W for translation transform mode
+					case 87: // Register W for translation transform mode.
 
-						editor.signals.transformModeChanged.dispatch( 'translate' );
-
-						break;
-
-					case 69: // Register E for rotation transform mode
-
-						editor.signals.transformModeChanged.dispatch( 'rotate' );
+						editor.signals.transformModeChanged.dispatch( "translate" );
 
 						break;
 
-					case 82: // Register R for scaling transform mode
+					case 69: // Register E for rotation transform mode.
 
-						editor.signals.transformModeChanged.dispatch( 'scale' );
+						editor.signals.transformModeChanged.dispatch( "rotate" );
+
+						break;
+
+					case 82: // Register R for scaling transform mode.
+
+						editor.signals.transformModeChanged.dispatch( "scale" );
 
 						break;
 
@@ -360,11 +360,11 @@
 
 			}
 
-			window.addEventListener( 'resize', onWindowResize, false );
+			window.addEventListener( "resize", onWindowResize, false );
 
 			onWindowResize();
 
-			//
+		//
 
 			var isLoadingFromHash = false;
 			var hash = window.location.hash;
@@ -382,7 +382,7 @@
 						editor.clear();
 						editor.fromJSON( JSON.parse( text ) );
 
-					} );
+					});
 
 					isLoadingFromHash = true;
 

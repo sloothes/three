@@ -43,7 +43,8 @@ var APP = {
 
 			if ( !vr ) {
 
-				controls = new THREE.EditorControls( camera, this.dom ); 
+				controls = new THREE.EditorControls( camera, this.dom );
+				controls.center.set( scene.position.x, camera.position.y, scene.position.z );
 				controls.addEventListener( "change", function () {
 
                     try {

@@ -279,8 +279,10 @@ var Viewport = function ( editor ) {
 
 		controls.center.set( 0, 0, 0 );
 
+        var name = light.name;
 		editor.execute( new AddObjectCommand( light ) );
-		editor.lights.position.copy( editor.camera.position );
+        light = editor.scene.getObjectByName( name );
+		light.position.copy( camera.position );
 
 		render();
 
@@ -599,7 +601,7 @@ var Viewport = function ( editor ) {
 
 	function render() {
 
-		editor.lights.position.copy( editor.camera.position );
+		light.position.copy( camera.position );  // update ligth position.
 
 		sceneHelpers.updateMatrixWorld();
 		scene.updateMatrixWorld();

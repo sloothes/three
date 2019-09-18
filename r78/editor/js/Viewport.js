@@ -259,8 +259,8 @@ var Viewport = function ( editor ) {
 	container.dom.addEventListener( "touchstart", onTouchStart, false );
 	container.dom.addEventListener( "dblclick", onDoubleClick, false );
 
-//	Controls need to be added "after" main logic,
-//	otherwise controls.enabled doesn't work.
+	//	Controls need to be added "after" main logic,
+	//	otherwise controls.enabled doesn't work.
 
 	var controls = new THREE.EditorControls( camera, container.dom );
 	controls.addEventListener( "change", function () {
@@ -281,7 +281,8 @@ var Viewport = function ( editor ) {
 		controls.center.set( 0, 0, 0 );
 
 	//	Add camera directional light.
-		editor.addObject( editor.lights );
+	//	editor.addObject( editor.lights );
+		scene.add( editor.lights ); // bypass push in "objects".
 
 	//	Update camera light position (by uuid) important!
         var uuid = editor.lights.uuid;

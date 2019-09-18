@@ -84,6 +84,12 @@ var Editor = function () {
 	this.loader = new Loader( this );
 
 	this.camera = this.DEFAULT_CAMERA.clone();
+
+//  Camera light is added in editor scene "only after" 
+//  editor has been cleared: this.clear() => 
+//  this.signals.editorCleared.dispatch(); => 
+//  Viewport.js => editor.signals.editorCleared.add();
+
 	this.lights = this.CAMERA_LIGHT.clone();
 
 	this.scene = new THREE.Scene();
@@ -100,8 +106,6 @@ var Editor = function () {
 
 	this.selected = null;
 	this.helpers = {};
-
-//	this.renderer = null;
 
 };
 

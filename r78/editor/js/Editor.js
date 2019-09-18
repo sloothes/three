@@ -101,7 +101,7 @@ var Editor = function () {
 	this.selected = null;
 	this.helpers = {};
 
-	this.renderer = null;
+//	this.renderer = null;
 
 };
 

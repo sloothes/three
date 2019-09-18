@@ -113,7 +113,7 @@ Editor.prototype = {
 
 	},
 
-	//
+//
 
 	setScene: function ( scene ) {
 
@@ -121,7 +121,7 @@ Editor.prototype = {
 		this.scene.name = scene.name;
 		this.scene.userData = JSON.parse( JSON.stringify( scene.userData ) );
 
-		// avoid render per object
+	//	avoid render per object.
 
 		this.signals.sceneGraphChanged.active = false;
 
@@ -136,7 +136,7 @@ Editor.prototype = {
 
 	},
 
-	//
+//
 
 	addObject: function ( object ) {
 
@@ -168,7 +168,7 @@ Editor.prototype = {
 
 		parent.add( object );
 
-		// sort children array
+	//	sort children array.
 
 		if ( before !== undefined ) {
 
@@ -193,7 +193,7 @@ Editor.prototype = {
 
 		if ( object.parent === null ) return; // avoid deleting the camera or scene.
 
-		if ( object.uuid == this.lights.uuid ) return; // avoid deleting camera light.
+        if ( object.id === this.lights.id ) return; // avoid deleting the camera light.
 
 		var scope = this;
 
@@ -439,7 +439,7 @@ Editor.prototype = {
 
 	},
 
-	//
+//
 
 	fromJSON: function ( json ) {
 

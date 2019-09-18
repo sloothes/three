@@ -266,10 +266,9 @@ var Viewport = function ( editor ) {
 
 		transformControls.update();
 
-	//	Update camera light position.
-		var name = editor.lights.name;
-		var light = editor.scene.getObjectByName( name );
-		if ( light ) light.position.copy( editor.camera.position );
+	//	Update light position.
+        var light = scene.getObjectById( editor.lights.id );
+        if ( light ) light.position.copy( camera.position );
 
 		signals.cameraChanged.dispatch( camera );
 
@@ -282,15 +281,10 @@ var Viewport = function ( editor ) {
 		controls.center.set( 0, 0, 0 );
 
 	//	Camera directional light.
-
-		editor.scene.add( editor.lights );
-	//	editor.execute( new AddObjectCommand( editor.lights.clone() ) );
-
+		editor.addObject( editor.lights );
 	//	Update camera light position.
-
-        var name = editor.lights.name;
-        var light = editor.scene.getObjectByName( name );
-        if ( light ) light.position.copy( editor.camera.position );
+        var light = scene.getObjectById( editor.lights.id );
+        if ( light ) light.position.copy( camera.position );
 
 		render();
 

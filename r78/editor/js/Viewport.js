@@ -27,7 +27,6 @@ var Viewport = function ( editor ) {
 	var camera = editor.camera;
 
 //
-
 	var selectionBox = new THREE.BoxHelper();
 	selectionBox.material.depthTest = false;
 	selectionBox.material.transparent = true;

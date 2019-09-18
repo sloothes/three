@@ -27,9 +27,8 @@ var Viewport = function ( editor ) {
 	var camera = editor.camera;
 
 //	Default directional light.
-
     var light = editor.lights;
-	scene.add( light );
+//	scene.add( light );
 
 //
 

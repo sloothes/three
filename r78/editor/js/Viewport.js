@@ -283,7 +283,8 @@ var Viewport = function ( editor ) {
 
 	//	Camera directional light.
 
-		editor.execute( new AddObjectCommand( editor.lights.clone() ) );
+		editor.scene.add( editor.lights.clone() );
+	//	editor.execute( new AddObjectCommand( editor.lights.clone() ) );
 
 	//	Update camera light position.
 

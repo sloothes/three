@@ -615,11 +615,11 @@ var Viewport = function ( editor ) {
 		renderer.clear();
 		renderer.render( scene, camera );
 
-	//	if ( renderer instanceof THREE.RaytracingRenderer === false ) {
+		if ( renderer instanceof THREE.RaytracingRenderer === false ) {
 
-			renderer.render( sceneHelpers, camera );  // always update helpers?
+			renderer.render( sceneHelpers, camera );
 
-	//	}
+		}
 
 	}
 

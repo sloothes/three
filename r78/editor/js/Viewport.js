@@ -587,7 +587,7 @@ var Viewport = function ( editor ) {
 
 	});
 
-//	var renderer = null;
+	renderer = null;
 
 	animate();
 

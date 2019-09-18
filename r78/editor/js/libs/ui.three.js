@@ -16,7 +16,7 @@ UI.Texture = function ( mapping ) {
 
 		loadFile( event.target.files[ 0 ] );
 
-	} );
+	});
 
 	var canvas = document.createElement( "canvas" );
 	canvas.width = 32;
@@ -29,6 +29,7 @@ UI.Texture = function ( mapping ) {
 		input.click();
 
 	}, false );
+
 	canvas.addEventListener( "drop", function ( event ) {
 
 		event.preventDefault();
@@ -36,6 +37,7 @@ UI.Texture = function ( mapping ) {
 		loadFile( event.dataTransfer.files[ 0 ] );
 
 	}, false );
+
 	dom.appendChild( canvas );
 
 	var name = document.createElement( "input" );

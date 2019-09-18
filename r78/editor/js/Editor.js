@@ -10,27 +10,27 @@ var Editor = function () {
 	this.DEFAULT_CAMERA.lookAt( new THREE.Vector3() );
 
 	this.CAMERA_LIGHT = new THREE.DirectionalLight( 0xffffff, 1 );
-	this.CAMERA_LIGHT.name = "Camera Light";
+	this.CAMERA_LIGHT.name = "Default Camera Light";
 	this.CAMERA_LIGHT.position.copy( this.DEFAULT_CAMERA.position );
 
 	var Signal = signals.Signal;
 
 	this.signals = {
 
-		// script
+	// script.
 
 		editScript: new Signal(),
 
-		// player
+	// player.
 
 		startPlayer: new Signal(),
 		stopPlayer: new Signal(),
 
-		// actions
+	// actions.
 
 		showModal: new Signal(),
 
-		// notifications
+	// notifications.
 
 		editorCleared: new Signal(),
 

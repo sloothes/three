@@ -450,6 +450,46 @@ var Viewport = function ( editor ) {
 
 		object.traverse( function ( child ) {
 
+			if ( child.geometry ) child.geometry.dispose();
+
+		//  Dispose textures and materials. !important
+
+			if ( child.material && !child.material.materials ) {
+                
+			//  Single material.
+
+                Object.keys( child ).filter( function(key) {
+                    return child.material[ key ] instanceof THREE.Texture;
+                }).forEach( function(key) {
+                    child.material[ key ].dispose();
+                //  DO NOT NULL OR DELETE TEXTURE.  important!
+                });
+
+                child.material.dispose();
+
+            } else if ( child.material && child.material.materials ) {
+
+			//  Multi material.
+
+                child.material.materials.forEach(function(material){
+
+                    Object.keys(material).filter(function(key){
+                        return material[ key ] instanceof THREE.Texture;
+                    }).forEach(function(key){
+                        material[ key ].dispose();
+                    //  DO NOT NULL OR DELETE TEXTURE.  important!
+                    });
+
+                    material.dispose();
+
+                });
+
+            }
+
+		//  Dispose bones texture. !important
+
+			if ( child.skeleton ) child.skeleton.boneTexture.dispose();
+
 			objects.splice( objects.indexOf( child ), 1 );
 
 		});

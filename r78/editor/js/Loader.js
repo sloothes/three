@@ -500,10 +500,10 @@ var Loader = function ( editor ) {
 				var result = loader.parse( data );
 
 				var geometry = result.geometry;
-			//	geometry.computeFaceNormals();
-			//	geometry.computeVertexNormals();
-			//	geometry.computeBoundingBox();
-			//	geometry.computeBoundingSphere();
+				geometry.computeFaceNormals();
+				geometry.computeVertexNormals();
+				geometry.computeBoundingBox();
+				geometry.computeBoundingSphere();
 				geometry.sourceType = "ascii";
 				geometry.sourceFile = file.name;
 

@@ -277,7 +277,9 @@ var Viewport = function ( editor ) {
 
 	signals.editorCleared.add( function () {
 
-		scene.add( light ); // default light.
+	//	scene.add( light ); // default light.
+		editor.execute( new AddObjectCommand( light ) );
+
 		controls.center.set( 0, 0, 0 );
 		render();
 

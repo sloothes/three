@@ -498,6 +498,7 @@ var Loader = function ( editor ) {
 				loader.setTexturePath( scope.texturePath );
 
 				var result = loader.parse( data );
+				debugMode && console.log( result ); // debug!
 
 				var geometry = result.geometry;
 				var material;

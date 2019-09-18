@@ -569,8 +569,6 @@ var Viewport = function ( editor ) {
 
 		requestAnimationFrame( animate );
 
-		editor.lights.position.copy( editor.camera.position );
-
 /*
 
 	//	animations
@@ -601,17 +599,19 @@ var Viewport = function ( editor ) {
 
 	function render() {
 
+		editor.lights.position.copy( editor.camera.position );
+
 		sceneHelpers.updateMatrixWorld();
 		scene.updateMatrixWorld();
 
 		renderer.clear();
 		renderer.render( scene, camera );
 
-		if ( renderer instanceof THREE.RaytracingRenderer === false ) {
+	//	if ( renderer instanceof THREE.RaytracingRenderer === false ) {
 
 			renderer.render( sceneHelpers, camera );
 
-		}
+	//	}
 
 	}
 

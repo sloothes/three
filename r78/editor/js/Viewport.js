@@ -260,14 +260,14 @@ var Viewport = function ( editor ) {
 	container.dom.addEventListener( "dblclick", onDoubleClick, false );
 
 	//	Controls need to be added "after" main logic,
-	//	otherwise controls.enabled doesn't work.
+	//	otherwise controls.enabled doesn't work. important!
 
 	var controls = new THREE.EditorControls( camera, container.dom );
 	controls.addEventListener( "change", function () {
 
 	//	Update light position (by name) important!
-        var light = scene.getObjectByName( editor.lights.name );
-        if ( light ) light.position.copy( camera.position );
+	//	var light = scene.getObjectByName( editor.lights.name );
+	//	if ( light ) light.position.copy( camera.position );
 
 		transformControls.update();
 		signals.cameraChanged.dispatch( camera );
@@ -282,12 +282,12 @@ var Viewport = function ( editor ) {
 
 	//	Add camera directional light.
 	//	editor.addObject( editor.lights );
-		scene.add( editor.lights ); // bypass push in "objects".
+		camera.add( editor.lights ); // bypass push in "objects" to avoid helper creation.
 
 	//	Update camera light position (by uuid) important!
-        var uuid = editor.lights.uuid;
-        var light = scene.getObjectByProperty("uuid", uuid);
-        if ( light ) light.position.copy( camera.position );
+	//	var uuid = editor.lights.uuid;
+	//	var light = scene.getObjectByProperty("uuid", uuid);
+	//	if ( light ) light.position.copy( camera.position );
 
 		render();
 

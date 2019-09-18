@@ -277,10 +277,9 @@ var Viewport = function ( editor ) {
 
 	signals.editorCleared.add( function () {
 
-	//	scene.add( light ); // default light.
+		controls.center.set( 0, 0, 0 );
 		editor.execute( new AddObjectCommand( light ) );
 
-		controls.center.set( 0, 0, 0 );
 		render();
 
 	});
@@ -598,6 +597,8 @@ var Viewport = function ( editor ) {
 
 		sceneHelpers.updateMatrixWorld();
 		scene.updateMatrixWorld();
+
+        if ( light ) light.position.copy( camera.position );
 
 		renderer.clear();
 		renderer.render( scene, camera );

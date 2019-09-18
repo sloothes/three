@@ -27,10 +27,6 @@ Menubar.File = function ( editor ) {
 
 			editor.clear();
 
-		//	light.
-
-		//	editor.scene.add( editor.lights );
-
 		}
 
 	});

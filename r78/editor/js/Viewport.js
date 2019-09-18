@@ -26,10 +26,6 @@ var Viewport = function ( editor ) {
 
 	var camera = editor.camera;
 
-//	Default directional light.
-
-    var light = editor.lights;
-
 //
 
 	var selectionBox = new THREE.BoxHelper();
@@ -279,10 +275,11 @@ var Viewport = function ( editor ) {
 
 		controls.center.set( 0, 0, 0 );
 
-        var name = light.name;
-		editor.execute( new AddObjectCommand( light ) );
-        light = editor.scene.getObjectByName( name );
-		light.position.copy( camera.position );
+	//	Camera directional light.
+        var name = editor.lights.name;
+		editor.execute( new AddObjectCommand( editor.lights ) );
+        var light = editor.scene.getObjectByName( name );
+        light.position.copy( editor.camera.position );
 
 		render();
 
@@ -365,11 +362,22 @@ var Viewport = function ( editor ) {
 
 	signals.cameraChanged.add( function () {
 
-	//	editor.lights.position.copy( editor.camera.position );
+	//	Update camera light position.
+		var name = editor.lights.name;
+		var light = editor.scene.getObjectByName( name );
+		light.position.copy( editor.camera.position );
 
 		render();
 
 	});
+
+/*
+	signals.cameraChanged.add( function () {
+
+		render();
+
+	});
+*/
 
 	signals.objectSelected.add( function ( object ) {
 
@@ -601,8 +609,6 @@ var Viewport = function ( editor ) {
 
 	function render() {
 
-		light.position.copy( camera.position );  // update ligth position.
-
 		sceneHelpers.updateMatrixWorld();
 		scene.updateMatrixWorld();
 
@@ -611,7 +617,7 @@ var Viewport = function ( editor ) {
 
 	//	if ( renderer instanceof THREE.RaytracingRenderer === false ) {
 
-			renderer.render( sceneHelpers, camera );
+			renderer.render( sceneHelpers, camera );  // always update helpers?
 
 	//	}
 

@@ -9,8 +9,8 @@ var Editor = function () {
 	this.DEFAULT_CAMERA.position.set( 20, 10, 20 );
 	this.DEFAULT_CAMERA.lookAt( new THREE.Vector3() );
 
-    this.DEFAULT_DIRECTIONAL_LIGHT = new THREE.DirectionalLight( 0xffffff, 1 );
-    this.DEFAULT_DIRECTIONAL_LIGHT.position.set( 0, 50, 100 );
+    this.CAMERA_LIGHT = new THREE.DirectionalLight( 0xffffff, 1 );
+    this.CAMERA_LIGHT.position.copy( this.DEFAULT_CAMERA.position );
 
 	var Signal = signals.Signal;
 
@@ -83,8 +83,8 @@ var Editor = function () {
 	this.loader = new Loader( this );
 
 	this.camera = this.DEFAULT_CAMERA.clone();
-    this.lights = this.DEFAULT_DIRECTIONAL_LIGHT.clone();
-    this.lights.name = "Default Light";
+    this.lights = this.CAMERA_LIGHT.clone();
+    this.lights.name = "Camera Light";
 
 	this.scene = new THREE.Scene();
 	this.scene.name = "Scene";
@@ -283,7 +283,7 @@ Editor.prototype = {
 			}
 
 			var picker = new THREE.Mesh( geometry, material );
-			picker.name = 'picker';
+			picker.name = "picker";
 			picker.userData.object = object;
 			helper.add( picker );
 

@@ -11,7 +11,7 @@ var Editor = function () {
 
 	this.CAMERA_LIGHT = new THREE.DirectionalLight( 0xffffff, 1 );
 	this.CAMERA_LIGHT.position.copy( this.DEFAULT_CAMERA.position );
-	this.CAMERA_LIGHT = "Default Camera Light";
+	this.CAMERA_LIGHT = "Default Light";
 
 	var Signal = signals.Signal;
 
@@ -107,7 +107,7 @@ Editor.prototype = {
 
 	setTheme: function ( value ) {
 
-		document.getElementById( 'theme' ).href = value;
+		document.getElementById( "theme" ).href = value;
 
 		this.signals.themeChanged.dispatch( value );
 
@@ -484,7 +484,7 @@ Editor.prototype = {
 
 		}
 
-	//
+		//
 
 		return {
 

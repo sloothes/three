@@ -193,8 +193,6 @@ Editor.prototype = {
 
 		if ( object.parent === null ) return; // avoid deleting the camera or scene.
 
-        if ( object.name == this.lights.name ) return; // avoid deleting the camera light.
-
 		var scope = this;
 
 		object.traverse( function ( child ) {
@@ -418,6 +416,7 @@ Editor.prototype = {
 		this.history.clear();
 		this.storage.clear();
 
+		this.lights.copy( this.CAMERA_LIGHT );
 		this.camera.copy( this.DEFAULT_CAMERA );
 
 		var objects = this.scene.children;

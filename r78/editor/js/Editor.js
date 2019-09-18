@@ -9,8 +9,9 @@ var Editor = function () {
 	this.DEFAULT_CAMERA.position.set( 20, 10, 20 );
 	this.DEFAULT_CAMERA.lookAt( new THREE.Vector3() );
 
-    this.CAMERA_LIGHT = new THREE.DirectionalLight( 0xffffff, 1 );
-    this.CAMERA_LIGHT.position.copy( this.DEFAULT_CAMERA.position );
+	this.CAMERA_LIGHT = new THREE.DirectionalLight( 0xffffff, 1 );
+	this.CAMERA_LIGHT.position.copy( this.DEFAULT_CAMERA.position );
+	this.CAMERA_LIGHT = "Default Camera Light";
 
 	var Signal = signals.Signal;
 
@@ -83,8 +84,7 @@ var Editor = function () {
 	this.loader = new Loader( this );
 
 	this.camera = this.DEFAULT_CAMERA.clone();
-    this.lights = this.CAMERA_LIGHT.clone();
-    this.lights.name = "Camera Light";
+	this.lights = this.CAMERA_LIGHT.clone();
 
 	this.scene = new THREE.Scene();
 	this.scene.name = "Scene";

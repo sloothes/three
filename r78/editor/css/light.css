@@ -1,4 +1,4 @@
-﻿.Outliner {
+.Outliner {
 	color: #444;
 	background: #fff;
 	padding: 0;
@@ -138,7 +138,8 @@ input.Number {
 	right: 0;
 	top: 32px;
 	bottom: 0;
-	width: 300px;
+//	width: 300px;
+    min-width: fit-content;
 	background: #eee;
 	overflow: auto;
 }

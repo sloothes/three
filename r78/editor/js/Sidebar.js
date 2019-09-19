@@ -16,7 +16,7 @@ var Sidebar = function ( editor ) {
 
 	var tabs = new UI.Div();
 	tabs.setId( "tabs" );
-	tabs.add( sceneTab, poserTab, projectTab, settingsTab );
+	tabs.add( sceneTab, projectTab, settingsTab );
 	container.add( tabs );
 
 	function onClick( event ) {

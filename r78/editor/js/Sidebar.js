@@ -37,7 +37,7 @@ var Sidebar = function ( editor ) {
 	container.add( scene );
 
     var poser = new UI.Span().add(
-		new Sidebar.Poser( editor )
+	//	new Sidebar.Poser( editor )
 	);
 
 	container.add( poser );

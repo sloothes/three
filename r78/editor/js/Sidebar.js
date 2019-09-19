@@ -10,13 +10,13 @@ var Sidebar = function ( editor ) {
 //
 
 	var sceneTab = new UI.Text( "SCENE" ).onClick( onClick );
-	var poseTab = new UI.Text( "POSE" ).onClick( onClick );
+	var poserTab = new UI.Text( "POSER" ).onClick( onClick );
 	var projectTab = new UI.Text( "PROJECT" ).onClick( onClick );
 	var settingsTab = new UI.Text( "SETTINGS" ).onClick( onClick );
 
 	var tabs = new UI.Div();
 	tabs.setId( "tabs" );
-	tabs.add( sceneTab, poseTab, projectTab, settingsTab );
+	tabs.add( sceneTab, poserTab, projectTab, settingsTab );
 	container.add( tabs );
 
 	function onClick( event ) {
@@ -36,6 +36,12 @@ var Sidebar = function ( editor ) {
 
 	container.add( scene );
 
+    var poser = new UI.Span().add(
+		new Sidebar.Poser( editor )
+	);
+
+	container.add( poser );
+
 	var project = new UI.Span().add(
 		new Sidebar.Project( editor )
 	);
@@ -54,10 +60,12 @@ var Sidebar = function ( editor ) {
 	function select( section ) {
 
 		sceneTab.setClass( "" );
+		poserTab.setClass( "" );
 		projectTab.setClass( "" );
 		settingsTab.setClass( "" );
 
 		scene.setDisplay( "none" );
+		poser.setDisplay( "none" );
 		project.setDisplay( "none" );
 		settings.setDisplay( "none" );
 
@@ -65,6 +73,10 @@ var Sidebar = function ( editor ) {
 			case "SCENE":
 				sceneTab.setClass( "selected" );
 				scene.setDisplay( "" );
+				break;
+			case "POSER":
+				poserTab.setClass( "selected" );
+				poser.setDisplay( "" );
 				break;
 			case "PROJECT":
 				projectTab.setClass( "selected" );

@@ -44,7 +44,7 @@ var APP = {
 			if ( !vr ) {
 
 				controls = new THREE.EditorControls( camera, this.dom );
-				controls.center.set( scene.position.x, camera.position.y, scene.position.z );
+				controls.center.copy( center ); // passing editor controls center.
 				controls.addEventListener( "change", function () {
 
                     try {

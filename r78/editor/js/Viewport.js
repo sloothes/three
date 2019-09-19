@@ -269,6 +269,8 @@ var Viewport = function ( editor ) {
 		var light = scene.getObjectByName( editor.lights.name );
 		if ( light ) light.position.copy( camera.position );
 
+		center = controls.center; // global for passing to player controls (hack).
+
 		transformControls.update();
 		signals.cameraChanged.dispatch( camera );
 

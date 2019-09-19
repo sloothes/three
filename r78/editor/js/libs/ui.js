@@ -198,14 +198,14 @@ UI.Row = function () {
 UI.Row.prototype = Object.create( UI.Element.prototype );
 UI.Row.prototype.constructor = UI.Row;
 
-// Panel
+// Panel.
 
 UI.Panel = function () {
 
 	UI.Element.call( this );
 
-	var dom = document.createElement( 'div' );
-	dom.className = 'Panel';
+	var dom = document.createElement( "div" );
+	dom.className = "Panel";
 
 	this.dom = dom;
 
@@ -217,18 +217,18 @@ UI.Panel.prototype = Object.create( UI.Element.prototype );
 UI.Panel.prototype.constructor = UI.Panel;
 
 
-// Collapsible Panel
+// Collapsible Panel.
 
 UI.CollapsiblePanel = function () {
 
 	UI.Panel.call( this );
 
-	this.setClass( 'Panel Collapsible' );
+	this.setClass( "Panel Collapsible" );
 
 	var scope = this;
 
 	this.static = new UI.Panel();
-	this.static.setClass( 'Static' );
+	this.static.setClass( "Static" );
 	this.static.onClick( function () {
 
 		scope.toggle();
@@ -237,11 +237,11 @@ UI.CollapsiblePanel = function () {
 	this.dom.appendChild( this.static.dom );
 
 	this.contents = new UI.Panel();
-	this.contents.setClass( 'Content' );
+	this.contents.setClass( "Content" );
 	this.dom.appendChild( this.contents.dom );
 
 	var button = new UI.Panel();
-	button.setClass( 'Button' );
+	button.setClass( "Button" );
 	this.static.add( button );
 
 	this.isCollapsed = false;
@@ -317,11 +317,11 @@ UI.CollapsiblePanel.prototype.setCollapsed = function( boolean ) {
 
 	if ( boolean ) {
 
-		this.dom.classList.add( 'collapsed' );
+		this.dom.classList.add( "collapsed" );
 
 	} else {
 
-		this.dom.classList.remove( 'collapsed' );
+		this.dom.classList.remove( "collapsed" );
 
 	}
 

@@ -10,7 +10,6 @@ Sidebar.Material = function ( editor ) {
 	var container = new UI.Panel();
 	container.setBorderTop( "0" );
 	container.setPaddingTop( "20px" );
-    container.setMinWidth( "300px" );
 
 //	New / Copy / Paste
 

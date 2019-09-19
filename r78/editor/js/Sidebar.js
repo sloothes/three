@@ -10,13 +10,13 @@ var Sidebar = function ( editor ) {
 //
 
 	var sceneTab = new UI.Text( "SCENE" ).onClick( onClick );
-	var poserTab = new UI.Text( "POSER" ).onClick( onClick );
+	var poseTab = new UI.Text( "POSE" ).onClick( onClick );
 	var projectTab = new UI.Text( "PROJECT" ).onClick( onClick );
 	var settingsTab = new UI.Text( "SETTINGS" ).onClick( onClick );
 
 	var tabs = new UI.Div();
 	tabs.setId( "tabs" );
-	tabs.add( sceneTab, poserTab, projectTab, settingsTab );
+	tabs.add( sceneTab, poseTab, projectTab, settingsTab );
 	container.add( tabs );
 
 	function onClick( event ) {

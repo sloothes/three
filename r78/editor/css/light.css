@@ -139,7 +139,6 @@ input.Number {
 	top: 32px;
 	bottom: 0;
 	width: 300px;
-    min-width: fit-content;
 	background: #eee;
 	overflow: auto;
 }

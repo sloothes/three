@@ -288,7 +288,7 @@ var Viewport = function ( editor ) {
 
 	//	Update camera light position (by uuid) important!
 		var uuid = editor.lights.uuid;
-		var light = scene.getObjectByProperty("uuid", uuid);
+		var light = editor.objectByUuid( uuid );
 		if ( light ) light.position.copy( camera.position );
 
 		render();

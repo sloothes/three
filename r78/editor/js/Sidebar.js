@@ -5,16 +5,16 @@
 var Sidebar = function ( editor ) {
 
 	var container = new UI.Panel();
-	container.setId( 'sidebar' );
+	container.setId( "sidebar" );
 
-	//
+//
 
-	var sceneTab = new UI.Text( 'SCENE' ).onClick( onClick );
-	var projectTab = new UI.Text( 'PROJECT' ).onClick( onClick );
-	var settingsTab = new UI.Text( 'SETTINGS' ).onClick( onClick );
+	var sceneTab = new UI.Text( "SCENE" ).onClick( onClick );
+	var projectTab = new UI.Text( "PROJECT" ).onClick( onClick );
+	var settingsTab = new UI.Text( "SETTINGS" ).onClick( onClick );
 
 	var tabs = new UI.Div();
-	tabs.setId( 'tabs' );
+	tabs.setId( "tabs" );
 	tabs.add( sceneTab, projectTab, settingsTab );
 	container.add( tabs );
 
@@ -24,7 +24,7 @@ var Sidebar = function ( editor ) {
 
 	}
 
-	//
+//
 
 	var scene = new UI.Span().add(
 		new Sidebar.Scene( editor ),
@@ -32,49 +32,52 @@ var Sidebar = function ( editor ) {
 		new Sidebar.Animation( editor ),
 		new Sidebar.Script( editor )
 	);
+
 	container.add( scene );
 
 	var project = new UI.Span().add(
 		new Sidebar.Project( editor )
 	);
+
 	container.add( project );
 
 	var settings = new UI.Span().add(
 		new Sidebar.Settings( editor ),
 		new Sidebar.History( editor )
 	);
+
 	container.add( settings );
 
-	//
+//
 
 	function select( section ) {
 
-		sceneTab.setClass( '' );
-		projectTab.setClass( '' );
-		settingsTab.setClass( '' );
+		sceneTab.setClass( "" );
+		projectTab.setClass( "" );
+		settingsTab.setClass( "" );
 
-		scene.setDisplay( 'none' );
-		project.setDisplay( 'none' );
-		settings.setDisplay( 'none' );
+		scene.setDisplay( "none" );
+		project.setDisplay( "none" );
+		settings.setDisplay( "none" );
 
 		switch ( section ) {
-			case 'SCENE':
-				sceneTab.setClass( 'selected' );
-				scene.setDisplay( '' );
+			case "SCENE":
+				sceneTab.setClass( "selected" );
+				scene.setDisplay( "" );
 				break;
-			case 'PROJECT':
-				projectTab.setClass( 'selected' );
-				project.setDisplay( '' );
+			case "PROJECT":
+				projectTab.setClass( "selected" );
+				project.setDisplay( "" );
 				break;
-			case 'SETTINGS':
-				settingsTab.setClass( 'selected' );
-				settings.setDisplay( '' );
+			case "SETTINGS":
+				settingsTab.setClass( "selected" );
+				settings.setDisplay( "" );
 				break;
 		}
 
 	}
 
-	select( 'SCENE' );
+	select( "SCENE" );
 
 	return container;
 

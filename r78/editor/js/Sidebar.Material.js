@@ -8,8 +8,9 @@ Sidebar.Material = function ( editor ) {
 	var currentObject;
 
 	var container = new UI.Panel();
-	container.setBorderTop( '0' );
-	container.setPaddingTop( '20px' );
+	container.setBorderTop( "0" );
+	container.setPaddingTop( "20px" );
+    container.style.["min-width"] = "320px";
 
 	// New / Copy / Paste
 

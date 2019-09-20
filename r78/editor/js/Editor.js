@@ -33,7 +33,7 @@ var Editor = function () {
 	// notifications.
 
 		editorCleared: new Signal(),
-		projectLoaded: new Signal(),
+		sceneLoaded: new Signal(),
 
 		savingStarted: new Signal(),
 		savingFinished: new Signal(),
@@ -146,6 +146,8 @@ Editor.prototype = {
 
 		this.signals.sceneGraphChanged.active = true;
 		this.signals.sceneGraphChanged.dispatch();
+
+		this.signals.sceneLoaded.dispatch();
 
 	},
 
@@ -481,8 +483,6 @@ Editor.prototype = {
 		this.scripts = json.scripts;
 
 		this.setScene( loader.parse( json.scene ) );
-
-		this.signals.projectLoaded.dispatch();
 
 	},
 

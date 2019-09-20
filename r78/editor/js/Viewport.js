@@ -304,11 +304,23 @@ var Viewport = function ( editor ) {
 	});
 
 
-	signals.projectLoaded.add( function () {
+	signals.sceneLoaded.add( function () {
 
 	//	Save state.
 
-		editor.storage.set( editor.toJSON() );
+		setTimeout( function () {
+
+			editor.signals.savingStarted.dispatch();
+
+			setTimeout( function () {
+
+				editor.storage.set( editor.toJSON() );
+
+				editor.signals.savingFinished.dispatch();
+
+			}, 100 );
+
+		}, 1000 );
 
 	});
 

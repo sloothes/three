@@ -310,6 +310,8 @@
 
 			document.addEventListener( "keydown", function ( event ) {
 
+				var timeout;
+
 				switch ( event.keyCode ) {
 
 					case 8: // backspace.
@@ -336,6 +338,32 @@
 						} else if ( event.ctrlKey ) {
 
 							editor.undo();
+
+						}
+
+						break;
+
+                    case 83: // Register Ctrl-S for Save.
+
+						//  saveState.
+
+						if ( event.ctrlKey ) {
+
+							clearTimeout( timeout );
+
+							timeout = setTimeout( function () {
+
+								editor.signals.savingStarted.dispatch();
+
+									timeout = setTimeout( function () {
+
+									editor.storage.set( editor.toJSON() );
+
+									editor.signals.savingFinished.dispatch();
+
+								}, 100 );
+
+							}, 1000 );
 
 						}
 
@@ -400,7 +428,7 @@
 			}
 
 		/*
-			window.addEventListener( 'message', function ( event ) {
+			window.addEventListener( "message", function ( event ) {
 
 				editor.clear();
 				editor.fromJSON( event.data );

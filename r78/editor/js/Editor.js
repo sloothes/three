@@ -33,7 +33,6 @@ var Editor = function () {
 	// notifications.
 
 		editorCleared: new Signal(),
-		sceneLoaded: new Signal(),
 
 		savingStarted: new Signal(),
 		savingFinished: new Signal(),
@@ -146,8 +145,6 @@ Editor.prototype = {
 
 		this.signals.sceneGraphChanged.active = true;
 		this.signals.sceneGraphChanged.dispatch();
-
-		this.signals.sceneLoaded.dispatch();
 
 	},
 

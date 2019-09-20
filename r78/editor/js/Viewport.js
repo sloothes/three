@@ -303,7 +303,7 @@ var Viewport = function ( editor ) {
 
 	});
 
-
+/*
 	signals.sceneLoaded.add( function () {
 
 	//	Save state.
@@ -323,6 +323,7 @@ var Viewport = function ( editor ) {
 		}, 1000 );
 
 	});
+*/
 
 	var clearColor;
 

@@ -259,12 +259,15 @@ var Viewport = function ( editor ) {
 	container.dom.addEventListener( "touchstart", onTouchStart, false );
 	container.dom.addEventListener( "dblclick", onDoubleClick, false );
 
-	//	Controls need to be added "after" main logic,
+
+//	Editor controls.
+
+	//	Editor controls need to be added "after" main logic,
 	//	otherwise controls.enabled doesn't work. important!
 
 	var controls = new THREE.EditorControls( camera, container.dom );
 
-	center = controls.center; // global! (for passing to player controls ( hack! )).
+	center = controls.center; // for passing to player controls on startup ( global! ).
 
 	controls.addEventListener( "change", function () {
 
@@ -272,12 +275,14 @@ var Viewport = function ( editor ) {
 		var light = scene.getObjectByName( editor.lights.name );
 		if ( light ) light.position.copy( camera.position );
 
+    //	Update center.
 		center = controls.center;
 
 		transformControls.update();
 		signals.cameraChanged.dispatch( camera );
 
 	});
+
 
 //	Signals.
 
@@ -473,10 +478,15 @@ var Viewport = function ( editor ) {
 			//  Single material.
 
                 Object.keys( child ).filter( function(key) {
+
                     return child.material[ key ] instanceof THREE.Texture;
+
                 }).forEach( function(key) {
+
                     child.material[ key ].dispose();
+
                 //  DO NOT NULL OR DELETE TEXTURE.  important!
+
                 });
 
                 child.material.dispose();
@@ -488,10 +498,15 @@ var Viewport = function ( editor ) {
                 child.material.materials.forEach(function(material){
 
                     Object.keys(material).filter(function(key){
+
                         return material[ key ] instanceof THREE.Texture;
+
                     }).forEach(function(key){
+
                         material[ key ].dispose();
+
                     //  DO NOT NULL OR DELETE TEXTURE.  important!
+
                     });
 
                     material.dispose();

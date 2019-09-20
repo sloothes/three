@@ -345,9 +345,9 @@
 
                     case 83: // Register Ctrl-S for Save.
 
-						//  saveState.
-
 						if ( event.ctrlKey ) {
+
+						//  saveState.
 
 							clearTimeout( timeout );
 
@@ -355,7 +355,7 @@
 
 								editor.signals.savingStarted.dispatch();
 
-									timeout = setTimeout( function () {
+								timeout = setTimeout( function () {
 
 									editor.storage.set( editor.toJSON() );
 

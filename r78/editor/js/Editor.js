@@ -127,13 +127,17 @@ Editor.prototype = {
 		this.scene.name = scene.name;
 		this.scene.userData = JSON.parse( JSON.stringify( scene.userData ) );
 
-	//	avoid render per object.
-
-		this.signals.sceneGraphChanged.active = false;
+		this.signals.sceneGraphChanged.active = false; // avoid render per object.
 
 		while ( scene.children.length > 0 ) {
 
-			this.addObject( scene.children[ 0 ] );
+		//	avoid to parse duplicate "Default Camera Light".
+
+			if ( scene.children[ 0 ].name !== this.lights.name ) { 
+
+                this.addObject( scene.children[ 0 ] );
+
+            }
 
 		}
 
@@ -448,6 +452,10 @@ Editor.prototype = {
 
 	fromJSON: function ( json ) {
 
+		var timeout;
+
+		var scope = this;
+
 		var loader = new THREE.ObjectLoader();
 
 	//  backwards.
@@ -455,6 +463,9 @@ Editor.prototype = {
 		if ( json.scene === undefined ) {
 
 			this.setScene( loader.parse( json ) );
+
+			saveState( this.scene );
+
 			return;
 
 		}
@@ -469,6 +480,30 @@ Editor.prototype = {
 		this.scripts = json.scripts;
 
 		this.setScene( loader.parse( json.scene ) );
+
+	//	Save editor state.
+
+		saveState( this.scene );
+
+		function saveState( scene ) {
+
+			clearTimeout( timeout );
+
+			timeout = setTimeout( function () {
+
+				scope.signals.savingStarted.dispatch();
+
+				timeout = setTimeout( function () {
+
+					scope.storage.set( scope.toJSON() );
+
+					scope.signals.savingFinished.dispatch();
+
+				}, 100 );
+
+			}, 1000 );
+
+		};
 
 	},
 

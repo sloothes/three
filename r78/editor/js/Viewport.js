@@ -291,8 +291,8 @@ var Viewport = function ( editor ) {
 		controls.center.set( 0, 0, 0 );
 
 	//	Add camera directional light.
-		scene.add( editor.lights );
-	//	bypass push in "objects" to avoid helper creation.
+	//	scene.add( editor.lights ); // bypass push in "objects" to avoid helper creation.
+        editor.addObject( editor.lights );
 
 	//	Update camera light position (by uuid) important!
 		var uuid = editor.lights.uuid;

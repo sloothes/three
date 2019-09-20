@@ -135,11 +135,11 @@ Editor.prototype = {
 
 		//	avoid to parse duplicate "Default Camera Light".
 
-			if ( scene.children[ 0 ].name !== this.lights.name ) { 
+		//	if ( scene.children[ 0 ].name !== this.lights.name ) { 
 
-                this.addObject( scene.children[ 0 ] );
+			this.addObject( scene.children[ 0 ] );
 
-            }
+        //  }
 
 		}
 

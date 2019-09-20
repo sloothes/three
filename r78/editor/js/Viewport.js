@@ -306,15 +306,13 @@ var Viewport = function ( editor ) {
 
 	signals.projectLoaded.add( function () {
 
-		var timeout;
-
 	//	Save state.
 
-		timeout = setTimeout( function () {
+		setTimeout( function () {
 
 			editor.signals.savingStarted.dispatch();
 
-			timeout = setTimeout( function () {
+			setTimeout( function () {
 
 				editor.storage.set( editor.toJSON() );
 

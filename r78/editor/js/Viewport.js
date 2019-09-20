@@ -303,6 +303,30 @@ var Viewport = function ( editor ) {
 
 	});
 
+	var timeout;
+
+	signals.projectLoaded.add( function () {
+
+	//	Save state.
+
+		clearTimeout( timeout );
+
+		timeout = setTimeout( function () {
+
+			editor.signals.savingStarted.dispatch();
+
+			timeout = setTimeout( function () {
+
+				editor.storage.set( editor.toJSON() );
+
+				editor.signals.savingFinished.dispatch();
+
+			}, 100 );
+
+		}, 1000 );
+
+	});
+
 	var clearColor;
 
 	signals.themeChanged.add( function ( value ) {

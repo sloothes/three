@@ -33,6 +33,7 @@ var Editor = function () {
 	// notifications.
 
 		editorCleared: new Signal(),
+		projectLoaded: new Signal(),
 
 		savingStarted: new Signal(),
 		savingFinished: new Signal(),
@@ -127,7 +128,9 @@ Editor.prototype = {
 		this.scene.name = scene.name;
 		this.scene.userData = JSON.parse( JSON.stringify( scene.userData ) );
 
-		this.signals.sceneGraphChanged.active = false; // avoid render per object.
+	//	avoid render per object.
+
+		this.signals.sceneGraphChanged.active = false; 
 
 		while ( scene.children.length > 0 ) {
 
@@ -464,8 +467,6 @@ Editor.prototype = {
 
 			this.setScene( loader.parse( json ) );
 
-			saveState( this.scene );
-
 			return;
 
 		}
@@ -481,29 +482,7 @@ Editor.prototype = {
 
 		this.setScene( loader.parse( json.scene ) );
 
-	//	Save editor state.
-
-		saveState( this.scene );
-
-		function saveState( scene ) {
-
-			clearTimeout( timeout );
-
-			timeout = setTimeout( function () {
-
-				scope.signals.savingStarted.dispatch();
-
-				timeout = setTimeout( function () {
-
-					scope.storage.set( scope.toJSON() );
-
-					scope.signals.savingFinished.dispatch();
-
-				}, 100 );
-
-			}, 1000 );
-
-		};
+		this.signals.projectLoaded.dispatch();
 
 	},
 
@@ -526,7 +505,7 @@ Editor.prototype = {
 
 		}
 
-		//
+	//
 
 		return {
 

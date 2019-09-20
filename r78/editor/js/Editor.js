@@ -133,13 +133,7 @@ Editor.prototype = {
 
 		while ( scene.children.length > 0 ) {
 
-		//	avoid to parse duplicate "Default Camera Light".
-
-		//	if ( scene.children[ 0 ].name !== this.lights.name ) { 
-
 			this.addObject( scene.children[ 0 ] );
-
-        //  }
 
 		}
 

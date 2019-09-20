@@ -4,6 +4,7 @@
 
 var Viewport = function ( editor ) {
 
+    center = new THREE.Vector3();
 	renderer = null; // (TODO: local?)
 
 	var signals = editor.signals;

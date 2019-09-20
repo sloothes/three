@@ -272,7 +272,7 @@ var Viewport = function ( editor ) {
 		var light = scene.getObjectByName( editor.lights.name );
 		if ( light ) light.position.copy( camera.position );
 
-		center = controls.center; // global! (for passing to player controls ( hack! )).
+		center = controls.center;
 
 		transformControls.update();
 		signals.cameraChanged.dispatch( camera );
@@ -286,8 +286,8 @@ var Viewport = function ( editor ) {
 		controls.center.set( 0, 0, 0 );
 
 	//	Add camera directional light.
-	//	editor.addObject( editor.lights );
-		scene.add( editor.lights ); // bypass push in "objects" to avoid helper creation.
+		scene.add( editor.lights );
+	//	bypass push in "objects" to avoid helper creation.
 
 	//	Update camera light position (by uuid) important!
 		var uuid = editor.lights.uuid;

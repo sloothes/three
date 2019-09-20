@@ -146,11 +146,13 @@ Editor.prototype = {
 
 	addObject: function ( object ) {
 
+    /*
 		var name = this.lights.name; //	avoid duplicate "Default Camera Light".
 		if ( this.scene.getObjectByName( name ) && object.name === name ) {
 			this.signals.sceneGraphChanged.dispatch();
 			return; 
         }
+    */
 
 		var scope = this;
 

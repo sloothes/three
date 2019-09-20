@@ -4,7 +4,6 @@
 
 var Viewport = function ( editor ) {
 
-    center = new THREE.Vector3();
 	renderer = null; // (TODO: local?)
 
 	var signals = editor.signals;
@@ -264,13 +263,16 @@ var Viewport = function ( editor ) {
 	//	otherwise controls.enabled doesn't work. important!
 
 	var controls = new THREE.EditorControls( camera, container.dom );
+
+	center = controls.center; // global! (for passing to player controls ( hack! )).
+
 	controls.addEventListener( "change", function () {
 
 	//	Update light position (by name) important!
 		var light = scene.getObjectByName( editor.lights.name );
 		if ( light ) light.position.copy( camera.position );
 
-		center = controls.center; // global for passing to player controls (hack).
+		center = controls.center; // global! (for passing to player controls ( hack! )).
 
 		transformControls.update();
 		signals.cameraChanged.dispatch( camera );

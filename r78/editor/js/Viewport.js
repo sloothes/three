@@ -303,13 +303,12 @@ var Viewport = function ( editor ) {
 
 	});
 
-	var timeout;
 
 	signals.projectLoaded.add( function () {
 
-	//	Save state.
+		var timeout;
 
-		clearTimeout( timeout );
+	//	Save state.
 
 		timeout = setTimeout( function () {
 

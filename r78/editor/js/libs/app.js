@@ -39,7 +39,9 @@ var APP = {
 			this.setScene( loader.parse( json.scene ) );
 			this.setCamera( loader.parse( json.camera ) );
 
-		//	Editor controls always "after" setCamera(); important!
+    /*
+        //  Player editor controls (at runtime).
+		//	always "after" setCamera(); important!
 
 			if ( !vr ) {
 
@@ -61,6 +63,7 @@ var APP = {
 				camera.lookAt( controls.center );
 
             }
+    */
 
 			events = {
 				init: [],

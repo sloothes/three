@@ -281,7 +281,7 @@ var Viewport = function ( editor ) {
 		transformControls.update();
 		signals.cameraChanged.dispatch( camera );
 
-	});
+	}, false);
 
 
 //	Signals.

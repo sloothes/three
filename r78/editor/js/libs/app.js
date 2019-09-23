@@ -122,9 +122,11 @@ var APP = {
 
 					var script = scripts[ i ];
 
+					debugMode && console.log( scriptWrapParams, script.source + "\nreturn " + scriptWrapResult + ";" );
+
 					var functions = ( new Function( scriptWrapParams, script.source + "\nreturn " + scriptWrapResult + ";" ).bind( object ) )( this, renderer, scene, camera );
 
-                    debugMode && console.log("functions:", functions);
+				//	debugMode && console.log("functions:", functions);
 
 					for ( var name in functions ) {
 
@@ -141,7 +143,7 @@ var APP = {
 
 					}
 
-					debugMode && console.log("0.events:", events);
+				//	debugMode && console.log("0.events:", events);
 
 				}
 

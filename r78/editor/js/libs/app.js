@@ -22,23 +22,30 @@ var APP = {
 
 		this.load = function ( json ) {
 
-			debugMode = json.project.debugMode;
+			debugMode = json.project.debugMode; // important!
 
 		//	var scripts = json.javascripts; // load scripts.
 
-            for ( var i = 0; i < json.javascripts.length; i ++ ) {
+			for ( var i = 0; i < json.javascripts.length; i ++ ) {
 
-                var script = json.javascripts[ i ];
+				var name = json.javascripts[ i ].name;
+				var source = json.javascripts[ i ].source;
 
-                console.log( ( new Function( script.source ).bind( window ) )() );
+				var script = new Function( source );
+				debugMode && console.log( name + ":", script );
 
-            }
+			//	execute script.
+				script.call(); // important!
+
+			//	( new Function( json.javascripts[ i ].source ) )(); // all together!
+
+			}
 
 			vr = json.project.vr;
 
 			renderer = new THREE.WebGLRenderer({ 
-                antialias: true,
-                preserveDrawingBuffer: true,
+				antialias: true,
+				preserveDrawingBuffer: true,
             });
 
 			renderer.setClearColor( 0x000000 );
@@ -82,11 +89,7 @@ var APP = {
 
 			}
 
-		//	debugMode && console.log("scriptWrapResultObj:", scriptWrapResultObj);
-
 			var scriptWrapResult = JSON.stringify( scriptWrapResultObj ).replace( /\"/g, "" );
-
-		//	debugMode && console.log("scriptWrapResult:", scriptWrapResult);
 
 			for ( var uuid in json.scripts ) {
 
@@ -105,11 +108,7 @@ var APP = {
 
 					var script = scripts[ i ];
 
-				//	debugMode && console.log( scriptWrapParams, script.source + "\nreturn " + scriptWrapResult + ";" );
-
 					var functions = ( new Function( scriptWrapParams, script.source + "\nreturn " + scriptWrapResult + ";" ).bind( object ) )( this, renderer, scene, camera );
-
-				//	debugMode && console.log("functions:", functions);
 
 					for ( var name in functions ) {
 
@@ -126,15 +125,9 @@ var APP = {
 
 					}
 
-				//	debugMode && console.log("0.events:", events);
-
 				}
 
-			//	debugMode && console.log("1.events:", events);
-
 			}
-
-		//	debugMode && console.log("2.events:", events);
 
 			dispatch( events.init, arguments );
 

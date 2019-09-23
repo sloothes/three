@@ -103,6 +103,7 @@ var Editor = function () {
 	this.materials = {};
 	this.textures = {};
 	this.scripts = {};
+	this.libraries = {};
 
 	this.selected = null;
 	this.helpers = {};
@@ -480,6 +481,7 @@ Editor.prototype = {
 
 		this.history.fromJSON( json.history );
 		this.scripts = json.scripts;
+        this.libraries = json.libraries;
 
 		this.setScene( loader.parse( json.scene ) );
 
@@ -520,7 +522,8 @@ Editor.prototype = {
 			camera: this.camera.toJSON(),
 			scene: this.scene.toJSON(),
 			scripts: this.scripts,
-			history: this.history.toJSON()
+            libraries: this.libraries,
+			history: this.history.toJSON(),
 
 		};
 

@@ -303,27 +303,6 @@ var Viewport = function ( editor ) {
 
 	});
 
-/*
-	signals.sceneLoaded.add( function () {
-
-	//	Save state.
-
-		setTimeout( function () {
-
-			editor.signals.savingStarted.dispatch();
-
-			setTimeout( function () {
-
-				editor.storage.set( editor.toJSON() );
-
-				editor.signals.savingFinished.dispatch();
-
-			}, 100 );
-
-		}, 1000 );
-
-	});
-*/
 
 	var clearColor;
 

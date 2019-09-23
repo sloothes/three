@@ -24,12 +24,12 @@ var APP = {
 
 			debugMode = json.project.debugMode; // important!
 
-		//	var scripts = json.javascripts; // load scripts.
+		//	load javascirpt libraries.
 
-			for ( var i = 0; i < json.javascripts.length; i ++ ) {
+			for ( var i = 0; i < json.javascript.length; i ++ ) {
 
-				var name = json.javascripts[ i ].name;
-				var source = json.javascripts[ i ].source;
+				var name = json.javascript[ i ].name;
+				var source = json.javascript[ i ].source;
 
 				var script = new Function( source );
 
@@ -38,7 +38,7 @@ var APP = {
 				debugMode && console.log( "script " + name + " loaded.");
 
 			//  all above in one code-line:
-			//	( new Function( json.javascripts[ i ].source ) )(); 
+			//	( new Function( json.javascript[ i ].source ) )(); 
 
 			}
 

@@ -31,6 +31,15 @@
                 opacity: 1;
             }
 
+            .middle > * {
+                position:absolute;
+                height:fit-content;
+                width:fit-content;
+                top:0; bottom:0;
+                left:0; right:0;
+                margin:auto;
+            }
+
 		</style>
 
         <style class="joystick-controls"> 
@@ -73,8 +82,6 @@
 	</head>
 
 	<body ontouchstart="">
-
-        <div id="scene-container"></div>
 
         <script src="js/signals.min.js"></script>
 		<script src="js/three.min.js"></script>

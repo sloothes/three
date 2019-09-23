@@ -24,15 +24,17 @@ var APP = {
 
 			vr = json.project.vr;
 
-			renderer = new THREE.WebGLRenderer( { antialias: true } );
+			renderer = new THREE.WebGLRenderer({ 
+                antialias: true,
+                preserveDrawingBuffer: true,
+            });
+
 			renderer.setClearColor( 0x000000 );
 			renderer.setPixelRatio( window.devicePixelRatio );
 
 			if ( json.project.shadows ) {
-
 				renderer.shadowMap.enabled = true;
 			//	renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-
 			}
 
 			this.dom.appendChild( renderer.domElement );
@@ -42,27 +44,6 @@ var APP = {
     /*
         //  Player editor controls (at runtime).
 		//	always "after" setCamera(); important!
-
-			if ( !vr ) {
-
-				controls = new THREE.EditorControls( camera, this.dom );
-
-				controls.center.copy( center ); // passing editor controls center.
-
-				controls.addEventListener( "change", function () {
-
-                    try {
-
-						var light = scene.getObjectByName( editor.lights.name );
-						if ( light ) light.position.copy( camera.position );
-
-                    } catch(err){;}
-
-				});
-
-				camera.lookAt( controls.center );
-
-            }
     */
 
 			events = {

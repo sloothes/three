@@ -24,32 +24,15 @@ var APP = {
 
 			debugMode = json.project.debugMode;
 
-/*
-		//	var scripts = json.javascripts;
+		//	var scripts = json.javascripts; // load scripts.
 
             for ( var i = 0; i < json.javascripts.length; i ++ ) {
 
                 var script = json.javascripts[ i ];
 
-                var functions = ( new Function( script.source ) )();
-
-                for ( var name in functions ) {
-
-                    if ( functions[ name ] === undefined ) continue;
-
-                    if ( events[ name ] === undefined ) {
-
-                        console.warn( "APP.Player: Event type not supported (", name, ")" );
-                        continue;
-
-                    }
-
-                    events[ name ].push( functions[ name ].bind( object ) );
-
-                }
+                console.log( ( new Function( script.source ).bind( window ) )() );
 
             }
-*/
 
 			vr = json.project.vr;
 
@@ -99,11 +82,11 @@ var APP = {
 
 			}
 
-			debugMode && console.log("scriptWrapResultObj:", scriptWrapResultObj);
+		//	debugMode && console.log("scriptWrapResultObj:", scriptWrapResultObj);
 
 			var scriptWrapResult = JSON.stringify( scriptWrapResultObj ).replace( /\"/g, "" );
 
-			debugMode && console.log("scriptWrapResult:", scriptWrapResult);
+		//	debugMode && console.log("scriptWrapResult:", scriptWrapResult);
 
 			for ( var uuid in json.scripts ) {
 
@@ -122,7 +105,7 @@ var APP = {
 
 					var script = scripts[ i ];
 
-					debugMode && console.log( scriptWrapParams, script.source + "\nreturn " + scriptWrapResult + ";" );
+				//	debugMode && console.log( scriptWrapParams, script.source + "\nreturn " + scriptWrapResult + ";" );
 
 					var functions = ( new Function( scriptWrapParams, script.source + "\nreturn " + scriptWrapResult + ";" ).bind( object ) )( this, renderer, scene, camera );
 
@@ -147,11 +130,11 @@ var APP = {
 
 				}
 
-				debugMode && console.log("1.events:", events);
+			//	debugMode && console.log("1.events:", events);
 
 			}
 
-			debugMode && console.log("2.events:", events);
+		//	debugMode && console.log("2.events:", events);
 
 			dispatch( events.init, arguments );
 

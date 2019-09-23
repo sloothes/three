@@ -32,12 +32,13 @@ var APP = {
 				var source = json.javascripts[ i ].source;
 
 				var script = new Function( source );
-				debugMode && console.log( name + ":", script );
 
-			//	execute script.
-				script.call(); // important!
+				script.call(); // execute script. important!
 
-			//	( new Function( json.javascripts[ i ].source ) )(); // all together!
+				debugMode && console.log( "script " + name + " loaded.");
+
+			//  all above in one code-line:
+			//	( new Function( json.javascripts[ i ].source ) )(); 
 
 			}
 

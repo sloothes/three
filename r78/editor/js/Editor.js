@@ -104,8 +104,10 @@ var Editor = function () {
 	this.textures = {};
 	this.scripts = {};
 
-	this.stylesheets = [];
-	this.javascripts = [];
+	this.stylesheet = [];
+	this.javascript = [];
+    
+    this.skinned = {};
 
 	this.selected = null;
 	this.helpers = {};
@@ -481,12 +483,13 @@ Editor.prototype = {
 		this.camera.aspect = this.DEFAULT_CAMERA.aspect;
 		this.camera.updateProjectionMatrix();
 
-		this.stylesheets = json.stylesheets;
-		this.javascripts = json.javascripts;
+		this.skinned = json.skinned; // TODO!
+
+		this.stylesheet = json.stylesheet;
+		this.javascript = json.javascript;
 
 		this.history.fromJSON( json.history );
 		this.scripts = json.scripts;
-
 		this.setScene( loader.parse( json.scene ) );
 
 	},
@@ -523,8 +526,10 @@ Editor.prototype = {
 				debugMode: this.config.getKey( "project/debugMode" ),
 			},
 
-			stylesheets: this.stylesheets,
-			javascripts: this.javascripts,
+			stylesheet: this.stylesheet,
+			javascript: this.javascript,
+
+			skinned: this.skinned,  // TODO!
 
 			camera: this.camera.toJSON(),
 			scene: this.scene.toJSON(),

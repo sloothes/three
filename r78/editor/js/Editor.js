@@ -481,7 +481,7 @@ Editor.prototype = {
 
 		this.history.fromJSON( json.history );
 		this.scripts = json.scripts;
-        this.libraries = json.libraries;
+		this.libraries = json.libraries;
 
 		this.setScene( loader.parse( json.scene ) );
 
@@ -522,7 +522,7 @@ Editor.prototype = {
 			camera: this.camera.toJSON(),
 			scene: this.scene.toJSON(),
 			scripts: this.scripts,
-            libraries: this.libraries,
+			libraries: this.libraries,
 			history: this.history.toJSON(),
 
 		};

@@ -11,7 +11,7 @@ var APP = {
 		var loader = new THREE.ObjectLoader();
 		var camera, scene, renderer;
 
-		var vr, controls, effect;
+		var vr, controls, effect, debugMode;
 
 		var events = {};
 
@@ -21,6 +21,35 @@ var APP = {
 		this.height = 500;
 
 		this.load = function ( json ) {
+
+			debugMode = json.project.debugMode;
+
+/*
+		//	var scripts = json.javascripts;
+
+            for ( var i = 0; i < json.javascripts.length; i ++ ) {
+
+                var script = json.javascripts[ i ];
+
+                var functions = ( new Function( script.source ) )();
+
+                for ( var name in functions ) {
+
+                    if ( functions[ name ] === undefined ) continue;
+
+                    if ( events[ name ] === undefined ) {
+
+                        console.warn( "APP.Player: Event type not supported (", name, ")" );
+                        continue;
+
+                    }
+
+                    events[ name ].push( functions[ name ].bind( object ) );
+
+                }
+
+            }
+*/
 
 			vr = json.project.vr;
 
@@ -40,7 +69,6 @@ var APP = {
 			this.dom.appendChild( renderer.domElement );
 			this.setScene( loader.parse( json.scene ) );
 			this.setCamera( loader.parse( json.camera ) );
-
     /*
         //  Player editor controls (at runtime).
 		//	always "after" setCamera(); important!
@@ -71,7 +99,11 @@ var APP = {
 
 			}
 
+			debugMode && console.log("scriptWrapResultObj:", scriptWrapResultObj);
+
 			var scriptWrapResult = JSON.stringify( scriptWrapResultObj ).replace( /\"/g, "" );
+
+			debugMode && console.log("scriptWrapResult:", scriptWrapResult);
 
 			for ( var uuid in json.scripts ) {
 
@@ -92,6 +124,8 @@ var APP = {
 
 					var functions = ( new Function( scriptWrapParams, script.source + "\nreturn " + scriptWrapResult + ";" ).bind( object ) )( this, renderer, scene, camera );
 
+                    debugMode && console.log("functions:", functions);
+
 					for ( var name in functions ) {
 
 						if ( functions[ name ] === undefined ) continue;
@@ -107,9 +141,15 @@ var APP = {
 
 					}
 
+					debugMode && console.log("0.events:", events);
+
 				}
 
+				debugMode && console.log("1.events:", events);
+
 			}
+
+			debugMode && console.log("2.events:", events);
 
 			dispatch( events.init, arguments );
 

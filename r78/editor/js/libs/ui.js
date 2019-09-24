@@ -24,7 +24,7 @@ UI.Element.prototype = {
 
 			} else {
 
-				console.error( 'UI.Element:', argument, 'is not an instance of UI.Element.' );
+				console.error( "UI.Element:", argument, "is not an instance of UI.Element." );
 
 			}
 
@@ -46,7 +46,7 @@ UI.Element.prototype = {
 
 			} else {
 
-				console.error( 'UI.Element:', argument, 'is not an instance of UI.Element.' );
+				console.error( "UI.Element:", argument, "is not an instance of UI.Element." );
 
 			}
 
@@ -115,15 +115,15 @@ UI.Element.prototype = {
 // properties
 
 var properties = [ 
-	'position', 'left', 'top', 'right', 'bottom', 'minWidth', 'width', 'height', 'border', 'borderLeft',
-	'borderTop', 'borderRight', 'borderBottom', 'borderColor', 'display', 'overflow', 'margin', 'marginLeft', 'marginTop', 
-	'marginRight', 'marginBottom', 'padding', 'paddingLeft', 'paddingTop', 'paddingRight', 'paddingBottom', 'color', 'background', 
-	'backgroundColor', 'opacity', 'fontSize', 'fontWeight', 'textAlign', 'textDecoration', 'textTransform', 'cursor', 'zIndex' 
+	"position", "left", "top", "right", "bottom", "minWidth", "width", "height", "border", "borderLeft",
+	"borderTop", "borderRight", "borderBottom", "borderColor", "display", "overflow", "margin", "marginLeft", "marginTop", 
+	"marginRight", "marginBottom", "padding", "paddingLeft", "paddingTop", "paddingRight", "paddingBottom", "color", "background", 
+	"backgroundColor", "opacity", "fontSize", "fontWeight", "textAlign", "textDecoration", "textTransform", "cursor", "zIndex" 
 ];
 
 properties.forEach( function ( property ) {
 
-	var method = 'set' + property.substr( 0, 1 ).toUpperCase() + property.substr( 1, property.length );
+	var method = "set" + property.substr( 0, 1 ).toUpperCase() + property.substr( 1, property.length );
 
 	UI.Element.prototype[ method ] = function () {
 
@@ -137,11 +137,11 @@ properties.forEach( function ( property ) {
 
 // events
 
-var events = [ 'KeyUp', 'KeyDown', 'MouseOver', 'MouseOut', 'Click', 'DblClick', 'Change' ];
+var events = [ "KeyUp", "KeyDown", "MouseOver", "MouseOut", "Click", "DblClick", "Change" ];
 
 events.forEach( function ( event ) {
 
-	var method = 'on' + event;
+	var method = "on" + event;
 
 	UI.Element.prototype[ method ] = function ( callback ) {
 
@@ -159,7 +159,7 @@ UI.Span = function () {
 
 	UI.Element.call( this );
 
-	this.dom = document.createElement( 'span' );
+	this.dom = document.createElement( "span" );
 
 	return this;
 
@@ -174,7 +174,7 @@ UI.Div = function () {
 
 	UI.Element.call( this );
 
-	this.dom = document.createElement( 'div' );
+	this.dom = document.createElement( "div" );
 
 	return this;
 
@@ -189,8 +189,8 @@ UI.Row = function () {
 
 	UI.Element.call( this );
 
-	var dom = document.createElement( 'div' );
-	dom.className = 'Row';
+	var dom = document.createElement( "div" );
+	dom.className = "Row";
 
 	this.dom = dom;
 
@@ -350,11 +350,11 @@ UI.Text = function ( text ) {
 
 	UI.Element.call( this );
 
-	var dom = document.createElement( 'span' );
-	dom.className = 'Text';
-	dom.style.cursor = 'default';
-	dom.style.display = 'inline-block';
-	dom.style.verticalAlign = 'middle';
+	var dom = document.createElement( "span" );
+	dom.className = "Text";
+	dom.style.cursor = "default";
+	dom.style.display = "inline-block";
+	dom.style.verticalAlign = "middle";
 
 	this.dom = dom;
 	this.setValue( text );
@@ -393,12 +393,12 @@ UI.Input = function ( text ) {
 
 	var scope = this;
 
-	var dom = document.createElement( 'input' );
-	dom.className = 'Input';
-	dom.style.padding = '2px';
-	dom.style.border = '1px solid transparent';
+	var dom = document.createElement( "input" );
+	dom.className = "Input";
+	dom.style.padding = "2px";
+	dom.style.border = "1px solid transparent";
 
-	dom.addEventListener( 'keydown', function ( event ) {
+	dom.addEventListener( "keydown", function ( event ) {
 
 		event.stopPropagation();
 
@@ -437,12 +437,12 @@ UI.TextArea = function () {
 
 	var scope = this;
 
-	var dom = document.createElement( 'textarea' );
-	dom.className = 'TextArea';
-	dom.style.padding = '2px';
+	var dom = document.createElement( "textarea" );
+	dom.className = "TextArea";
+	dom.style.padding = "2px";
 	dom.spellcheck = false;
 
-	dom.addEventListener( 'keydown', function ( event ) {
+	dom.addEventListener( "keydown", function ( event ) {
 
 		event.stopPropagation();
 
@@ -452,7 +452,7 @@ UI.TextArea = function () {
 
 			var cursor = dom.selectionStart;
 
-			dom.value = dom.value.substring( 0, cursor ) + '\t' + dom.value.substring( cursor );
+			dom.value = dom.value.substring( 0, cursor ) + "\t" + dom.value.substring( cursor );
 			dom.selectionStart = cursor + 1;
 			dom.selectionEnd = dom.selectionStart;
 
@@ -492,9 +492,9 @@ UI.Select = function () {
 
 	var scope = this;
 
-	var dom = document.createElement( 'select' );
-	dom.className = 'Select';
-	dom.style.padding = '2px';
+	var dom = document.createElement( "select" );
+	dom.className = "Select";
+	dom.style.padding = "2px";
 
 	this.dom = dom;
 
@@ -525,7 +525,7 @@ UI.Select.prototype.setOptions = function ( options ) {
 
 	for ( var key in options ) {
 
-		var option = document.createElement( 'option' );
+		var option = document.createElement( "option" );
 		option.value = key;
 		option.innerHTML = options[ key ];
 		this.dom.appendChild( option );
@@ -566,9 +566,9 @@ UI.Checkbox = function ( boolean ) {
 
 	var scope = this;
 
-	var dom = document.createElement( 'input' );
-	dom.className = 'Checkbox';
-	dom.type = 'checkbox';
+	var dom = document.createElement( "input" );
+	dom.className = "Checkbox";
+	dom.type = "checkbox";
 
 	this.dom = dom;
 	this.setValue( boolean );
@@ -607,18 +607,18 @@ UI.Color = function () {
 
 	var scope = this;
 
-	var dom = document.createElement( 'input' );
-	dom.className = 'Color';
-	dom.style.width = '64px';
-	dom.style.height = '17px';
-	dom.style.border = '0px';
-	dom.style.padding = '2px';
-	dom.style.backgroundColor = 'transparent';
+	var dom = document.createElement( "input" );
+	dom.className = "Color";
+	dom.style.width = "64px";
+	dom.style.height = "17px";
+	dom.style.border = "0px";
+	dom.style.padding = "2px";
+	dom.style.backgroundColor = "transparent";
 
 	try {
 
-		dom.type = 'color';
-		dom.value = '#ffffff';
+		dom.type = "color";
+		dom.value = "#ffffff";
 
 	} catch ( exception ) {}
 
@@ -653,7 +653,7 @@ UI.Color.prototype.setValue = function ( value ) {
 
 UI.Color.prototype.setHexValue = function ( hex ) {
 
-	this.dom.value = '#' + ( '000000' + hex.toString( 16 ) ).slice( - 6 );
+	this.dom.value = "#" + ( "000000" + hex.toString( 16 ) ).slice( - 6 );
 
 	return this;
 
@@ -668,11 +668,11 @@ UI.Number = function ( number ) {
 
 	var scope = this;
 
-	var dom = document.createElement( 'input' );
-	dom.className = 'Number';
-	dom.value = '0.00';
+	var dom = document.createElement( "input" );
+	dom.className = "Number";
+	dom.value = "0.00";
 
-	dom.addEventListener( 'keydown', function ( event ) {
+	dom.addEventListener( "keydown", function ( event ) {
 
 		event.stopPropagation();
 
@@ -692,8 +692,8 @@ UI.Number = function ( number ) {
 
 	this.setValue( number );
 
-	var changeEvent = document.createEvent( 'HTMLEvents' );
-	changeEvent.initEvent( 'change', true, true );
+	var changeEvent = document.createEvent( "HTMLEvents" );
+	changeEvent.initEvent( "change", true, true );
 
 	var distance = 0;
 	var onMouseDownValue = 0;
@@ -711,8 +711,8 @@ UI.Number = function ( number ) {
 
 		prevPointer = [ event.clientX, event.clientY ];
 
-		document.addEventListener( 'mousemove', onMouseMove, false );
-		document.addEventListener( 'mouseup', onMouseUp, false );
+		document.addEventListener( "mousemove", onMouseMove, false );
+		document.addEventListener( "mouseup", onMouseUp, false );
 
 	}
 
@@ -740,8 +740,8 @@ UI.Number = function ( number ) {
 
 	function onMouseUp( event ) {
 
-		document.removeEventListener( 'mousemove', onMouseMove, false );
-		document.removeEventListener( 'mouseup', onMouseUp, false );
+		document.removeEventListener( "mousemove", onMouseMove, false );
+		document.removeEventListener( "mouseup", onMouseUp, false );
 
 		if ( Math.abs( distance ) < 2 ) {
 
@@ -772,24 +772,24 @@ UI.Number = function ( number ) {
 
 	function onFocus( event ) {
 
-		dom.style.backgroundColor = '';
-		dom.style.cursor = '';
+		dom.style.backgroundColor = "";
+		dom.style.cursor = "";
 
 	}
 
 	function onBlur( event ) {
 
-		dom.style.backgroundColor = 'transparent';
-		dom.style.cursor = 'col-resize';
+		dom.style.backgroundColor = "transparent";
+		dom.style.cursor = "col-resize";
 
 	}
 
 	onBlur();
 
-	dom.addEventListener( 'mousedown', onMouseDown, false );
-	dom.addEventListener( 'change', onChange, false );
-	dom.addEventListener( 'focus', onFocus, false );
-	dom.addEventListener( 'blur', onBlur, false );
+	dom.addEventListener( "mousedown", onMouseDown, false );
+	dom.addEventListener( "change", onChange, false );
+	dom.addEventListener( "focus", onFocus, false );
+	dom.addEventListener( "blur", onBlur, false );
 
 	return this;
 
@@ -848,11 +848,11 @@ UI.Integer = function ( number ) {
 
 	var scope = this;
 
-	var dom = document.createElement( 'input' );
-	dom.className = 'Number';
-	dom.value = '0';
+	var dom = document.createElement( "input" );
+	dom.className = "Number";
+	dom.value = "0";
 
-	dom.addEventListener( 'keydown', function ( event ) {
+	dom.addEventListener( "keydown", function ( event ) {
 
 		event.stopPropagation();
 
@@ -869,8 +869,8 @@ UI.Integer = function ( number ) {
 
 	this.setValue( number );
 
-	var changeEvent = document.createEvent( 'HTMLEvents' );
-	changeEvent.initEvent( 'change', true, true );
+	var changeEvent = document.createEvent( "HTMLEvents" );
+	changeEvent.initEvent( "change", true, true );
 
 	var distance = 0;
 	var onMouseDownValue = 0;
@@ -888,8 +888,8 @@ UI.Integer = function ( number ) {
 
 		prevPointer = [ event.clientX, event.clientY ];
 
-		document.addEventListener( 'mousemove', onMouseMove, false );
-		document.addEventListener( 'mouseup', onMouseUp, false );
+		document.addEventListener( "mousemove", onMouseMove, false );
+		document.addEventListener( "mouseup", onMouseUp, false );
 
 	}
 
@@ -917,8 +917,8 @@ UI.Integer = function ( number ) {
 
 	function onMouseUp( event ) {
 
-		document.removeEventListener( 'mousemove', onMouseMove, false );
-		document.removeEventListener( 'mouseup', onMouseUp, false );
+		document.removeEventListener( "mousemove", onMouseMove, false );
+		document.removeEventListener( "mouseup", onMouseUp, false );
 
 		if ( Math.abs( distance ) < 2 ) {
 
@@ -949,24 +949,24 @@ UI.Integer = function ( number ) {
 
 	function onFocus( event ) {
 
-		dom.style.backgroundColor = '';
-		dom.style.cursor = '';
+		dom.style.backgroundColor = "";
+		dom.style.cursor = "";
 
 	}
 
 	function onBlur( event ) {
 
-		dom.style.backgroundColor = 'transparent';
-		dom.style.cursor = 'col-resize';
+		dom.style.backgroundColor = "transparent";
+		dom.style.cursor = "col-resize";
 
 	}
 
 	onBlur();
 
-	dom.addEventListener( 'mousedown', onMouseDown, false );
-	dom.addEventListener( 'change', onChange, false );
-	dom.addEventListener( 'focus', onFocus, false );
-	dom.addEventListener( 'blur', onBlur, false );
+	dom.addEventListener( "mousedown", onMouseDown, false );
+	dom.addEventListener( "change", onChange, false );
+	dom.addEventListener( "focus", onFocus, false );
+	dom.addEventListener( "blur", onBlur, false );
 
 	return this;
 
@@ -1010,8 +1010,8 @@ UI.Break = function () {
 
 	UI.Element.call( this );
 
-	var dom = document.createElement( 'br' );
-	dom.className = 'Break';
+	var dom = document.createElement( "br" );
+	dom.className = "Break";
 
 	this.dom = dom;
 
@@ -1029,8 +1029,8 @@ UI.HorizontalRule = function () {
 
 	UI.Element.call( this );
 
-	var dom = document.createElement( 'hr' );
-	dom.className = 'HorizontalRule';
+	var dom = document.createElement( "hr" );
+	dom.className = "HorizontalRule";
 
 	this.dom = dom;
 
@@ -1048,8 +1048,8 @@ UI.Button = function ( value ) {
 
 	UI.Element.call( this );
 
-	var dom = document.createElement( 'button' );
-	dom.className = 'Button';
+	var dom = document.createElement( "button" );
+	dom.className = "Button";
 
 	this.dom = dom;
 	this.dom.textContent = value;
@@ -1076,16 +1076,16 @@ UI.Modal = function ( value ) {
 
 	var scope = this;
 
-	var dom = document.createElement( 'div' );
+	var dom = document.createElement( "div" );
 
-	dom.style.position = 'absolute';
-	dom.style.width = '100%';
-	dom.style.height = '100%';
-	dom.style.backgroundColor = 'rgba(0,0,0,0.5)';
-	dom.style.display = 'none';
-	dom.style.alignItems = 'center';
-	dom.style.justifyContent = 'center';
-	dom.addEventListener( 'click', function ( event ) {
+	dom.style.position = "absolute";
+	dom.style.width = "100%";
+	dom.style.height = "100%";
+	dom.style.backgroundColor = "rgba(0,0,0,0.5)";
+	dom.style.display = "none";
+	dom.style.alignItems = "center";
+	dom.style.justifyContent = "center";
+	dom.addEventListener( "click", function ( event ) {
 
 		scope.hide();
 
@@ -1094,10 +1094,10 @@ UI.Modal = function ( value ) {
 	this.dom = dom;
 
 	this.container = new UI.Panel();
-	this.container.dom.style.width = '200px';
-	this.container.dom.style.padding = '20px';
-	this.container.dom.style.backgroundColor = '#ffffff';
-	this.container.dom.style.boxShadow = '0px 5px 10px rgba(0,0,0,0.5)';
+	this.container.dom.style.width = "200px";
+	this.container.dom.style.padding = "20px";
+	this.container.dom.style.backgroundColor = "#ffffff";
+	this.container.dom.style.boxShadow = "0px 5px 10px rgba(0,0,0,0.5)";
 
 	this.add( this.container );
 
@@ -1113,7 +1113,7 @@ UI.Modal.prototype.show = function ( content ) {
 	this.container.clear();
 	this.container.add( content );
 
-	this.dom.style.display = 'flex';
+	this.dom.style.display = "flex";
 
 	return this;
 
@@ -1121,7 +1121,7 @@ UI.Modal.prototype.show = function ( content ) {
 
 UI.Modal.prototype.hide = function () {
 
-	this.dom.style.display = 'none';
+	this.dom.style.display = "none";
 
 	return this;
 

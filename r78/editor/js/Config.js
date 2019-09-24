@@ -21,6 +21,7 @@ var Config = function ( name ) {
 
 		"ui/sidebar/script/collapsed": true,
 		"ui/sidebar/animation/collapsed": true,
+
 	};
 
 	if ( window.localStorage[ name ] === undefined ) {

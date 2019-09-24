@@ -19,7 +19,7 @@ var Config = function ( name ) {
 
 		"settings/history": false,
 
-		"ui/sidebar/script/collapsed": true
+		"ui/sidebar/script/collapsed": true,
 		"ui/sidebar/animation/collapsed": true,
 	};
 

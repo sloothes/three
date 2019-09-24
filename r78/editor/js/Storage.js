@@ -2,7 +2,9 @@
  * @author mrdoob / http://mrdoob.com/
  */
 
-var Storage = function () {
+var Storage = function (editor) {
+
+	var signals = editor.signals;
 
 	var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
 
@@ -34,6 +36,7 @@ var Storage = function () {
 				}
 
 			};
+
 			request.onsuccess = function ( event ) {
 
 				database = event.target.result;
@@ -41,6 +44,7 @@ var Storage = function () {
 				callback();
 
 			};
+
 			request.onerror = function ( event ) {
 
 				console.error( "IndexedDB", event );
@@ -72,7 +76,11 @@ var Storage = function () {
 			var request = objectStore.put( data, 0 );
 			request.onsuccess = function ( event ) {
 
-				console.log( "[" + /\d\d\:\d\d\:\d\d/.exec( new Date() )[ 0 ] + "]", "Saved state to IndexedDB. " + ( performance.now() - start ).toFixed( 2 ) + "ms" );
+				var msg = "[" + /\d\d\:\d\d\:\d\d/.exec( new Date() )[ 0 ] + "]", "Saved state to IndexedDB. " + ( performance.now() - start ).toFixed( 2 ) + "ms";
+
+				console.log( msg );
+
+				signals.savingFinished.dispatch();
 
 			};
 
@@ -87,7 +95,9 @@ var Storage = function () {
 			var request = objectStore.clear();
 			request.onsuccess = function ( event ) {
 
-				console.log( "[" + /\d\d\:\d\d\:\d\d/.exec( new Date() )[ 0 ] + "]", "Cleared IndexedDB." );
+				var msg = "[" + /\d\d\:\d\d\:\d\d/.exec( new Date() )[ 0 ] + "]", "Cleared IndexedDB.";
+
+				console.log( msg );
 
 			};
 

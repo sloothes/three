@@ -5,20 +5,22 @@
 var Config = function ( name ) {
 
 	var storage = {
-		'autosave': true,
-		'theme': 'css/light.css',
 
-		'project/renderer': 'WebGLRenderer',
-		'project/renderer/antialias': true,
-		'project/renderer/shadows': true,
-		'project/editable': false,
-		'project/vr': false,
-        'project/debugMode': true,
+		"autosave": true,
+		"theme": "css/light.css",
 
-		'settings/history': false,
+		"project/vr": false,
+		"project/cache":false,
+		"project/editable": false,
+        "project/debugMode": true,
+		"project/renderer/shadows": true,
+		"project/renderer/antialias": true,
+		"project/renderer": "WebGLRenderer",
 
-		'ui/sidebar/animation/collapsed': true,
-		'ui/sidebar/script/collapsed': true
+		"settings/history": false,
+
+		"ui/sidebar/script/collapsed": true
+		"ui/sidebar/animation/collapsed": true,
 	};
 
 	if ( window.localStorage[ name ] === undefined ) {
@@ -55,7 +57,7 @@ var Config = function ( name ) {
 
 			window.localStorage[ name ] = JSON.stringify( storage );
 
-			console.log( '[' + /\d\d\:\d\d\:\d\d/.exec( new Date() )[ 0 ] + ']', 'Saved config to LocalStorage.' );
+			console.log( "[" + /\d\d\:\d\d\:\d\d/.exec( new Date() )[ 0 ] + "]", "Saved config to LocalStorage." );
 
 		},
 

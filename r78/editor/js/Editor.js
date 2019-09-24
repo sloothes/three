@@ -210,7 +210,11 @@ Editor.prototype = {
 
 	removeObject: function ( object ) {
 
-		if ( object.parent === null ) return; // avoid deleting the camera or scene.
+	//	avoid deleting the camera or scene.
+
+		if ( object.parent === null ) return; 
+
+	//
 
 		var scope = this;
 
@@ -218,7 +222,7 @@ Editor.prototype = {
 
 			scope.removeHelper( child );
 
-		} );
+		});
 
 		object.parent.remove( object );
 
@@ -259,7 +263,7 @@ Editor.prototype = {
 
 	},
 
-	//
+//
 
 	addHelper: function () {
 
@@ -295,9 +299,8 @@ Editor.prototype = {
 				helper = new THREE.SkeletonHelper( object );
 
 			} else {
-
-			//  no helper for this object type.
-				return;
+			
+				return; // no helper for this object type.
 
 			}
 
@@ -330,7 +333,7 @@ Editor.prototype = {
 
 	},
 
-	//
+//
 
 	addScript: function ( object, script ) {
 
@@ -362,7 +365,7 @@ Editor.prototype = {
 
 	},
 
-	//
+//
 
 	select: function ( object ) {
 
@@ -408,7 +411,7 @@ Editor.prototype = {
 
 			}
 
-		} );
+		});
 
 	},
 
@@ -483,13 +486,12 @@ Editor.prototype = {
 		this.camera.aspect = this.DEFAULT_CAMERA.aspect;
 		this.camera.updateProjectionMatrix();
 
-		this.skinned = json.skinned; // TODO!
+		this.skinned = json.skinned;       // TODO!
+		this.stylesheet = json.stylesheet; // TODO!
+		this.javascript = json.javascript; // TODO!
 
-		this.stylesheet = json.stylesheet;
-		this.javascript = json.javascript;
-
-		this.history.fromJSON( json.history );
 		this.scripts = json.scripts;
+		this.history.fromJSON( json.history );
 		this.setScene( loader.parse( json.scene ) );
 
 	},
@@ -520,20 +522,20 @@ Editor.prototype = {
 			metadata: {},
 
 			project: {
-				shadows: this.config.getKey( "project/renderer/shadows" ),
-				editable: this.config.getKey( "project/editable" ),
 				vr: this.config.getKey( "project/vr" ),
+				cache: this.config.getKey( "project/cache" ),
+				editable: this.config.getKey( "project/editable" ),
 				debugMode: this.config.getKey( "project/debugMode" ),
+				shadows: this.config.getKey( "project/renderer/shadows" ),
 			},
 
-			stylesheet: this.stylesheet,
-			javascript: this.javascript,
+			skinned: this.skinned,       // TODO!
+			stylesheet: this.stylesheet, // TODO!
+			javascript: this.javascript, // TODO!
 
-			skinned: this.skinned,  // TODO!
-
+			scripts: this.scripts,
 			camera: this.camera.toJSON(),
 			scene: this.scene.toJSON(),
-			scripts: this.scripts,
 			history: this.history.toJSON(),
 		};
 

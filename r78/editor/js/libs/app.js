@@ -20,9 +20,15 @@ var APP = {
 		this.width = 500;
 		this.height = 500;
 
+	//
+
 		this.load = function ( json ) {
 
+			vr = json.project.vr;
+
 			debugMode = json.project.debugMode; // important!
+
+			THREE.Cache.enabled = json.project.cache; // important!
 
 		//	load javascirpt libraries.
 
@@ -47,8 +53,6 @@ var APP = {
 
 		//
 
-			vr = json.project.vr;
-
 			renderer = new THREE.WebGLRenderer({ 
 				antialias: true,
 				preserveDrawingBuffer: true,
@@ -58,18 +62,18 @@ var APP = {
 			renderer.setPixelRatio( window.devicePixelRatio );
 
 			if ( json.project.shadows ) {
+
 				renderer.shadowMap.enabled = true;
 			//	renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
 			}
 
 			this.dom.appendChild( renderer.domElement );
 			this.setScene( loader.parse( json.scene ) );
 			this.setCamera( loader.parse( json.camera ) );
 
-    /*
         //  Player editor controls (at runtime).
 		//	always "after" setCamera(); important!
-    */
 
 			events = {
 				init: [],
@@ -104,8 +108,7 @@ var APP = {
 
 				if ( object === undefined ) {
 
-					console.warn( "APP.Player: Script without object.", uuid );
-					continue;
+					console.warn( "APP.Player: Script without object.", uuid ); continue;
 
 				}
 
@@ -123,8 +126,7 @@ var APP = {
 
 						if ( events[ name ] === undefined ) {
 
-							console.warn( "APP.Player: Event type not supported (", name, ")" );
-							continue;
+							console.warn( "APP.Player: Event type not supported (", name, ")" ); continue;
 
 						}
 
@@ -139,6 +141,8 @@ var APP = {
 			dispatch( events.init, arguments );
 
 		};
+
+	//
 
 		this.setCamera = function ( value ) {
 
@@ -194,8 +198,10 @@ var APP = {
 			this.height = height;
 
             if ( camera ) {
+
                 camera.aspect = this.width / this.height;
                 camera.updateProjectionMatrix();
+
             }
 
 			if ( renderer ) renderer.setSize( width, height );
@@ -290,7 +296,7 @@ var APP = {
 
 		};
 
-		//
+	//
 
 		function onDocumentKeyDown( event ) {
 

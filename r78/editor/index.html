@@ -262,8 +262,11 @@
 
 							editor.signals.savingFinished.dispatch();
 
+							var content = new UI.Panel();
+							content.setClass( "middle" );
 							var msg = "Editor state saved to IndexedDB.";
-							var content = new UI.Text( msg );
+							content.setTextContent( msg );
+
 							editor.signals.showModal.dispatch( content );
 
 						}, 100 );

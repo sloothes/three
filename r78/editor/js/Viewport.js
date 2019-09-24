@@ -620,11 +620,6 @@ var Viewport = function ( editor ) {
 
 	});
 
-	signals.savingFinished.add( function( msg ){
-
-		if ( msg ) alert( msg );
-
-	});
 
 //	var renderer = null;
 

@@ -2,9 +2,7 @@
  * @author mrdoob / http://mrdoob.com/
  */
 
-var Storage = function (editor) {
-
-	var signals = editor.signals;
+var Storage = function () {
 
 	var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
 
@@ -80,8 +78,6 @@ var Storage = function (editor) {
 				+ "] Saved state to IndexedDB. " + ( performance.now() - start ).toFixed( 2 ) + "ms";
 
 				console.log( msg );
-
-				signals.savingFinished.dispatch();
 
 			};
 

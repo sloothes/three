@@ -95,6 +95,8 @@ Menubar.File = function ( editor ) {
 
                 editor.signals.savingFinished.dispatch();
 
+				editor.signals.showModal.dispatch( "Editor state saved to IndexedDB." );
+
             }, 100 );
 
         }, 1000 );

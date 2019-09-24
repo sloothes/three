@@ -267,7 +267,8 @@ var Viewport = function ( editor ) {
 
 	var controls = new THREE.EditorControls( camera, container.dom );
 
-	center = controls.center; // for passing to player controls on startup ( global! ).
+//  passing to player controls on startup.
+	editor.config.setKey( "controls/center", controls.center ); 
 
 	controls.addEventListener( "change", function () {
 
@@ -276,7 +277,7 @@ var Viewport = function ( editor ) {
 		if ( light ) light.position.copy( camera.position );
 
     //	Update center.
-		center = controls.center;
+		editor.config.setKey( "controls/center", controls.center );
 
 		transformControls.update();
 		signals.cameraChanged.dispatch( camera );

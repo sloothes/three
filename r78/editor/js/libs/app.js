@@ -9,7 +9,7 @@ var APP = {
 		var scope = this;
 
 		var loader = new THREE.ObjectLoader();
-		var camera, scene, renderer;
+		var camera, scene, renderer, center;
 
 		var vr, controls, effect, debugMode;
 
@@ -35,12 +35,14 @@ var APP = {
 
 				script.call(); // execute script. important!
 
-				debugMode && console.log( "script " + name + " loaded.");
+				debugMode && console.log( name + " loaded.");
 
-			//  all above in one code-line:
+			//  all in one line.
 			//	( new Function( json.javascript[ i ].source ) )(); 
 
 			}
+
+		//
 
 			vr = json.project.vr;
 

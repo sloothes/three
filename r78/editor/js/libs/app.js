@@ -26,20 +26,24 @@ var APP = {
 
 		//	load javascirpt libraries.
 
-			for ( var i = 0; i < json.javascript.length; i ++ ) {
+			if ( json.javascript ) {
 
-				var name = json.javascript[ i ].name;
+				for ( var i = 0; i < json.javascript.length; i ++ ) {
 
-			//	var source = json.javascript[ i ].source;
-			//	var script = new Function( source );
-			//	script.call(); // execute script. important!
+					var name = json.javascript[ i ].name;
 
-			//  all in one line.
-				( new Function( json.javascript[ i ].source ) )(); 
+				//	var source = json.javascript[ i ].source;
+				//	var script = new Function( source );
+				//	script.call(); // execute script. important!
 
-				debugMode && console.log( name + " loaded.");
+				//  execute script in one line-code.
+					( new Function( json.javascript[ i ].source ) )(); 
 
-			}
+					debugMode && console.log( name + " loaded.");
+
+				}
+
+            }
 
 		//
 

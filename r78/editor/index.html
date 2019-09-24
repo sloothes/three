@@ -262,10 +262,6 @@
 
 							editor.signals.savingFinished.dispatch();
 
-							var content = new UI.Element( document.createElement("h2") );
-							content.setTextContent( "Editor state saved to IndexedDB." )
-							editor.signals.showModal.dispatch( content );
-
 						}, 100 );
 
 					}, 1000 );

@@ -97,6 +97,13 @@ Menubar.File = function ( editor ) {
 
 				editor.signals.showModal.dispatch( "Editor state saved to IndexedDB." );
 
+				var element = document.createElement("h4");
+				var text = "Editor state saved to IndexedDB.";
+				var content = new UI.Element( element );
+				content.setTextAlign("center");
+				content.setTextContent( text );
+				editor.signals.showModal.dispatch( content );
+
             }, 100 );
 
         }, 1000 );

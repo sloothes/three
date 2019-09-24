@@ -14,6 +14,7 @@ Menubar.Play = function ( editor ) {
 	var title = new UI.Panel();
 	title.setClass( "title" );
 	title.setTextContent( "Play" );
+
 	title.onClick( function () {
 
 		if ( isPlaying === false ) {
@@ -30,7 +31,8 @@ Menubar.Play = function ( editor ) {
 
 		}
 
-	} );
+	});
+
 	container.add( title );
 
 	return container;

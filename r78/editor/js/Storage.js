@@ -76,7 +76,8 @@ var Storage = function (editor) {
 			var request = objectStore.put( data, 0 );
 			request.onsuccess = function ( event ) {
 
-				var msg = "[" + /\d\d\:\d\d\:\d\d/.exec( new Date() )[ 0 ] + "]", "Saved state to IndexedDB. " + ( performance.now() - start ).toFixed( 2 ) + "ms";
+				var msg = "[" + /\d\d\:\d\d\:\d\d/.exec( new Date() )[ 0 ] 
+				+ "] Saved state to IndexedDB. " + ( performance.now() - start ).toFixed( 2 ) + "ms";
 
 				console.log( msg );
 
@@ -95,7 +96,7 @@ var Storage = function (editor) {
 			var request = objectStore.clear();
 			request.onsuccess = function ( event ) {
 
-				var msg = "[" + /\d\d\:\d\d\:\d\d/.exec( new Date() )[ 0 ] + "]", "Cleared IndexedDB.";
+				var msg = "[" + /\d\d\:\d\d\:\d\d/.exec( new Date() )[ 0 ] + "] Cleared IndexedDB.";
 
 				console.log( msg );
 

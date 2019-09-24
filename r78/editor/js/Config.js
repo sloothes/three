@@ -56,6 +56,8 @@ var Config = function ( name ) {
 
 			}
 
+			var debugMode = storage["project/debugMode"];
+
 			window.localStorage[ name ] = JSON.stringify( storage );
 
 			debugMode && console.log( "[" + /\d\d\:\d\d\:\d\d/.exec( new Date() )[ 0 ] + "]", "Saved config to LocalStorage." );

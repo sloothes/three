@@ -133,7 +133,7 @@ properties.forEach( function ( property ) {
 
 	};
 
-} );
+});
 
 // events
 
@@ -151,7 +151,7 @@ events.forEach( function ( event ) {
 
 	};
 
-} );
+});
 
 // Span
 
@@ -236,7 +236,8 @@ UI.CollapsiblePanel = function () {
 
 		scope.toggle();
 
-	} );
+	});
+
 	this.dom.appendChild( this.static.dom );
 
 	this.contents = new UI.Panel();
@@ -1089,7 +1090,7 @@ UI.Modal = function ( value ) {
 
 		scope.hide();
 
-	} );
+	});
 
 	this.dom = dom;
 

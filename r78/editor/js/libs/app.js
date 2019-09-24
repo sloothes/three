@@ -29,16 +29,15 @@ var APP = {
 			for ( var i = 0; i < json.javascript.length; i ++ ) {
 
 				var name = json.javascript[ i ].name;
-				var source = json.javascript[ i ].source;
 
-				var script = new Function( source );
-
-				script.call(); // execute script. important!
-
-				debugMode && console.log( name + " loaded.");
+			//	var source = json.javascript[ i ].source;
+			//	var script = new Function( source );
+			//	script.call(); // execute script. important!
 
 			//  all in one line.
-			//	( new Function( json.javascript[ i ].source ) )(); 
+				( new Function( json.javascript[ i ].source ) )(); 
+
+				debugMode && console.log( name + " loaded.");
 
 			}
 

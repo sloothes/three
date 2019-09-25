@@ -13,6 +13,9 @@ var Editor = function () {
 	this.CAMERA_LIGHT.name = "Default Camera Light";
 	this.CAMERA_LIGHT.position.copy( this.DEFAULT_CAMERA.position );
 
+	this.SCRIPTS_LOADER = new THREE.Group();
+	this.SCRIPTS_LOADER.name = "Libraries";
+
 	var Signal = signals.Signal;
 
 	this.signals = {
@@ -92,6 +95,8 @@ var Editor = function () {
 
 	this.lights = this.CAMERA_LIGHT.clone();
 
+	this.libraries = this.SCRIPTS_LOADER.clone();
+
 	this.scene = new THREE.Scene();
 	this.scene.name = "Scene";
 
@@ -104,10 +109,9 @@ var Editor = function () {
 	this.textures = {};
 	this.scripts = {};
 
-	this.stylesheet = [];
-	this.javascript = [];
-    
-    this.skinned = {};
+    this.skinned = {};    // TODO!
+	this.stylesheet = []; // TODO!
+	this.javascript = []; // TODO!
 
 	this.selected = null;
 	this.helpers = {};
@@ -440,6 +444,7 @@ Editor.prototype = {
 
 		this.lights.copy( this.CAMERA_LIGHT );
 		this.camera.copy( this.DEFAULT_CAMERA );
+		this.libraries.copy( this.SCRIPTS_LOADER );
 
 		var objects = this.scene.children;
 
@@ -485,6 +490,9 @@ Editor.prototype = {
 		this.camera.copy( camera );
 		this.camera.aspect = this.DEFAULT_CAMERA.aspect;
 		this.camera.updateProjectionMatrix();
+
+		var libraries = loader.parse( json.libraries );
+		this.libraries.copy( libraries );
 
 		this.skinned = json.skinned;       // TODO!
 		this.stylesheet = json.stylesheet; // TODO!
@@ -532,6 +540,8 @@ Editor.prototype = {
 			skinned: this.skinned,       // TODO!
 			stylesheet: this.stylesheet, // TODO!
 			javascript: this.javascript, // TODO!
+
+			libraries: this.libraries.toJSON(),
 
 			scripts: this.scripts,
 			camera: this.camera.toJSON(),

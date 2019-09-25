@@ -423,7 +423,7 @@
 				if ( confirm( "Any unsaved data will be lost. Are you sure?" ) ) {
 
 					var loader = new THREE.XHRLoader();
-					loader.crossOrigin = "";  // important!
+					loader.crossOrigin = "anonymous";  // important!
 					loader.load( file, function ( text ) {
 
 						editor.clear();

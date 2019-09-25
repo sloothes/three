@@ -104,7 +104,7 @@ Sidebar.Project = function ( editor ) {
 
 	});
 
-	cacheRow.add( new UI.Text( "Cache enabled" ).setWidth( "90px" ) );
+	cacheRow.add( new UI.Text( "Cache" ).setWidth( "90px" ) );
 	cacheRow.add( cache );
 
 	container.add( cacheRow );

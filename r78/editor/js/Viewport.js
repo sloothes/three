@@ -266,11 +266,11 @@ var Viewport = function ( editor ) {
 	//	Editor controls need to be added "after" main logic,
 	//	otherwise controls.enabled doesn't work. important!
 
-//	Controls.
+//	Editor Controls.
 
 	var controls = new THREE.EditorControls( camera, container.dom );
 
-//  Passing to player controls on startup.
+//  Passing controls center to player controls on startup.
 	editor.config.setKey( "controls/center", controls.center ); 
 
 	controls.addEventListener( "change", function () {

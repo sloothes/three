@@ -40,7 +40,7 @@ var Sidebar = function ( editor ) {
 //		new Sidebar.Poser( editor )
 //	);
 
-	container.add( poser );
+//	container.add( poser );
 
 	var project = new UI.Span().add(
 		new Sidebar.Project( editor )

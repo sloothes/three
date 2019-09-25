@@ -8,6 +8,8 @@ var APP = {
 
 		var scope = this;
 
+		var libraries;
+
 		var loader = new THREE.ObjectLoader();
 		var camera, scene, renderer;
 
@@ -185,6 +187,16 @@ var APP = {
 			}
 
 		};
+
+	//
+
+		this.setLibraries = function ( value ) {
+
+			libraries = value;
+
+		};
+
+	//
 
 		this.setScene = function ( value ) {
 

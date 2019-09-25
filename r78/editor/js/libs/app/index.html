@@ -103,20 +103,20 @@
 
 	<body ontouchstart="">
 
-		<!-- script src="js/app.js"></script -->
+		<script src="js/app.js"></script>
 
 		<script>
-
+		/*
 			var APP = {
 
 				Player: function () {
 
 					var scope = this;
 
+					var libraries;
+
 					var loader = new THREE.ObjectLoader();
 					var libLoader = new THREE.XHRLoader();
-
-					var libraries;
 
 					var camera, scene, renderer;
 
@@ -140,28 +140,28 @@
 						THREE.Cache.enabled = json.project.cache; // important!
 
 						console.log({ "vr": vr, "debugMode": debugMode, "cache": THREE.Cache.enabled });
-/*
+
 					//	load external javascirpt libraries.
 
-						if ( json.javascript ) { // experimental!
+					//	if ( json.javascript ) { // experimental!
 
-							for ( var i = 0; i < json.javascript.length; i ++ ) {
+					//		for ( var i = 0; i < json.javascript.length; i ++ ) {
 
-								var name = json.javascript[ i ].name;
-								var source = json.javascript[ i ].source;
+					//			var name = json.javascript[ i ].name;
+					//			var source = json.javascript[ i ].source;
 
-								var script = new Function( "window", source );
-								script.call( window ); // execute script in window scope. important!
+					//			var script = new Function( "window", source );
+					//			script.call( window ); // execute script in window scope. important!
 
 							//  execute script in one line-code.
 							//	( new Function( "window", json.javascript[ i ].source ) )( window ); 
 
-								debugMode && console.log( name + " loaded.");
+					//			debugMode && console.log( name + " loaded.");
 
-							}
+					//		}
 
-						}
-*/
+					//	}
+
 						renderer = new THREE.WebGLRenderer({ 
 							antialias: true,
 							preserveDrawingBuffer: true,
@@ -463,7 +463,7 @@
 				}
 
 			};
-
+		*/
 		</script>
 
 		<!-- includes -->

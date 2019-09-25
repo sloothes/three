@@ -40,6 +40,9 @@ var Config = function ( name ) {
 
 	}
 
+//	First setup of debugMode (global).
+	debugMode = storage["project/debugMode"];
+
 	return {
 
 		getKey: function ( key ) {
@@ -56,7 +59,8 @@ var Config = function ( name ) {
 
 			}
 
-			debugMode = storage["project/debugMode"]; // global!
+		//  Update debugMode (global).
+			debugMode = storage["project/debugMode"];
 
 			window.localStorage[ name ] = JSON.stringify( storage );
 

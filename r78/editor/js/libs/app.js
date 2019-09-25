@@ -9,7 +9,7 @@ var APP = {
 		var scope = this;
 
 		var loader = new THREE.ObjectLoader();
-		var camera, scene, renderer, debugMode;
+		var camera, scene, renderer;
 
 		var vr, controls, effect, center;
 
@@ -26,9 +26,11 @@ var APP = {
 
 			vr = json.project.vr;
 
-			debugMode = json.project.debugMode; // important!
+			debugMode = json.project.debugMode; // important! global!
 
 			THREE.Cache.enabled = json.project.cache; // important!
+
+			console.log({ "vr": vr, "debugMode": debugMode, "cache": THREE.Cache.enabled });
 
 		//	load javascirpt libraries.
 

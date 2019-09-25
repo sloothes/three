@@ -7,14 +7,14 @@ Sidebar.Scene = function ( editor ) {
 	var signals = editor.signals;
 
 	var container = new UI.Panel();
-	container.setBorderTop( '0' );
-	container.setPaddingTop( '20px' );
+	container.setBorderTop( "0" );
+	container.setPaddingTop( "20px" );
 
-	// outliner
+//	Outliner.
 
 	function buildOption( object, draggable ) {
 
-		var option = document.createElement( 'div' );
+		var option = document.createElement( "div" );
 		option.draggable = draggable;
 		option.innerHTML = buildHTML( object );
 		option.value = object.id;
@@ -25,15 +25,15 @@ Sidebar.Scene = function ( editor ) {
 
 	function buildHTML( object ) {
 
-		var html = '<span class="type ' + object.type + '"></span> ' + object.name;
+		var html = "<span class=\"type " + object.type + "\"></span> " + object.name;
 
 		if ( object instanceof THREE.Mesh ) {
 
 			var geometry = object.geometry;
 			var material = object.material;
 
-			html += ' <span class="type ' + geometry.type + '"></span> ' + geometry.name;
-			html += ' <span class="type ' + material.type + '"></span> ' + material.name;
+			html += " <span class=\"type " + geometry.type + "\"></span> " + geometry.name;
+			html += " <span class=\"type " + material.type + "\"></span> " + material.name;
 
 		}
 
@@ -47,18 +47,18 @@ Sidebar.Scene = function ( editor ) {
 
 		if ( editor.scripts[ uuid ] !== undefined ) {
 
-			return ' <span class="type Script"></span>';
+			return " <span class=\"type Script\"></span>";
 
 		}
 
-		return '';
+		return "";
 
 	}
 
 	var ignoreObjectSelectedSignal = false;
 
 	var outliner = new UI.Outliner( editor );
-	outliner.setId( 'outliner' );
+	outliner.setId( "outliner" );
 	outliner.onChange( function () {
 
 		ignoreObjectSelectedSignal = true;
@@ -67,16 +67,18 @@ Sidebar.Scene = function ( editor ) {
 
 		ignoreObjectSelectedSignal = false;
 
-	} );
+	});
+
 	outliner.onDblClick( function () {
 
 		editor.focusById( parseInt( outliner.getValue() ) );
 
-	} );
+	});
+
 	container.add( outliner );
 	container.add( new UI.Break() );
 
-	// fog
+//	Fog
 
 	var updateFogParameters = function () {
 
@@ -91,11 +93,12 @@ Sidebar.Scene = function ( editor ) {
 	var fogTypeRow = new UI.Row();
 	var fogType = new UI.Select().setOptions( {
 
-		'None': 'None',
-		'Fog': 'Linear',
-		'FogExp2': 'Exponential'
+		"None": "None",
+		"Fog": "Linear",
+		"FogExp2": "Exponential"
 
-	} ).setWidth( '150px' );
+	}).setWidth( "150px" );
+
 	fogType.onChange( function () {
 
 		var type = fogType.getValue();
@@ -103,67 +106,67 @@ Sidebar.Scene = function ( editor ) {
 
 		refreshFogUI();
 
-	} );
+	});
 
-	fogTypeRow.add( new UI.Text( 'Fog' ).setWidth( '90px' ) );
+	fogTypeRow.add( new UI.Text( "Fog" ).setWidth( "90px" ) );
 	fogTypeRow.add( fogType );
 
 	container.add( fogTypeRow );
 
-	// fog color
+//	Fog color.
 
 	var fogColorRow = new UI.Row();
-	fogColorRow.setDisplay( 'none' );
+	fogColorRow.setDisplay( "none" );
 
-	var fogColor = new UI.Color().setValue( '#aaaaaa' )
+	var fogColor = new UI.Color().setValue( "#aaaaaa" )
 	fogColor.onChange( function () {
 
 		signals.fogColorChanged.dispatch( fogColor.getHexValue() );
 
-	} );
+	});
 
-	fogColorRow.add( new UI.Text( 'Fog color' ).setWidth( '90px' ) );
+	fogColorRow.add( new UI.Text( "Fog color" ).setWidth( "90px" ) );
 	fogColorRow.add( fogColor );
 
 	container.add( fogColorRow );
 
-	// fog near
+//	Fog near.
 
 	var fogNearRow = new UI.Row();
-	fogNearRow.setDisplay( 'none' );
+	fogNearRow.setDisplay( "none" );
 
-	var fogNear = new UI.Number( 1 ).setWidth( '60px' ).setRange( 0, Infinity ).onChange( updateFogParameters );
+	var fogNear = new UI.Number( 1 ).setWidth( "60px" ).setRange( 0, Infinity ).onChange( updateFogParameters );
 
-	fogNearRow.add( new UI.Text( 'Fog near' ).setWidth( '90px' ) );
+	fogNearRow.add( new UI.Text( "Fog near" ).setWidth( "90px" ) );
 	fogNearRow.add( fogNear );
 
 	container.add( fogNearRow );
 
 	var fogFarRow = new UI.Row();
-	fogFarRow.setDisplay( 'none' );
+	fogFarRow.setDisplay( "none" );
 
-	// fog far
+//	Fog far.
 
-	var fogFar = new UI.Number( 5000 ).setWidth( '60px' ).setRange( 0, Infinity ).onChange( updateFogParameters );
+	var fogFar = new UI.Number( 5000 ).setWidth( "60px" ).setRange( 0, Infinity ).onChange( updateFogParameters );
 
-	fogFarRow.add( new UI.Text( 'Fog far' ).setWidth( '90px' ) );
+	fogFarRow.add( new UI.Text( "Fog far" ).setWidth( "90px" ) );
 	fogFarRow.add( fogFar );
 
 	container.add( fogFarRow );
 
-	// fog density
+//	Fog density.
 
 	var fogDensityRow = new UI.Row();
-	fogDensityRow.setDisplay( 'none' );
+	fogDensityRow.setDisplay( "none" );
 
-	var fogDensity = new UI.Number( 0.00025 ).setWidth( '60px' ).setRange( 0, 0.1 ).setPrecision( 5 ).onChange( updateFogParameters );
+	var fogDensity = new UI.Number( 0.00025 ).setWidth( "60px" ).setRange( 0, 0.1 ).setPrecision( 5 ).onChange( updateFogParameters );
 
-	fogDensityRow.add( new UI.Text( 'Fog density' ).setWidth( '90px' ) );
+	fogDensityRow.add( new UI.Text( "Fog density" ).setWidth( "90px" ) );
 	fogDensityRow.add( fogDensity );
 
 	container.add( fogDensityRow );
 
-	//
+//
 
 	var refreshUI = function () {
 
@@ -182,14 +185,14 @@ Sidebar.Scene = function ( editor ) {
 				var object = objects[ i ];
 
 				var option = buildOption( object, true );
-				option.style.paddingLeft = ( pad * 10 ) + 'px';
+				option.style.paddingLeft = ( pad * 10 ) + "px";
 				options.push( option );
 
 				addObjects( object.children, pad + 1 );
 
 			}
 
-		} )( scene.children, 1 );
+		})( scene.children, 1 );
 
 		outliner.setOptions( options );
 
@@ -230,16 +233,16 @@ Sidebar.Scene = function ( editor ) {
 
 		var type = fogType.getValue();
 
-		fogColorRow.setDisplay( type === 'None' ? 'none' : '' );
-		fogNearRow.setDisplay( type === 'Fog' ? '' : 'none' );
-		fogFarRow.setDisplay( type === 'Fog' ? '' : 'none' );
-		fogDensityRow.setDisplay( type === 'FogExp2' ? '' : 'none' );
+		fogColorRow.setDisplay( type === "None" ? "none" : "" );
+		fogNearRow.setDisplay( type === "Fog" ? "" : "none" );
+		fogFarRow.setDisplay( type === "Fog" ? "" : "none" );
+		fogDensityRow.setDisplay( type === "FogExp2" ? "" : "none" );
 
 	};
 
 	refreshUI();
 
-	// events
+//	Events.
 
 	signals.sceneGraphChanged.add( refreshUI );
 
@@ -260,7 +263,7 @@ Sidebar.Scene = function ( editor ) {
 
 		}
 
-	} );
+	});
 
 	signals.objectSelected.add( function ( object ) {
 
@@ -268,7 +271,7 @@ Sidebar.Scene = function ( editor ) {
 
 		outliner.setValue( object !== null ? object.id : null );
 
-	} );
+	});
 
 	return container;
 

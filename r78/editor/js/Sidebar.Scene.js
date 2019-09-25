@@ -78,7 +78,7 @@ Sidebar.Scene = function ( editor ) {
 	container.add( outliner );
 	container.add( new UI.Break() );
 
-//	Fog
+//	Fog.
 
 	var updateFogParameters = function () {
 

@@ -94,7 +94,6 @@ var Editor = function () {
 //  Viewport.js => editor.signals.editorCleared.add();
 
 	this.lights = this.CAMERA_LIGHT.clone();
-
 	this.libraries = this.SCRIPTS_LOADER.clone();
 
 	this.scene = new THREE.Scene();
@@ -154,14 +153,6 @@ Editor.prototype = {
 //
 
 	addObject: function ( object ) {
-
-    /*
-		var name = this.lights.name; //	avoid duplicate "Default Camera Light".
-		if ( this.scene.getObjectByName( name ) && object.name === name ) {
-			this.signals.sceneGraphChanged.dispatch();
-			return; 
-        }
-    */
 
 		var scope = this;
 
@@ -395,6 +386,13 @@ Editor.prototype = {
 		if ( id === this.camera.id ) {
 
 			this.select( this.camera );
+			return;
+
+		}
+
+		if ( id === this.libraries.id ) {
+
+			this.select( this.libraries );
 			return;
 
 		}

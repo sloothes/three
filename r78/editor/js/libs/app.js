@@ -95,7 +95,7 @@ var APP = {
 				update: []
 			};
 
-			var scriptWrapParams = "player,renderer,scene,camera";
+			var scriptWrapParams = "player,renderer,scene,camera,controls";
 			var scriptWrapResultObj = {};
 
 			for ( var eventKey in events ) {
@@ -123,7 +123,7 @@ var APP = {
 
 					var script = scripts[ i ];
 
-					var functions = ( new Function( scriptWrapParams, script.source + "\nreturn " + scriptWrapResult + ";" ).bind( object ) )( this, renderer, scene, camera );
+					var functions = ( new Function( scriptWrapParams, script.source + "\nreturn " + scriptWrapResult + ";" ).bind( object ) )( this, renderer, scene, camera, controls );
 
 					for ( var name in functions ) {
 

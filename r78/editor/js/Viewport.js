@@ -307,7 +307,7 @@ var Viewport = function ( editor ) {
 			var script = {
 				name: "camera-light.js",
 				source: "var light = this;\nif (!controls) controls = new THREE.EditorControls(camera, renderer.domElement);\n"
-				+ "if (controls) {\n\tcontrols.addEventListener(\"change\", function(){\n\t\tlight.position.copy(camera.position);\n\t});\n}";
+				+ "if (controls) {\n\tcontrols.addEventListener(\"change\", function(){\n\t\tlight.position.copy(camera.position);\n\t});\n}"
 			}
 
 		//  Add default camera light script.

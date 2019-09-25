@@ -56,7 +56,7 @@ var Config = function ( name ) {
 
 			}
 
-			var debugMode = storage["project/debugMode"];
+			debugMode = storage["project/debugMode"]; // global!
 
 			window.localStorage[ name ] = JSON.stringify( storage );
 

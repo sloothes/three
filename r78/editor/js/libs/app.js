@@ -32,28 +32,28 @@ var APP = {
 
 			console.log({ "vr": vr, "debugMode": debugMode, "cache": THREE.Cache.enabled });
 
-		//	load javascirpt libraries.
+/*
+		//	load external javascirpt libraries.
 
-			if ( json.javascript ) {
+			if ( json.javascript ) { // experimental!
 
 				for ( var i = 0; i < json.javascript.length; i ++ ) {
 
 					var name = json.javascript[ i ].name;
+					var source = json.javascript[ i ].source;
 
-				//	var source = json.javascript[ i ].source;
-				//	var script = new Function( source );
-				//	script.call(); // execute script. important!
+					var script = new Function( "window", source );
+					script.call( window ); // execute script in window scope. important!
 
 				//  execute script in one line-code.
-					( new Function( json.javascript[ i ].source ) )(); 
+				//	( new Function( "window", json.javascript[ i ].source ) )( window ); 
 
 					debugMode && console.log( name + " loaded.");
 
 				}
 
             }
-
-		//
+*/
 
 			renderer = new THREE.WebGLRenderer({ 
 				antialias: true,

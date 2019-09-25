@@ -263,11 +263,10 @@ var Viewport = function ( editor ) {
 	container.dom.addEventListener( "touchstart", onTouchStart, false );
 	container.dom.addEventListener( "dblclick", onDoubleClick, false );
 
-
-//	Controls.
-
 	//	Editor controls need to be added "after" main logic,
 	//	otherwise controls.enabled doesn't work. important!
+
+//	Controls.
 
 	var controls = new THREE.EditorControls( camera, container.dom );
 

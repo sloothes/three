@@ -9,6 +9,7 @@ var APP = {
 		var scope = this;
 
 		var libraries;
+		var libLoader = new THREE.XHRLoader();
 
 		var loader = new THREE.ObjectLoader();
 		var camera, scene, renderer;

@@ -28,6 +28,10 @@ var Viewport = function ( editor ) {
 
 	var camera = editor.camera;
 
+//  Libraries.
+
+	var libraries = editor.libraries;
+
 //
 	var selectionBox = new THREE.BoxHelper();
 	selectionBox.material.depthTest = false;
@@ -122,7 +126,7 @@ var Viewport = function ( editor ) {
 
 	sceneHelpers.add( transformControls );
 
-//	fog.
+//	Fog.
 
 	var oldFogType = "None";
 	var oldFogColor = 0xaaaaaa;
@@ -130,12 +134,12 @@ var Viewport = function ( editor ) {
 	var oldFogFar = 5000;
 	var oldFogDensity = 0.00025;
 
-//	object picking.
+//	Object picking.
 
 	var raycaster = new THREE.Raycaster();
 	var mouse = new THREE.Vector2();
 
-//	events.
+//	Events.
 
 	function getIntersects( point, objects ) {
 
@@ -170,7 +174,7 @@ var Viewport = function ( editor ) {
 
 				if ( object.userData.object !== undefined ) {
 
-				//	helper.
+				//	Helper.
 
 					editor.select( object.userData.object );
 
@@ -260,14 +264,14 @@ var Viewport = function ( editor ) {
 	container.dom.addEventListener( "dblclick", onDoubleClick, false );
 
 
-//	Editor controls.
+//	Controls.
 
 	//	Editor controls need to be added "after" main logic,
 	//	otherwise controls.enabled doesn't work. important!
 
 	var controls = new THREE.EditorControls( camera, container.dom );
 
-//  passing to player controls on startup.
+//  Passing to player controls on startup.
 	editor.config.setKey( "controls/center", controls.center ); 
 
 	controls.addEventListener( "change", function () {
@@ -292,13 +296,23 @@ var Viewport = function ( editor ) {
 		controls.center.set( 0, 0, 0 );
 
 	//	Add camera directional light.
-	//	scene.add( editor.lights ); // bypass push in "objects" to avoid helper creation.
         editor.addObject( editor.lights );
 
 	//	Update camera light position (by uuid) important!
 		var uuid = editor.lights.uuid;
 		var light = editor.objectByUuid( uuid );
 		if ( light ) light.position.copy( camera.position );
+
+	//  Add default camera light script.
+
+		if ( light ) {
+
+			editor.addScript( light, {
+				name: "camera-light.js",
+				source: "var light = this;\n\nif (controls) {\n\tcontorls.addEventListener(\"change\", function(){\n\t\tlight.position.copy(camera.position);\n\t});\n}"
+			});
+
+		}
 
 		render();
 

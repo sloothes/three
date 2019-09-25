@@ -96,7 +96,7 @@ Menubar.File = function ( editor ) {
                 editor.signals.savingFinished.dispatch();
 
 				var element = document.createElement("h4");
-				var text = "Editor state saved to IndexedDB.";
+				var text = "Editor state saved.";
 				var content = new UI.Element( element );
 				content.setTextAlign("center");
 				content.setTextContent( text );

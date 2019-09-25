@@ -9,9 +9,9 @@ var APP = {
 		var scope = this;
 
 		var loader = new THREE.ObjectLoader();
-		var camera, scene, renderer, center;
+		var camera, scene, renderer, debugMode;
 
-		var vr, controls, effect, debugMode;
+		var vr, controls, effect, center;
 
 		var events = {};
 
@@ -90,7 +90,7 @@ var APP = {
 				update: []
 			};
 
-			var scriptWrapParams = "player,renderer,scene,camera";
+			var scriptWrapParams = "player,renderer,scene,camera,debugMode";
 			var scriptWrapResultObj = {};
 
 			for ( var eventKey in events ) {
@@ -118,7 +118,7 @@ var APP = {
 
 					var script = scripts[ i ];
 
-					var functions = ( new Function( scriptWrapParams, script.source + "\nreturn " + scriptWrapResult + ";" ).bind( object ) )( this, renderer, scene, camera );
+					var functions = ( new Function( scriptWrapParams, script.source + "\nreturn " + scriptWrapResult + ";" ).bind( object ) )( this, renderer, scene, camera, debugMode );
 
 					for ( var name in functions ) {
 

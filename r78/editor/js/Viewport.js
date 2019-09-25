@@ -298,19 +298,23 @@ var Viewport = function ( editor ) {
 	//	Add camera directional light.
         editor.addObject( editor.lights );
 
-	//	Update camera light position (by uuid) important!
+	//	Get default camera light (by uuid).
 		var uuid = editor.lights.uuid;
 		var light = editor.objectByUuid( uuid );
-		if ( light ) light.position.copy( camera.position );
-
-	//  Add default camera light script.
 
 		if ( light ) {
 
-			editor.addScript( light, {
+			var script = {
 				name: "camera-light.js",
-				source: "var light = this;\n\nif (controls) {\n\tcontorls.addEventListener(\"change\", function(){\n\t\tlight.position.copy(camera.position);\n\t});\n}"
-			});
+				source: "var light = this;\nif (!controls) controls = new THREE.EditorControls(camera, renderer.domElement);\n"
+				+ "if (controls) {\n\tcontrols.addEventListener(\"change\", function(){\n\t\tlight.position.copy(camera.position);\n\t});\n}";
+			}
+
+		//  Add default camera light script.
+			editor.addScript( light, script);
+
+		//	Update camera light position (by uuid).
+			light.position.copy( camera.position );
 
 		}
 

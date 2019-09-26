@@ -78,8 +78,9 @@ var APP = {
 					var script = new Function( "scope", scripts.shift() );
 				//	debugMode && console.log( script.toString() );
 				//	script = script.bind( window ); // bind to window.
-				//	script.bind( window ).call(); // bind and execute.
-					console.log("Script", script.bind( window ).call().toString(), "executed."); // debugging.
+					script.bind( window ).call(); // bind and execute.
+
+					debugMode && console.log("Script", script.toString(), "executed.");
 
 				}
 

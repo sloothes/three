@@ -65,7 +65,11 @@ var APP = {
 
 			if ( json.javascripts && json.javascripts.length > 0 ) {
 
-				this.setLibrary.apply(this, json.javascripts);
+				function stringify( script ){ 
+					return JSON.stringify( script ); 
+				}
+
+				this.setLibrary.apply( this, json.javascripts.map( stringify ) );
 
             }
 

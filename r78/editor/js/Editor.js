@@ -483,9 +483,10 @@ Editor.prototype = {
 		this.camera.aspect = this.DEFAULT_CAMERA.aspect;
 		this.camera.updateProjectionMatrix();
 
-		this.skinned = json.skinned; // TODO!
 		this.javascripts = json.javascripts;
-		this.stylesheets = json.stylesheets; // TODO!
+
+		this.stylesheets = json.stylesheets;	// TODO!
+		this.skinned = json.skinned;			// TODO!
 
 		this.scripts = json.scripts;
 		this.history.fromJSON( json.history );
@@ -513,7 +514,18 @@ Editor.prototype = {
 			}
 
 		}
+/*
+	//	javascript functions toJSON.
 
+		var javascripts = [];
+
+		this.javascripts.forEach(function( script ){
+		//  because script is in function, first we convert 
+		//	function to string and then we stringify to json.
+			var code = script.toString();				// important!
+			javascripts.push( JSON.stringify( code ) );	// important!
+		});
+*/
 	//
 
 		return {
@@ -528,9 +540,10 @@ Editor.prototype = {
 				shadows: this.config.getKey( "project/renderer/shadows" ),
 			},
 
-			skinned: this.skinned, // TODO!
 			javascripts: this.javascripts,
-			stylesheets: this.stylesheets, // TODO!
+
+			stylesheets: this.stylesheets,	// TODO!
+			skinned: this.skinned,			// TODO!
 
 			scripts: this.scripts,
 			camera: this.camera.toJSON(),

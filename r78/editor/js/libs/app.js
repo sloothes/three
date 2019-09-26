@@ -35,11 +35,7 @@ var APP = {
 		this.loadLibrary = function ( value ) {
 
 			var loader = new THREE.XHRLoader();
-			loader.load( value, function(text){
-
-				scope.setLibrary( text );
-
-			});
+			loader.load( value, this.setLibrary);
 
 		};
 

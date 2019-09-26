@@ -106,9 +106,9 @@ var Editor = function () {
 	this.textures = {};
 	this.scripts = {};
 
-    this.skinned = {};    // TODO!
-	this.javascripts = []; // TODO!
+	this.javascripts = [];
 	this.stylesheets = []; // TODO!
+    this.skinned = []; // TODO!
 
 	this.selected = null;
 	this.helpers = {};
@@ -442,7 +442,7 @@ Editor.prototype = {
 
 		}
 
-		this.skinned = {};
+		this.skinned = [];
 		this.javascripts = [];
 		this.stylesheets = [];
 
@@ -484,9 +484,19 @@ Editor.prototype = {
 		this.camera.updateProjectionMatrix();
 
 		this.javascripts = json.javascripts;
+		if ( json.javascripts === undefined ) {
+			this.javascripts = []; // important!
+		}
 
 		this.stylesheets = json.stylesheets;	// TODO!
+		if ( json.stylesheets === undefined ) {
+			this.stylesheets = []; // important!
+		}
+
 		this.skinned = json.skinned;			// TODO!
+		if ( json.skinned === undefined ) {
+			this.skinned = []; // important!
+		}
 
 		this.scripts = json.scripts;
 		this.history.fromJSON( json.history );

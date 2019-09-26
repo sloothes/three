@@ -176,16 +176,26 @@ Menubar.File = function ( editor ) {
 	fileInput.accept = ".js";
 	fileInput.addEventListener( "change", function ( event ) {
 
+		var files = fileInput.files;
+		debugMode && console.log(files);
+
 		var reader = new FileReader();
 		reader.addEventListener("load", function(e){
 
 			editor.javascripts.push( reader.result );
+			debugMode && console.log(editor.javascripts);
 
 		});
-		
-	//	reader.readAsText( fileInput.files[ 0 ] );
 
-		reader.readAsText.apply(reader, fileInput.files);
+		(function(){
+
+			for ( var i in arguments ){
+				reader.readAsText(arguments[i]);
+			}
+
+		}).apply(this, files);
+
+	//	reader.readAsText( fileInput.files[ 0 ] );
 
 	});
 

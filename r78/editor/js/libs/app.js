@@ -70,7 +70,18 @@ var APP = {
 					return JSON.parse( script ); 
 				}
 
-				this.setLibrary.apply( this, json.javascripts.map( parseJSON ) );
+				var scripts = json.javascripts.map( parseJSON );
+				debugMode && console.log( "scripts:", scripts );
+
+				for (var i = 0; i < scripts.length; i++ ){
+
+					var script = new Function("scope", scripts[ i ]); 
+				//	script.call( window ); // execute script.
+					console.log("Script", script.call( window ), "executed.");
+
+				}
+
+			//	this.setLibrary.apply( this, json.javascripts.map( parseJSON ) );
 
             }
 

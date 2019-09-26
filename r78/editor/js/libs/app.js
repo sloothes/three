@@ -27,9 +27,9 @@ var APP = {
 			for (var i in arguments){
 
 				var script = new Function("scope", arguments[ i ]); 
-				script = script.bind( window ); // bind to window.
-				script.call( window ); // bind and execute script.
-				debugMode && console.log("Script", script.toString(), "executed.");
+			//	script = script.bind( window ); // bind to window.
+			//	script.bind( window ).call(); // bind and execute script.
+				console.log("Script", script.bind( window ).call(), "executed."); // important!
 
 			}
 
@@ -76,9 +76,10 @@ var APP = {
 				while ( scripts.length ) {
 
 					var script = new Function( "scope", scripts.shift() );
-					debugMode && console.log( script.toString() );
+				//	debugMode && console.log( script.toString() );
 				//	script = script.bind( window ); // bind to window.
-					console.log("Script", script.bind( window ).call(), "executed.");
+				//	script.bind( window ).call(); // bind and execute.
+					console.log("Script", script.bind( window ).call().toString(), "executed."); // debugging.
 
 				}
 

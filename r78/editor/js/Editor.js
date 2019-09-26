@@ -431,8 +431,8 @@ Editor.prototype = {
 		this.history.clear();
 		this.storage.clear();
 
-		this.lights.copy( this.CAMERA_LIGHT );
 		this.camera.copy( this.DEFAULT_CAMERA );
+		this.lights.copy( this.DEFAULT_CAMERA_LIGHT );
 
 		var objects = this.scene.children;
 

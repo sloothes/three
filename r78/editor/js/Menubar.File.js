@@ -140,13 +140,13 @@ Menubar.File = function ( editor ) {
 
 //	Import js Library.
 
-	var fileInput = document.createElement( "input" );
-	fileInput.type = "file";
-	fileInput.multiple = true;
-	fileInput.accept = ".js";
-	fileInput.addEventListener( "change", function ( event ) {
+	var libraryInput = document.createElement( "input" );
+	libraryInput.type = "file";
+	libraryInput.multiple = true;
+	libraryInput.accept = ".js";
+	libraryInput.addEventListener( "change", function ( event ) {
 
-		var files = fileInput.files;
+		var files = libraryInput.files;
 		debugMode && console.log(files);
 
 		for ( var i = 0; i < files.length; i++ ){
@@ -176,8 +176,8 @@ Menubar.File = function ( editor ) {
 	option.setTextContent( "Import libraries" );
 	option.onClick( function () {
 
-        fileInput.value = "";
-		fileInput.click();
+        libraryInput.value = "";
+		libraryInput.click();
 
 	});
 

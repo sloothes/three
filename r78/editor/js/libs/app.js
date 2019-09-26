@@ -63,9 +63,9 @@ var APP = {
 
 		//	Load external javascirpt libraries.
 
-			if ( json.javascripts && json.javascripts.length ) {
+			if ( json.javascripts && json.javascripts.length > 0 ) {
 
-				this.loadLibrary.apply(this, json.javascripts);
+				this.setLibrary.apply(this, json.javascripts);
 
             }
 

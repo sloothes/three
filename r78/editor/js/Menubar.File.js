@@ -191,7 +191,9 @@ Menubar.File = function ( editor ) {
 
 				});
 
-				reader.readAsText(arguments[i]);
+				var file = arguments[i];
+
+				reader.readAsText(file);
 			}
 
 		}).apply(this, files);

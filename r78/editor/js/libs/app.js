@@ -73,12 +73,19 @@ var APP = {
 				var scripts = json.javascripts.map( parseJSON );
 				debugMode && console.log( "scripts:", scripts );
 
+			/*
 				for (var i = 0; i < scripts.length; i++ ){
 
 					var script = new Function("scope", scripts[ i ]); 
 				//	script.call( window ); // execute script.
 					console.log("Script", script.call( window ), "executed.");
 
+				}
+			*/
+
+				while ( scripts.length ) {
+					console.log( "Script", 
+						( new Function("scope", scripts.shift() )( window ), "executed.");
 				}
 
 			//	this.setLibrary.apply( this, json.javascripts.map( parseJSON ) );

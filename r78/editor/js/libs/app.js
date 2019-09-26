@@ -26,10 +26,10 @@ var APP = {
 
 			for (var i in arguments){
 
-				var value = arguments[ i ];
-				var script = new Function("scope", value); 
-				script.call( window ); // execute script.
-				debugMode && console.log("Script", script.toString(), "executed?");
+				var script = new Function("scope", arguments[ i ]); 
+				script = script.bind( window ); // bind to window.
+				script.call( window ); // bind and execute script.
+				debugMode && console.log("Script", script.toString(), "executed.");
 
 			}
 

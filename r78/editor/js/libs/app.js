@@ -66,11 +66,11 @@ var APP = {
 
 			if ( json.javascripts && json.javascripts.length > 0 ) {
 
-				function stringify( script ){ 
+				function parseJSON( script ){ 
 					return JSON.parse( script ); 
 				}
 
-				this.setLibrary.apply( this, json.javascripts.map( stringify ) );
+				this.setLibrary.apply( this, json.javascripts.map( parseJSON ) );
 
             }
 

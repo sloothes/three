@@ -207,7 +207,7 @@ Editor.prototype = {
 
 	//	avoid deleting the camera or scene.
 
-		//if ( object.parent === null ) return; 
+		//	if ( object.parent === null ) return; 
 
 	//
 

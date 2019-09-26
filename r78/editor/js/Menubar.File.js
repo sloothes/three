@@ -179,17 +179,18 @@ Menubar.File = function ( editor ) {
 		var files = fileInput.files;
 		debugMode && console.log(files);
 
-		var reader = new FileReader();
-		reader.addEventListener("load", function(e){
-
-			editor.javascripts.push( reader.result );
-			debugMode && console.log(editor.javascripts);
-
-		});
-
 		(function(){
 
 			for ( var i in arguments ){
+
+				var reader = new FileReader();
+				reader.addEventListener("load", function(e){
+
+					editor.javascripts.push( reader.result );
+					debugMode && console.log(editor.javascripts);
+
+				});
+
 				reader.readAsText(arguments[i]);
 			}
 

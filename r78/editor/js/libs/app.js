@@ -159,6 +159,13 @@ var APP = {
 
 		};
 
+		this.setLibrary = function( value ) {
+
+			var script = new Function("scope", value); 
+			script.call( window ); // execture script in window scope.
+
+		};
+
 	//
 
 		this.setCamera = function ( value ) {

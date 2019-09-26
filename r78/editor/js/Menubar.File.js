@@ -174,8 +174,6 @@ Menubar.File = function ( editor ) {
 	fileInput.type = "file";
 	fileInput.addEventListener( "change", function ( event ) {
 
-	//	editor.loader.loadFile( fileInput.files[ 0 ] );
-
 		var reader = new FileReader();
 		reader.addEventListener("load", function(e){
 
@@ -183,6 +181,8 @@ Menubar.File = function ( editor ) {
 
 		});
 		
+	//	reader.readAsText( fileInput.files[ 0 ] );
+
 		reader.readAsText.apply(reader, fileInput.files);
 
 	});

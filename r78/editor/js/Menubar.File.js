@@ -138,6 +138,10 @@ Menubar.File = function ( editor ) {
 
 	options.add( option );
 
+//
+
+	options.add( new UI.HorizontalRule() );
+
 //	Import js Libraries.
 
 	var libraryInput = document.createElement( "input" );

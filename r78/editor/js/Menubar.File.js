@@ -180,7 +180,7 @@ Menubar.File = function ( editor ) {
 
 	var option = new UI.Row();
 	option.setClass( "option" );
-	option.setTextContent( "Import libraries" );
+	option.setTextContent( "Import JS Libs" );
 	option.onClick( function () {
 
         libraryInput.value = "";

@@ -157,7 +157,7 @@ Menubar.File = function ( editor ) {
 				reader.addEventListener("load", function(e){
 
 					var text = reader.result;		//	editor.javascripts.push( text );
-					var script = new Function("window", text);	//  script.call(window);
+					var script = new Function("scope", text);	//  script.call(window);
 					editor.javascripts.push( script );
 
 				});

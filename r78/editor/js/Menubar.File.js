@@ -179,24 +179,20 @@ Menubar.File = function ( editor ) {
 		var files = fileInput.files;
 		debugMode && console.log(files);
 
-		(function(){
+		for ( var i = 0; i < files.length; i++ ){
 
-			for ( var i in arguments ){
+			var file = files[i];
 
-				var reader = new FileReader();
-				reader.addEventListener("load", function(e){
+			var reader = new FileReader();
+			reader.addEventListener("load", function(e){
 
-					editor.javascripts.push( reader.result );
-					debugMode && console.log(editor.javascripts);
+				editor.javascripts.push( reader.result );
+				debugMode && console.log(editor.javascripts);
 
-				});
+			});
 
-				var file = arguments[i];
-
-				reader.readAsText(file);
-			}
-
-		}).apply(this, files);
+			reader.readAsText(file);
+		}
 
 	//	reader.readAsText( fileInput.files[ 0 ] );
 

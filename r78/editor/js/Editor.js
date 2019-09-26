@@ -4,17 +4,17 @@
 
 var Editor = function () {
 
+	this.JS_LIBRARIES = [];
+
 	this.DEFAULT_CAMERA = new THREE.PerspectiveCamera( 50, 1, 0.1, 10000 );
 	this.DEFAULT_CAMERA.name = "Camera";
 	this.DEFAULT_CAMERA.position.set( 20, 10, 20 );
 	this.DEFAULT_CAMERA.lookAt( new THREE.Vector3() );
 
-	this.CAMERA_LIGHT = new THREE.DirectionalLight( 0xffffff, 1 );
-	this.CAMERA_LIGHT.name = "Default Camera Light";
-	this.CAMERA_LIGHT.position.copy( this.DEFAULT_CAMERA.position );
+	this.DEFAULT_CAMERA_LIGHT = new THREE.DirectionalLight( 0xffffff, 1 );
+	this.DEFAULT_CAMERA_LIGHT.name = "Default Camera Light";
+	this.DEFAULT_CAMERA_LIGHT.position.copy( this.DEFAULT_CAMERA.position );
 
-	this.SCRIPTS_LOADER = new THREE.Group();
-	this.SCRIPTS_LOADER.name = "Libraries";
 
 	var Signal = signals.Signal;
 
@@ -87,14 +87,12 @@ var Editor = function () {
 	this.loader = new Loader( this );
 
 	this.camera = this.DEFAULT_CAMERA.clone();
+	this.lights = this.DEFAULT_CAMERA_LIGHT.clone();
 
 //  Camera light is added in editor scene "only after" 
 //  editor has been cleared: this.clear() => 
 //  this.signals.editorCleared.dispatch(); => 
 //  Viewport.js => editor.signals.editorCleared.add();
-
-	this.lights = this.CAMERA_LIGHT.clone();
-	this.libraries = this.SCRIPTS_LOADER.clone();
 
 	this.scene = new THREE.Scene();
 	this.scene.name = "Scene";
@@ -109,8 +107,8 @@ var Editor = function () {
 	this.scripts = {};
 
     this.skinned = {};    // TODO!
-	this.stylesheet = []; // TODO!
-	this.javascript = []; // TODO!
+	this.javascripts = []; // TODO!
+	this.stylesheets = []; // TODO!
 
 	this.selected = null;
 	this.helpers = {};
@@ -390,13 +388,6 @@ Editor.prototype = {
 
 		}
 
-		if ( id === this.libraries.id ) {
-
-			this.select( this.libraries );
-			return;
-
-		}
-
 		this.select( this.scene.getObjectById( id, true ) );
 
 	},
@@ -442,7 +433,6 @@ Editor.prototype = {
 
 		this.lights.copy( this.CAMERA_LIGHT );
 		this.camera.copy( this.DEFAULT_CAMERA );
-		this.libraries.copy( this.SCRIPTS_LOADER );
 
 		var objects = this.scene.children;
 
@@ -452,10 +442,14 @@ Editor.prototype = {
 
 		}
 
-		this.geometries = {};
-		this.materials = {};
-		this.textures = {};
+		this.skinned = {};
+		this.javascripts = [];
+		this.stylesheets = [];
+
 		this.scripts = {};
+		this.textures = {};
+		this.materials = {};
+		this.geometries = {};
 
 		this.deselect();
 
@@ -489,12 +483,9 @@ Editor.prototype = {
 		this.camera.aspect = this.DEFAULT_CAMERA.aspect;
 		this.camera.updateProjectionMatrix();
 
-		var libraries = loader.parse( json.libraries );
-		this.libraries.copy( libraries );
-
-		this.skinned = json.skinned;       // TODO!
-		this.stylesheet = json.stylesheet; // TODO!
-		this.javascript = json.javascript; // TODO!
+		this.skinned = json.skinned; // TODO!
+		this.javascripts = json.javascripts;
+		this.stylesheets = json.stylesheets; // TODO!
 
 		this.scripts = json.scripts;
 		this.history.fromJSON( json.history );
@@ -535,11 +526,9 @@ Editor.prototype = {
 				shadows: this.config.getKey( "project/renderer/shadows" ),
 			},
 
-			skinned: this.skinned,       // TODO!
-			stylesheet: this.stylesheet, // TODO!
-			javascript: this.javascript, // TODO!
-
-			libraries: this.libraries.toJSON(),
+			skinned: this.skinned, // TODO!
+			javascripts: this.javascripts,
+			stylesheets: this.stylesheets, // TODO!
 
 			scripts: this.scripts,
 			camera: this.camera.toJSON(),

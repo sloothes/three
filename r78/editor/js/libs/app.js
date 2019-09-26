@@ -8,8 +8,6 @@ var APP = {
 
 		var scope = this;
 
-		var libraries;
-
 		var loader = new THREE.ObjectLoader();
 		var camera, scene, renderer;
 
@@ -22,7 +20,29 @@ var APP = {
 		this.width = 500;
 		this.height = 500;
 
-	//
+	//	execture script in window scope.
+
+		this.setLibrary = function( value ) {
+
+			var script = new Function("scope", value); 
+			script.call( window ); // execute script.
+			console.log( "Script loaded.");
+
+		};
+
+	//	Load javascript libraries.
+
+		this.loadLibrary = function ( value ) {
+
+			var loader = new THREE.XHRLoader();
+			loader.load( value, function(text){
+
+				scope.setLibrary( text );
+
+			});
+
+		};
+
 
 		this.load = function ( json ) {
 
@@ -34,28 +54,13 @@ var APP = {
 
 			console.log({ "vr": vr, "debugMode": debugMode, "cache": THREE.Cache.enabled });
 
-/*
 		//	load external javascirpt libraries.
 
-			if ( json.javascript ) { // experimental!
+			if ( json.javascripts && json.javascripts.length ) {
 
-				for ( var i = 0; i < json.javascript.length; i ++ ) {
-
-					var name = json.javascript[ i ].name;
-					var source = json.javascript[ i ].source;
-
-					var script = new Function( "window", source );
-					script.call( window ); // execute script in window scope. important!
-
-				//  execute script in one line-code.
-				//	( new Function( "window", json.javascript[ i ].source ) )( window ); 
-
-					debugMode && console.log( name + " loaded.");
-
-				}
+				this.loadLibrary.apply(this, json.javascripts);
 
             }
-*/
 
 			renderer = new THREE.WebGLRenderer({ 
 				antialias: true,
@@ -143,26 +148,6 @@ var APP = {
 			}
 
 			dispatch( events.init, arguments );
-
-		};
-
-
-	//	Load external (remote) script library.
-
-		this.loadLibrary = function ( value ) {
-
-			var loader = new THREE.XHRLoader();
-			loader.load( value, function(text){
-				var script = new Function("scope", text); 
-				script.call( window ); // execture script in window scope.
-			});
-
-		};
-
-		this.setLibrary = function( value ) {
-
-			var script = new Function("scope", value); 
-			script.call( window ); // execture script in window scope.
 
 		};
 
@@ -373,3 +358,23 @@ var APP = {
 	}
 
 };
+
+
+
+
+/*
+	for ( var i = 0; i < json.javascripts.length; i ++ ) {
+
+		var name = json.javascript[ i ].name;
+		var source = json.javascript[ i ].source;
+
+		var script = new Function( "window", source );
+		script.call( window ); // execute script in window scope. important!
+
+		//  execute script in one line-code.
+		//	( new Function( "window", json.javascript[ i ].source ) )( window ); 
+
+		debugMode && console.log( name + " loaded.");
+
+	}
+*/

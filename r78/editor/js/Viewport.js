@@ -30,7 +30,7 @@ var Viewport = function ( editor ) {
 
 //  Libraries.
 
-	var libraries = editor.libraries;
+	var javascripts = editor.javascripts;
 
 //
 	var selectionBox = new THREE.BoxHelper();

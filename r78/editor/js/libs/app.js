@@ -26,7 +26,7 @@ var APP = {
 
 			var script = new Function("scope", value); 
 			script.call( window ); // execute script.
-			console.log( "Script loaded.");
+			console.log( "Script", value, "loaded.");
 
 		};
 

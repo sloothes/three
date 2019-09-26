@@ -388,6 +388,24 @@ Menubar.File = function ( editor ) {
 
 		});
 
+		loader.load( "/js/jquery.min.js", function ( content ) {
+
+			zip.file( "js/jquery.min.js", content );
+
+		});
+
+		loader.load( "/js/bootbox.min.js", function ( content ) {
+
+			zip.file( "js/bootbox.min.js", content );
+
+		});
+
+		loader.load( "/js/bootstrap.min.js", function ( content ) {
+
+			zip.file( "js/bootstrap.min.js", content );
+
+		});
+
 		loader.load( "/three/three.min.js", function ( content ) {
 
 			zip.file( "js/three.min.js", content );

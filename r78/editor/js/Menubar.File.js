@@ -118,6 +118,7 @@ Menubar.File = function ( editor ) {
 	option.onClick( function () {
 
 		var output = editor.toJSON();
+		output.metadata.type = "App";
 		delete output.history;
 
 		try {
@@ -154,6 +155,41 @@ Menubar.File = function ( editor ) {
 	var option = new UI.Row();
 	option.setClass( "option" );
 	option.setTextContent( "Import" );
+	option.onClick( function () {
+
+        fileInput.value = "";
+		fileInput.click();
+
+	});
+
+	options.add( option );
+
+//
+
+	options.add( new UI.HorizontalRule() );
+
+//	Import js Library.
+
+	var fileInput = document.createElement( "input" );
+	fileInput.type = "file";
+	fileInput.addEventListener( "change", function ( event ) {
+
+	//	editor.loader.loadFile( fileInput.files[ 0 ] );
+
+		var reader = new FileReader();
+		reader.addEventListener("load", function(e){
+
+			editor.javascripts.push( reader.result );
+
+		});
+		
+		reader.readAsText.apply(reader, fileInput.files);
+
+	});
+
+	var option = new UI.Row();
+	option.setClass( "option" );
+	option.setTextContent( "Import libraries" );
 	option.onClick( function () {
 
         fileInput.value = "";

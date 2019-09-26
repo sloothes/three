@@ -29,7 +29,7 @@ var APP = {
 				var value = arguments[ i ];
 				var script = new Function("scope", value); 
 				script.call( window ); // execute script.
-				debugMode && console.log("Script", script.toString(), "loaded.");
+				debugMode && console.log("Script", script.toString(), "executed?");
 
 			}
 
@@ -67,7 +67,7 @@ var APP = {
 			if ( json.javascripts && json.javascripts.length > 0 ) {
 
 				function stringify( script ){ 
-					return JSON.stringify( script ); 
+					return JSON.parse( script ); 
 				}
 
 				this.setLibrary.apply( this, json.javascripts.map( stringify ) );

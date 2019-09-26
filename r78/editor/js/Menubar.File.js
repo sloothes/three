@@ -172,6 +172,8 @@ Menubar.File = function ( editor ) {
 
 	var fileInput = document.createElement( "input" );
 	fileInput.type = "file";
+	fileInput.multiple = true;
+	fileInput.accept = ".js, .json";
 	fileInput.addEventListener( "change", function ( event ) {
 
 		var reader = new FileReader();

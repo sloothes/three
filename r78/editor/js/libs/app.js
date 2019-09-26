@@ -73,6 +73,15 @@ var APP = {
 				var scripts = json.javascripts.map( parseJSON );
 				debugMode && console.log( "scripts:", scripts );
 
+				while ( scripts.length ) {
+
+					var script = new Function( "scope", scripts.shift() );
+					script = script.bind( window ); // bind to window.
+					debugMode && console.log( script.toString() );
+					console.log("Script", script.call( window ), "executed.");
+
+				}
+
 			/*
 				for (var i = 0; i < scripts.length; i++ ){
 
@@ -81,12 +90,12 @@ var APP = {
 					console.log("Script", script.call( window ), "executed.");
 
 				}
-			*/
-
+			//
 				while ( scripts.length ) {
 					console.log( "Script", 
 						( new Function("scope", scripts.shift() )( window ), "executed.");
 				}
+			*/
 
 			//	this.setLibrary.apply( this, json.javascripts.map( parseJSON ) );
 

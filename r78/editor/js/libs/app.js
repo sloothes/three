@@ -117,7 +117,9 @@ var APP = {
 
 				if ( object === undefined ) {
 
-					console.warn( "APP.Player: Script without object.", uuid ); continue;
+					console.warn( "APP.Player: Script without object.", uuid ); 
+
+				//	continue;
 
 				}
 
@@ -135,7 +137,9 @@ var APP = {
 
 						if ( events[ name ] === undefined ) {
 
-							console.warn( "APP.Player: Event type not supported (", name, ")" ); continue;
+							console.warn( "APP.Player: Event type not supported (", name, ")" ); 
+
+							continue;
 
 						}
 

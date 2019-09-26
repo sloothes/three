@@ -181,17 +181,20 @@ Menubar.File = function ( editor ) {
 
 		for ( var i = 0; i < files.length; i++ ){
 
-			var file = files[i];
+			(function(file){
 
-			var reader = new FileReader();
-			reader.addEventListener("load", function(e){
+				var reader = new FileReader();
+				reader.addEventListener("load", function(e){
 
-				editor.javascripts.push( reader.result );
-				debugMode && console.log(editor.javascripts);
+					editor.javascripts.push( reader.result );
+					debugMode && console.log(editor.javascripts);
 
-			});
+				});
 
-			reader.readAsText(file);
+				reader.readAsText(file);
+
+			})( files[i] );
+
 		}
 
 	//	reader.readAsText( fileInput.files[ 0 ] );

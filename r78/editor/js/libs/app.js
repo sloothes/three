@@ -54,13 +54,17 @@ var APP = {
 
 			console.log({ "vr": vr, "debugMode": debugMode, "cache": THREE.Cache.enabled });
 
-		//	load external javascirpt libraries.
+
+		//	Load external javascirpt libraries.
 
 			if ( json.javascripts && json.javascripts.length ) {
 
 				this.loadLibrary.apply(this, json.javascripts);
 
             }
+
+
+		//	Player renderer.
 
 			renderer = new THREE.WebGLRenderer({ 
 				antialias: true,
@@ -78,11 +82,11 @@ var APP = {
 			}
 
 			this.dom.appendChild( renderer.domElement );
+
 			this.setScene( loader.parse( json.scene ) );
 			this.setCamera( loader.parse( json.camera ) );
 
-        //  Player editor controls (at runtime).
-		//	always "after" setCamera(); important!
+        //  If editor controls (at runtime) "always after" setCamera(); important!
 
 			events = {
 				init: [],

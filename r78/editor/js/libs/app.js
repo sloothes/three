@@ -28,9 +28,7 @@ var APP = {
 
 				var value = arguments[ i ];
 				var script = new Function("scope", value); 
-
 				script.call( window ); // execute script.
-				console.log( "Script executed.");
 
 			}
 
@@ -43,8 +41,10 @@ var APP = {
 			var loader = new THREE.XHRLoader();
 
 			for ( var i in arguments ){
+
 				loader.load( arguments[i], this.setLibrary );
 				console.log( "Script:", arguments[i], "loaded.");
+
 			}
 
 		};

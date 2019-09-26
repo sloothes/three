@@ -138,36 +138,6 @@ Menubar.File = function ( editor ) {
 
 	options.add( option );
 
-//
-
-	options.add( new UI.HorizontalRule() );
-
-//  Import.
-
-	var fileInput = document.createElement( "input" );
-	fileInput.type = "file";
-	fileInput.addEventListener( "change", function ( event ) {
-
-		editor.loader.loadFile( fileInput.files[ 0 ] );
-
-	});
-
-	var option = new UI.Row();
-	option.setClass( "option" );
-	option.setTextContent( "Import" );
-	option.onClick( function () {
-
-        fileInput.value = "";
-		fileInput.click();
-
-	});
-
-	options.add( option );
-
-//
-
-	options.add( new UI.HorizontalRule() );
-
 //	Import js Library.
 
 	var fileInput = document.createElement( "input" );
@@ -186,8 +156,9 @@ Menubar.File = function ( editor ) {
 				var reader = new FileReader();
 				reader.addEventListener("load", function(e){
 
-					editor.javascripts.push( reader.result );
-					debugMode && console.log(editor.javascripts);
+					var text = reader.result;		//	editor.javascripts.push( text );
+					var script = new Function("window", text);	//  script.call(window);
+					editor.javascripts.push( script );
 
 				});
 
@@ -196,14 +167,38 @@ Menubar.File = function ( editor ) {
 			})( files[i] );
 
 		}
-
-	//	reader.readAsText( fileInput.files[ 0 ] );
-
+		
 	});
 
 	var option = new UI.Row();
 	option.setClass( "option" );
 	option.setTextContent( "Import libraries" );
+	option.onClick( function () {
+
+        fileInput.value = "";
+		fileInput.click();
+
+	});
+
+	options.add( option );
+
+//
+
+	options.add( new UI.HorizontalRule() );
+
+//  Import.
+
+	var fileInput = document.createElement( "input" );
+	fileInput.type = "file";
+	fileInput.addEventListener( "change", function ( event ) {
+
+		editor.loader.loadFile( fileInput.files[ 0 ] );
+
+	});
+
+	var option = new UI.Row();
+	option.setClass( "option" );
+	option.setTextContent( "Import" );
 	option.onClick( function () {
 
         fileInput.value = "";

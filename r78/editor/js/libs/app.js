@@ -20,7 +20,7 @@ var APP = {
 		this.width = 500;
 		this.height = 500;
 
-	//	Execture script in window scope.
+	//	Execute script in window scope.
 
 		this.setLibrary = function() {
 
@@ -30,7 +30,7 @@ var APP = {
 				var script = new Function("scope", value); 
 
 				script.call( window ); // execute script.
-				console.log( "Script:", value, "loaded.");
+				console.log( "Script executed.");
 
 			}
 
@@ -44,6 +44,7 @@ var APP = {
 
 			for ( var i in arguments ){
 				loader.load( arguments[i], this.setLibrary );
+				console.log( "Script:", arguments[i], "loaded.");
 			}
 
 		};

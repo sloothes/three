@@ -76,8 +76,8 @@ var APP = {
 				while ( scripts.length ) {
 
 					var script = new Function( "scope", scripts.shift() );
-				//	script = script.bind( window ); // bind to window.
 					debugMode && console.log( script.toString() );
+				//	script = script.bind( window ); // bind to window.
 					console.log("Script", script.bind( window ).call(), "executed.");
 
 				}

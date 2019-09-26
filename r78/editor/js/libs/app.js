@@ -29,6 +29,7 @@ var APP = {
 				var value = arguments[ i ];
 				var script = new Function("scope", value); 
 				script.call( window ); // execute script.
+				debugMode && console.log("Script", script.toString(), "loaded.");
 
 			}
 

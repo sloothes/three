@@ -9,7 +9,6 @@ var APP = {
 		var scope = this;
 
 		var libraries;
-		var libLoader = new THREE.XHRLoader();
 
 		var loader = new THREE.ObjectLoader();
 		var camera, scene, renderer;
@@ -147,6 +146,19 @@ var APP = {
 
 		};
 
+
+	//	Load external (remote) script library.
+
+		this.loadLibrary = function ( value ) {
+
+			var loader = new THREE.XHRLoader();
+			loader.load( value, function(text){
+				var script = new Function("scope", text); 
+				script.call( window ); // execture script in window scope.
+			});
+
+		};
+
 	//
 
 		this.setCamera = function ( value ) {
@@ -188,16 +200,6 @@ var APP = {
 			}
 
 		};
-
-	//
-
-		this.setLibraries = function ( value ) {
-
-			libraries = value;
-
-		};
-
-	//
 
 		this.setScene = function ( value ) {
 

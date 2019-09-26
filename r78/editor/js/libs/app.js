@@ -20,22 +20,31 @@ var APP = {
 		this.width = 500;
 		this.height = 500;
 
-	//	execture script in window scope.
+	//	Execture script in window scope.
 
-		this.setLibrary = function( value ) {
+		this.setLibrary = function() {
 
-			var script = new Function("scope", value); 
-			script.call( window ); // execute script.
-			console.log( "Script", value, "loaded.");
+			for (var i in arguments){
+
+				var value = arguments[ i ];
+				var script = new Function("scope", value); 
+
+				script.call( window ); // execute script.
+				console.log( "Script:", value, "loaded.");
+
+			}
 
 		};
 
 	//	Load javascript libraries.
 
-		this.loadLibrary = function ( value ) {
+		this.loadLibrary = function(){
 
 			var loader = new THREE.XHRLoader();
-			loader.load( value, this.setLibrary);
+
+			for ( var i in arguments ){
+				loader.load( arguments[i], this.setLibrary );
+			}
 
 		};
 

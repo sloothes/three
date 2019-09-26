@@ -504,11 +504,13 @@ Editor.prototype = {
 
 			var script = scripts[ key ];
 
-		//	if ( script.length === 0 || scene.getObjectByProperty( "uuid", key ) === undefined ) {
+		//	if ( script.length === 0 ) delete scripts[ key ];
 
-			if ( script.length === 0 ) delete scripts[ key ];
+			if ( script.length === 0 || scene.getObjectByProperty( "uuid", key ) === undefined ) {
 
-		//	}
+				delete scripts[ key ]; 
+
+			}
 
 		}
 

@@ -31,7 +31,7 @@ var APP = {
 				var script = new Function("scope", arguments[ i ]); 
 			//	script = script.bind( window ); // bind to window.
 				script.bind( window ).call(); // bind and execute script.
-				debugMode && console.log("Script", script.toString(), "executed.");
+				debugMode && console.log("Library", script.toString(), "executed.");
 
 			}
 
@@ -46,7 +46,7 @@ var APP = {
 			for ( var i in arguments ){
 
 				loader.load( arguments[i], this.setLibrary );
-				console.log( "Script:", arguments[i], "loaded.");
+				console.log( "Library", arguments[i], "loaded.");
 
 			}
 
@@ -83,7 +83,7 @@ var APP = {
 					var object = scripts.shift(); // important!
 					var script = new Function( "scope", object.source );
 					script.bind( window ).call(); // bind and execute.
-					console.log("Script", object.name, "loaded.");
+					console.log("Library", object.name, "loaded.");
 
 				}
 

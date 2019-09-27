@@ -69,7 +69,7 @@ var APP = {
 			if ( json.javascripts && json.javascripts.length > 0 ) {
 
 				function parseJSON( script ){ 
-					return JSON.parse( script ); // important!
+					return JSON.parse( script.source ); // important!
 				}
 
 				var scripts = json.javascripts.map( parseJSON );

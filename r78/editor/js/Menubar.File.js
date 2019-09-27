@@ -95,8 +95,8 @@ Menubar.File = function ( editor ) {
 
                 editor.signals.savingFinished.dispatch();
 
-				var element = document.createElement("h4");
 				var text = "Editor state saved.";
+				var element = document.createElement("h4");
 				var content = new UI.Element( element );
 				content.setTextAlign("center");
 				content.setTextContent( text );
@@ -201,10 +201,19 @@ Menubar.File = function ( editor ) {
 
 	var option = new UI.Row();
 	option.setClass( "option" );
-	option.setTextContent( "Clear JS" );
+	option.setTextContent( "Clear JS Libs" );
 	option.onClick( function () {
 
         editor.javascripts.length = 0;
+
+		var text = "Javascript libraries cleared.";
+		var element = document.createElement("h4");
+		var content = new UI.Element( element );
+		content.setTextAlign("center");
+		content.setTextContent( text );
+		editor.signals.showModal.dispatch( content );
+
+		debugMode && console.log( text, editor.javascripts );
 
 	});
 

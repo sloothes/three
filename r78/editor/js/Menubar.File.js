@@ -187,11 +187,24 @@ Menubar.File = function ( editor ) {
 
 	var option = new UI.Row();
 	option.setClass( "option" );
-	option.setTextContent( "Import JS Libs" );
+	option.setTextContent( "Import JS" );
 	option.onClick( function () {
 
         libraryInput.value = "";
 		libraryInput.click();
+
+	});
+
+	options.add( option );
+
+//	Clear js Libraries.
+
+	var option = new UI.Row();
+	option.setClass( "option" );
+	option.setTextContent( "Clear JS" );
+	option.onClick( function () {
+
+        editor.javascripts.length = 0;
 
 	});
 
@@ -213,7 +226,7 @@ Menubar.File = function ( editor ) {
 
 	var option = new UI.Row();
 	option.setClass( "option" );
-	option.setTextContent( "Import" );
+	option.setTextContent( "Import 3D" );
 	option.onClick( function () {
 
         fileInput.value = "";

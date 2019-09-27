@@ -87,7 +87,7 @@ var APP = {
 
 				}
 
-            }
+			}
 
 
 		//	Player renderer.

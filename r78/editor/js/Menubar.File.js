@@ -157,16 +157,23 @@ Menubar.File = function ( editor ) {
 
 			(function(file){
 
+				debugMode && console.log("file:", file);
+
 				var reader = new FileReader();
 				reader.addEventListener("load", function(e){
 
-					var script = JSON.stringify( reader.result );
-					editor.javascripts.push( script );
+					var script = {
+						"name": file.name,
+						"source": JSON.stringify( reader.result ),
+					}
 
-				//	var text = reader.result;
-				//	var script = new Function("scope", text);
-				//	editor.javascripts.push( script );	
-				//	debugMode && console.log( script );
+					editor.javascripts.push( script );
+					debugMode && console.log( "script:", script );
+
+					//	var text = reader.result;
+					//	var script = new Function("scope", text);
+					//	editor.javascripts.push( script );	
+					//	debugMode && console.log( script );
 
 				});
 

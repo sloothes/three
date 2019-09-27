@@ -24,12 +24,14 @@ var APP = {
 
 		this.setLibrary = function() {
 
+		//  arguments: soucre code (text) only.
+
 			for (var i in arguments){
 
 				var script = new Function("scope", arguments[ i ]); 
 			//	script = script.bind( window ); // bind to window.
-			//	script.bind( window ).call(); // bind and execute script.
-				console.log("Script", script.bind( window ).call(), "executed."); // important!
+				script.bind( window ).call(); // bind and execute script.
+				debugMode && console.log("Script", script.toString(), "executed.");
 
 			}
 
@@ -75,12 +77,13 @@ var APP = {
 
 				while ( scripts.length ) {
 
-					var script = new Function( "scope", scripts.shift() );
+					var object = scripts.shift();
+					var script = new Function( "scope", object.source );
 				//	debugMode && console.log( script.toString() );
 				//	script = script.bind( window ); // bind to window.
 					script.bind( window ).call(); // bind and execute.
 
-					debugMode && console.log("Script", script.toString(), "executed.");
+					debugMode && console.log("Script", object.name, "executed.");
 
 				}
 

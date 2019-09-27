@@ -484,17 +484,17 @@ Editor.prototype = {
 		this.camera.updateProjectionMatrix();
 
 		this.javascripts = json.javascripts;
-		if ( json.javascripts === undefined ) {
+		if ( json.javascripts == undefined ) {
 			this.javascripts = []; // important!
 		}
 
 		this.stylesheets = json.stylesheets;	// TODO!
-		if ( json.stylesheets === undefined ) {
+		if ( json.stylesheets == undefined ) {
 			this.stylesheets = []; // important!
 		}
 
 		this.skinned = json.skinned;			// TODO!
-		if ( json.skinned === undefined ) {
+		if ( json.skinned == undefined ) {
 			this.skinned = []; // important!
 		}
 

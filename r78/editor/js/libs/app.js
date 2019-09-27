@@ -68,23 +68,22 @@ var APP = {
 
 			if ( json.javascripts && json.javascripts.length > 0 ) {
 
-				function parseJSON( script ){ 
-					script.source = JSON.parse( script.source ); // important!
-					return script;
-				}
-
-				var scripts = json.javascripts.map( parseJSON );
+				var scripts = json.javascripts.map( parseScript );
 				debugMode && console.log( "scripts:", scripts );
+
+				function parseScript( item ){ 
+					return {
+						name: item.name,
+						source: JSON.parse( item.source ) // important!
+					};
+				}
 
 				while ( scripts.length ) {
 
-					var object = scripts.shift();
+					var object = scripts.shift(); // important!
 					var script = new Function( "scope", object.source );
-				//	debugMode && console.log( script.toString() );
-				//	script = script.bind( window ); // bind to window.
 					script.bind( window ).call(); // bind and execute.
-
-					debugMode && console.log("Script", object.name, "executed.");
+					console.log("Script", object.name, "loaded.");
 
 				}
 

@@ -513,7 +513,7 @@ Editor.prototype = {
 
 		if ( json.javascripts ) this.javascripts = json.javascripts; // previous version.
 
-		if ( json.collections ) (
+		if ( json.collections ) {
 			
 			this.stylesheets = json.collections.stylesheets;
 			if ( this.stylesheets == undefined ) {

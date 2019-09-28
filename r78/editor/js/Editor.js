@@ -87,8 +87,8 @@ var Editor = function () {
 	this.loader = new Loader( this );
 
 	this.camera = this.DEFAULT_CAMERA.clone();
-	this.lights = this.DEFAULT_CAMERA_LIGHT.clone();
 
+	this.lights = this.DEFAULT_CAMERA_LIGHT.clone();
 //  Camera light is added in editor scene "only after" 
 //  editor has been cleared: this.clear() => 
 //  this.signals.editorCleared.dispatch(); => 
@@ -100,15 +100,27 @@ var Editor = function () {
 	this.sceneHelpers = new THREE.Scene();
 	this.sceneHelpers.name = "Helpers";
 
-	this.object = {};
-	this.geometries = {};
-	this.materials = {};
-	this.textures = {};
-	this.scripts = {};
+//
 
+	this.object = {};
+	this.scripts = {};
+	this.textures = {};
+	this.materials = {};
+	this.geometries = {};
+
+//
+
+	this.male = [];
+	this.female = [];
+	this.skinned = [];
+	this.skeleton = [];
+
+	this.functions = [];
+	this.animations = [];
+	this.stylesheets = [];
 	this.javascripts = [];
-	this.stylesheets = []; // TODO!
-    this.skinned = []; // TODO!
+
+//
 
 	this.selected = null;
 	this.helpers = {};
@@ -428,11 +440,15 @@ Editor.prototype = {
 
 	clear: function () {
 
+	//
+
 		this.history.clear();
 		this.storage.clear();
 
 		this.camera.copy( this.DEFAULT_CAMERA );
 		this.lights.copy( this.DEFAULT_CAMERA_LIGHT );
+
+	//
 
 		var objects = this.scene.children;
 
@@ -442,9 +458,19 @@ Editor.prototype = {
 
 		}
 
+	//
+
+		this.male = [];
+		this.female = [];
 		this.skinned = [];
-		this.javascripts = [];
+		this.skeleton = [];
+
+		this.functions = [];
+		this.animations = [];
 		this.stylesheets = [];
+		this.javascripts = [];
+
+	//
 
 		this.scripts = {};
 		this.textures = {};
@@ -477,26 +503,59 @@ Editor.prototype = {
 
 		}
 
+	//  Order is important!
+
 		var camera = loader.parse( json.camera );
 
 		this.camera.copy( camera );
 		this.camera.aspect = this.DEFAULT_CAMERA.aspect;
 		this.camera.updateProjectionMatrix();
 
+	//  css - js - functions - animations.
+
+		this.stylesheets = json.stylesheets;
+		if ( json.stylesheets == undefined ) {
+			this.stylesheets = []; // important!
+		}
+
 		this.javascripts = json.javascripts;
 		if ( json.javascripts == undefined ) {
 			this.javascripts = []; // important!
 		}
 
-		this.stylesheets = json.stylesheets;	// TODO!
-		if ( json.stylesheets == undefined ) {
-			this.stylesheets = []; // important!
+		this.functions = json.functions;
+		if ( json.functions == undefined ) {
+			this.functions = []; // important!
 		}
 
-		this.skinned = json.skinned;			// TODO!
+		this.animations = json.animations;
+		if ( json.animations == undefined ) {
+			this.animations = []; // important!
+		}
+
+	//	Male - Female - Skeleton - Skinned.
+
+		this.male = json.male;
+		if ( json.male == undefined ) {
+			this.male = []; // important!
+		}
+
+		this.female = json.female;
+		if ( json.female == undefined ) {
+			this.female = []; // important!
+		}
+
+		this.skeleton = json.skeleton;
+		if ( json.skeleton == undefined ) {
+			this.skeleton = []; // important!
+		}
+
+		this.skinned = json.skinned;
 		if ( json.skinned == undefined ) {
 			this.skinned = []; // important!
 		}
+
+	//	Editor.
 
 		this.scripts = json.scripts;
 		this.history.fromJSON( json.history );
@@ -524,18 +583,7 @@ Editor.prototype = {
 			}
 
 		}
-/*
-	//	javascript functions toJSON.
 
-		var javascripts = [];
-
-		this.javascripts.forEach(function( script ){
-		//  because script is in function, first we convert 
-		//	function to string and then we stringify to json.
-			var code = script.toString();				// important!
-			javascripts.push( JSON.stringify( code ) );	// important!
-		});
-*/
 	//
 
 		return {
@@ -543,17 +591,28 @@ Editor.prototype = {
 			metadata: {},
 
 			project: {
+
 				vr: this.config.getKey( "project/vr" ),
 				cache: this.config.getKey( "project/cache" ),
 				editable: this.config.getKey( "project/editable" ),
 				debugMode: this.config.getKey( "project/debugMode" ),
 				shadows: this.config.getKey( "project/renderer/shadows" ),
+
 			},
 
+		//
+
+			male: this.male,
+			female: this.female,
+			skinned: this.skinned,
+			skeleton: this.skeleton,
+
+			functions: this.functions,
+			animations: this.animations,
+			stylesheets: this.stylesheets,
 			javascripts: this.javascripts,
 
-			stylesheets: this.stylesheets,	// TODO!
-			skinned: this.skinned,			// TODO!
+		//
 
 			scripts: this.scripts,
 			camera: this.camera.toJSON(),
@@ -588,3 +647,17 @@ Editor.prototype = {
 	}
 
 };
+
+
+/*
+	//	javascript functions toJSON.
+
+		var javascripts = [];
+
+		this.javascripts.forEach(function( script ){
+		//  because script is in function, first we convert 
+		//	function to string and then we stringify to json.
+			var code = script.toString();				// important!
+			javascripts.push( JSON.stringify( code ) );	// important!
+		});
+*/

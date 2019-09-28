@@ -513,27 +513,35 @@ Editor.prototype = {
 
 		if ( json.javascripts ) this.javascripts = json.javascripts; // previous version.
 
-		if ( json.collections ) {
+		coltrap: if ( json.collections ) {
 			
 			this.stylesheets = json.collections.stylesheets;
 			if ( this.stylesheets == undefined ) {
 				this.stylesheets = []; // important!
 			}
 
+			debugMode && console.log( "editor.stylesheets:", this.stylesheets );
+
 			this.javascripts = json.collections.javascripts;
 			if ( this.javascripts == undefined ) {
 				this.javascripts = []; // important!
 			}
+
+			debugMode && console.log( "editor.javascripts:", this.javascripts );
 
 			this.functions = json.collections.functions;
 			if ( this.functions == undefined ) {
 				this.functions = []; // important!
 			}
 
+			debugMode && console.log( "editor.functions:", this.functions );
+
 			this.animations = json.collections.animations;
 			if ( this.animations == undefined ) {
 				this.animations = []; // important!
 			}
+
+			debugMode && console.log( "editor.animations:", this.animations );
 
 		//	Male - Female - Skeleton - Skinned.
 
@@ -542,20 +550,28 @@ Editor.prototype = {
 				this.male = []; // important!
 			}
 
+			debugMode && console.log( "editor.male:", this.male );
+
 			this.female = json.collections.female;
 			if ( this.female == undefined ) {
 				this.female = []; // important!
 			}
+
+			debugMode && console.log( "editor.female:", this.female );
 
 			this.skeleton = json.collections.skeleton;
 			if ( this.skeleton == undefined ) {
 				this.skeleton = []; // important!
 			}
 
+			debugMode && console.log( "editor.skeleton:", this.skeleton );
+
 			this.skinned = json.collections.skinned;
 			if ( this.skinned == undefined ) {
 				this.skinned = []; // important!
 			}
+
+			debugMode && console.log( "editor.skinned:", this.skinned );
 
 		}
 

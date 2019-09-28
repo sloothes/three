@@ -100,7 +100,7 @@ var Editor = function () {
 	this.sceneHelpers = new THREE.Scene();
 	this.sceneHelpers.name = "Helpers";
 
-//
+//	Editor.
 
 	this.object = {};
 	this.scripts = {};
@@ -108,7 +108,7 @@ var Editor = function () {
 	this.materials = {};
 	this.geometries = {};
 
-//
+//	Collections.
 
 	this.male = [];
 	this.female = [];
@@ -120,7 +120,7 @@ var Editor = function () {
 	this.stylesheets = [];
 	this.javascripts = [];
 
-//
+//	Editor.
 
 	this.selected = null;
 	this.helpers = {};
@@ -458,7 +458,7 @@ Editor.prototype = {
 
 		}
 
-	//
+	//	Collections.
 
 		this.male = [];
 		this.female = [];
@@ -470,7 +470,7 @@ Editor.prototype = {
 		this.stylesheets = [];
 		this.javascripts = [];
 
-	//
+	//	Editor.
 
 		this.scripts = {};
 		this.textures = {};
@@ -511,49 +511,55 @@ Editor.prototype = {
 		this.camera.aspect = this.DEFAULT_CAMERA.aspect;
 		this.camera.updateProjectionMatrix();
 
-	//  css - js - functions - animations.
+	//  Collections.
 
-		this.stylesheets = json.stylesheets;
-		if ( json.stylesheets == undefined ) {
-			this.stylesheets = []; // important!
-		}
+		if ( json.javascripts ) this.javascripts = json.javascripts; // alpha version.
 
-		this.javascripts = json.javascripts;
-		if ( json.javascripts == undefined ) {
-			this.javascripts = []; // important!
-		}
+		if ( json.collections ) (function(){
+			
+			this.stylesheets = json.collections.stylesheets;
+			if ( this.stylesheets == undefined ) {
+				this.stylesheets = []; // important!
+			}
 
-		this.functions = json.functions;
-		if ( json.functions == undefined ) {
-			this.functions = []; // important!
-		}
+			this.javascripts = json.collections.javascripts;
+			if ( this.javascripts == undefined ) {
+				this.javascripts = []; // important!
+			}
 
-		this.animations = json.animations;
-		if ( json.animations == undefined ) {
-			this.animations = []; // important!
-		}
+			this.functions = json.collections.functions;
+			if ( this.functions == undefined ) {
+				this.functions = []; // important!
+			}
 
-	//	Male - Female - Skeleton - Skinned.
+			this.animations = json.collections.animations;
+			if ( this.animations == undefined ) {
+				this.animations = []; // important!
+			}
 
-		this.male = json.male;
-		if ( json.male == undefined ) {
-			this.male = []; // important!
-		}
+		//	Male - Female - Skeleton - Skinned.
 
-		this.female = json.female;
-		if ( json.female == undefined ) {
-			this.female = []; // important!
-		}
+			this.male = json.collections.male;
+			if ( this.male == undefined ) {
+				this.male = []; // important!
+			}
 
-		this.skeleton = json.skeleton;
-		if ( json.skeleton == undefined ) {
-			this.skeleton = []; // important!
-		}
+			this.female = json.collections.female;
+			if ( this.female == undefined ) {
+				this.female = []; // important!
+			}
 
-		this.skinned = json.skinned;
-		if ( json.skinned == undefined ) {
-			this.skinned = []; // important!
-		}
+			this.skeleton = json.collections.skeleton;
+			if ( this.skeleton == undefined ) {
+				this.skeleton = []; // important!
+			}
+
+			this.skinned = json.collections.skinned;
+			if ( this.skinned == undefined ) {
+				this.skinned = []; // important!
+			}
+
+		})();
 
 	//	Editor.
 
@@ -600,19 +606,23 @@ Editor.prototype = {
 
 			},
 
-		//
+		//	Collections.
+			
+			collections: {
 
-			male: this.male,
-			female: this.female,
-			skinned: this.skinned,
-			skeleton: this.skeleton,
+				male: this.male,
+				female: this.female,
+				skinned: this.skinned,
+				skeleton: this.skeleton,
 
-			functions: this.functions,
-			animations: this.animations,
-			stylesheets: this.stylesheets,
-			javascripts: this.javascripts,
+				functions: this.functions,
+				animations: this.animations,
+				stylesheets: this.stylesheets,
+				javascripts: this.javascripts,
 
-		//
+			},
+
+		//	Editor.
 
 			scripts: this.scripts,
 			camera: this.camera.toJSON(),

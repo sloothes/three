@@ -104,13 +104,32 @@
 
 	<body ontouchstart="">
 
+		<script src="/three/three.js"></script>
 		<script src="js/app.js"></script>
 
 		<!-- includes -->
 
 		<script>
 
-			bootboxLoading();
+			(function(){
+
+			//  Loading dialog.
+
+				var loadingDialog = document.createElement("div");
+				loadingDialog.id = "loading-dialog"
+				loadingDialog.classList.add("middle", "text-center");
+				loadingDialog.style.cssText = "position:absolute;top:0;left:0;bottom:0;right:0;background:none;z-index:9999;";
+
+				var dialogContent = document.createElement("h2");
+				dialogContent.style.cssText = "width:fit-content;font-weight:bold;color:#fff;text-align:center;"
+				dialogContent.innerHTML = "Loading" + "<br>" + "Please wait..." + "<br>" + "(heavy duty)";
+
+				loadingDialog.appendChild( dialogContent );
+				document.body.appendChild( loadingDialog );
+
+			})();
+
+		//
 
 			var loader = new THREE.XHRLoader();
 			loader.load( "app.json", function ( text ) {
@@ -141,35 +160,22 @@
 
 				}
 
+		//
+
 				window.addEventListener( "resize", function () {
 					player.setSize( window.innerWidth, window.innerHeight );
 				});
 
-                bootbox.hideAll();
+		//
+
+				setTimeout(function(){
+					var dialog = document.getElementById("loading-dialog");
+					dialog.style.display = "none"; dialog.remove();
+				}, 1000);
 
 			});
 
-			function bootboxLoading(){
-
-			//  Loading bar.
-
-				var dialog = window.bootbox.dialog({
-					message: "<div class=\"text-center\">"
-					+ "<h2 style=\"width:fit-content;font-weight:bold;"
-					+ "color:#fff;text-align:center;\">Loading<br>"
-					+ "Please wait...<br>(heavy duty)</h2></div>",
-					buttons: false,
-					closeButton: false,
-					className: "middle",
-				});
-
-				$( dialog.modal() ).find(".modal-content").css({
-                    "border"    : "none",
-                    "box-shadow": "none",
-                    "background": "none",
-				});
-
-			}
+		//
 
 			(function(){
 

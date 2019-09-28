@@ -105,7 +105,9 @@
 		<script src="js/libs/ui.js"></script>
 		<script src="js/libs/ui.three.js"></script>
 
-		<script src="js/libs/app.js"></script>
+		<script src="/in-a-box/js/app.js" class="developing-mode"></script>
+
+	<!-- script src="js/libs/app.js"></script -->
 		<script src="js/Player.js"></script>
 		<script src="js/Script.js"></script>
 
@@ -348,7 +350,7 @@
 
 						if ( event.ctrlKey ) {
 
-							event.preventDefault();
+							event.preventDefault(); // prevent browser save. important!
 							
 						//  saveState.
 

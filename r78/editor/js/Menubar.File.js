@@ -407,7 +407,7 @@ Menubar.File = function ( editor ) {
 	//
 
 		var output = editor.toJSON();
-		output.metadata.type = "App";
+		output.metadata.type = "App"; // important!
 		delete output.history;
 
 		var vr = output.project.vr;

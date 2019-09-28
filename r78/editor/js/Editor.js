@@ -503,8 +503,6 @@ Editor.prototype = {
 
 		}
 
-	//  Order is important!
-
 		var camera = loader.parse( json.camera );
 
 		this.camera.copy( camera );
@@ -513,9 +511,9 @@ Editor.prototype = {
 
 	//  Collections.
 
-		if ( json.javascripts ) this.javascripts = json.javascripts; // alpha version.
+		if ( json.javascripts ) this.javascripts = json.javascripts; // previous version.
 
-		if ( json.collections ) (function(){
+		if ( json.collections ) (
 			
 			this.stylesheets = json.collections.stylesheets;
 			if ( this.stylesheets == undefined ) {
@@ -559,7 +557,7 @@ Editor.prototype = {
 				this.skinned = []; // important!
 			}
 
-		})();
+		}
 
 	//	Editor.
 
@@ -628,6 +626,9 @@ Editor.prototype = {
 			camera: this.camera.toJSON(),
 			scene: this.scene.toJSON(),
 			history: this.history.toJSON(),
+
+			_id: "editor"
+
 		};
 
 	},

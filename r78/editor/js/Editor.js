@@ -108,15 +108,7 @@ var Editor = function () {
 	this.materials = {};
 	this.geometries = {};
 
-//	Collections.
-
-	this.male = [];
-	this.female = [];
-	this.skinned = [];
-	this.skeleton = [];
-
 	this.functions = [];
-	this.animations = [];
 	this.stylesheets = [];
 	this.javascripts = [];
 
@@ -440,15 +432,11 @@ Editor.prototype = {
 
 	clear: function () {
 
-	//
-
 		this.history.clear();
 		this.storage.clear();
 
 		this.camera.copy( this.DEFAULT_CAMERA );
 		this.lights.copy( this.DEFAULT_CAMERA_LIGHT );
-
-	//
 
 		var objects = this.scene.children;
 
@@ -458,19 +446,9 @@ Editor.prototype = {
 
 		}
 
-	//	Collections.
-
-		this.male = [];
-		this.female = [];
-		this.skinned = [];
-		this.skeleton = [];
-
 		this.functions = [];
-		this.animations = [];
 		this.stylesheets = [];
 		this.javascripts = [];
-
-	//	Editor.
 
 		this.scripts = {};
 		this.textures = {};
@@ -509,73 +487,10 @@ Editor.prototype = {
 		this.camera.aspect = this.DEFAULT_CAMERA.aspect;
 		this.camera.updateProjectionMatrix();
 
-	//  Collections.
-
-		if ( json.javascripts ) this.javascripts = json.javascripts; // previous version.
-
-		coltrap: if ( json.collections ) {
-			
-			this.stylesheets = json.collections.stylesheets;
-			if ( this.stylesheets == undefined ) {
-				this.stylesheets = []; // important!
-			}
-
-			debugMode && console.log( "editor.stylesheets:", this.stylesheets );
-
-			this.javascripts = json.collections.javascripts;
-			if ( this.javascripts == undefined ) {
-				this.javascripts = []; // important!
-			}
-
-			debugMode && console.log( "editor.javascripts:", this.javascripts );
-
-			this.functions = json.collections.functions;
-			if ( this.functions == undefined ) {
-				this.functions = []; // important!
-			}
-
-			debugMode && console.log( "editor.functions:", this.functions );
-
-			this.animations = json.collections.animations;
-			if ( this.animations == undefined ) {
-				this.animations = []; // important!
-			}
-
-			debugMode && console.log( "editor.animations:", this.animations );
-
-		//	Male - Female - Skeleton - Skinned.
-
-			this.male = json.collections.male;
-			if ( this.male == undefined ) {
-				this.male = []; // important!
-			}
-
-			debugMode && console.log( "editor.male:", this.male );
-
-			this.female = json.collections.female;
-			if ( this.female == undefined ) {
-				this.female = []; // important!
-			}
-
-			debugMode && console.log( "editor.female:", this.female );
-
-			this.skeleton = json.collections.skeleton;
-			if ( this.skeleton == undefined ) {
-				this.skeleton = []; // important!
-			}
-
-			debugMode && console.log( "editor.skeleton:", this.skeleton );
-
-			this.skinned = json.collections.skinned;
-			if ( this.skinned == undefined ) {
-				this.skinned = []; // important!
-			}
-
-			debugMode && console.log( "editor.skinned:", this.skinned );
-
+		this.javascripts = json.javascripts;
+		if ( this.javascripts == undefined ) {
+			this.javascripts = []; // important!
 		}
-
-	//	Editor.
 
 		this.scripts = json.scripts;
 		this.history.fromJSON( json.history );
@@ -620,30 +535,14 @@ Editor.prototype = {
 
 			},
 
-		//	Collections.
-			
-			collections: {
-
-				male: this.male,
-				female: this.female,
-				skinned: this.skinned,
-				skeleton: this.skeleton,
-
-				functions: this.functions,
-				animations: this.animations,
-				stylesheets: this.stylesheets,
-				javascripts: this.javascripts,
-
-			},
-
-		//	Editor.
+			functions: this.functions,
+			stylesheets: this.stylesheets,
+			javascripts: this.javascripts,
 
 			scripts: this.scripts,
 			camera: this.camera.toJSON(),
 			scene: this.scene.toJSON(),
 			history: this.history.toJSON(),
-
-			_id: "editor"
 
 		};
 

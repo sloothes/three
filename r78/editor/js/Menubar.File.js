@@ -163,6 +163,7 @@ Menubar.File = function ( editor ) {
 				reader.addEventListener("load", function(e){
 
 					var script = {
+						"_id": file.name.split(".").shift();
 						"name": file.name,
 						"source": JSON.stringify( reader.result ),
 					}

@@ -20,40 +20,11 @@ var APP = {
 		this.width = 500;
 		this.height = 500;
 
-	//	Execute script in window scope.
-
-		this.setLibrary = function() {
-
-		//  arguments: soucre code (text) only.
-
-			for (var i in arguments){
-
-				var script = new Function("scope", arguments[ i ]); 
-			//	script = script.bind( window ); // bind to window.
-				script.bind( window ).call(); // bind and execute script.
-				debugMode && console.log("Library", script.toString(), "executed.");
-
-			}
-
-		};
-
-	//	Load javascript libraries.
-
-		this.loadLibrary = function(){
-
-			var loader = new THREE.XHRLoader();
-
-			for ( var i in arguments ){
-
-				loader.load( arguments[i], this.setLibrary );
-				console.log( "Library", arguments[i], "loaded.");
-
-			}
-
-		};
-
+	//	Load app.json.
 
 		this.load = function ( json ) {
+
+			console.clear(); // debug!
 
 			vr = json.project.vr;
 
@@ -185,7 +156,40 @@ var APP = {
 
 		};
 
-	//
+//
+
+	//	Execute script in window scope.
+
+		this.setLibrary = function() {
+
+		//  arguments: soucre code (text) only.
+
+			for (var i in arguments){
+
+				var script = new Function("scope", arguments[ i ]); 
+				script.bind( window ).call(); // bind and execute script.
+				debugMode && console.log("Library", script.toString(), "executed.");
+
+			}
+
+		};
+
+	//	Load javascript libraries.
+
+		this.loadLibrary = function(){
+
+			var loader = new THREE.XHRLoader();
+
+			for ( var i in arguments ){
+
+				loader.load( arguments[i], this.setLibrary );
+				console.log( "Library", arguments[i], "loaded.");
+
+			}
+
+		};
+
+//
 
 		this.setCamera = function ( value ) {
 

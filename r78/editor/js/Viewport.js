@@ -276,8 +276,8 @@ var Viewport = function ( editor ) {
 	controls.addEventListener( "change", function () {
 
 	//	Update light position (by name) important!
-		var light = scene.getObjectByName( editor.lights.name );
-		if ( light ) light.position.copy( camera.position );
+	//	var light = scene.getObjectByName( editor.lights.name );
+	//	if ( light ) light.position.copy( camera.position );
 
     //	Update center.
 		editor.config.setKey( "controls/center", controls.center );

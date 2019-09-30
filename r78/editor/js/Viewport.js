@@ -293,7 +293,7 @@ var Viewport = function ( editor ) {
 	signals.editorCleared.add( function () {
 
 		controls.center.set( 0, 0, 0 );
-
+/*
 	//	Add camera directional light.
         editor.addObject( editor.lights );
 
@@ -316,7 +316,7 @@ var Viewport = function ( editor ) {
 			light.position.copy( camera.position );
 
 		}
-
+*/
 		render();
 
 	});

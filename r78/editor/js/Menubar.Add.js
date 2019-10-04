@@ -5,18 +5,18 @@
 Menubar.Add = function ( editor ) {
 
 	var container = new UI.Panel();
-	container.setClass( 'menu' );
+	container.setClass( "menu" );
 
 	var title = new UI.Panel();
-	title.setClass( 'title' );
-	title.setTextContent( 'Add' );
+	title.setClass( "title" );
+	title.setTextContent( "Add" );
 	container.add( title );
 
 	var options = new UI.Panel();
-	options.setClass( 'options' );
+	options.setClass( "options" );
 	container.add( options );
 
-	//
+//
 
 	var meshCount = 0;
 	var lightCount = 0;
@@ -28,65 +28,84 @@ Menubar.Add = function ( editor ) {
 		lightCount = 0;
 		cameraCount = 0;
 
-	} );
+	});
 
-	// Group
+//	Group
 
 	var option = new UI.Row();
-	option.setClass( 'option' );
-	option.setTextContent( 'Group' );
+	option.setClass( "option" );
+	option.setTextContent( "Group" );
 	option.onClick( function () {
 
 		var mesh = new THREE.Group();
-		mesh.name = 'Group ' + ( ++ meshCount );
+		mesh.name = "Group " + ( ++ meshCount );
 
 		editor.execute( new AddObjectCommand( mesh ) );
 
-	} );
+	});
+
 	options.add( option );
 
-	//
+//	Object3D.
+
+	var option = new UI.Row();
+	option.setClass( "option" );
+	option.setTextContent( "Object3D" );
+	option.onClick( function () {
+
+		var mesh = new THREE.Object3D();
+		mesh.name = "Object3D " + ( ++ meshCount );
+
+		editor.execute( new AddObjectCommand( mesh ) );
+
+	});
+
+	options.add( option );
+
+//
 
 	options.add( new UI.HorizontalRule() );
 
-	// Plane
+//	Plane
 
 	var option = new UI.Row();
-	option.setClass( 'option' );
-	option.setTextContent( 'Plane' );
+	option.setClass( "option" );
+	option.setTextContent( "Plane" );
 	option.onClick( function () {
 
 		var geometry = new THREE.PlaneBufferGeometry( 2, 2 );
 		var material = new THREE.MeshStandardMaterial();
 		var mesh = new THREE.Mesh( geometry, material );
-		mesh.name = 'Plane ' + ( ++ meshCount );
+		mesh.name = "Plane " + ( ++ meshCount );
 
 		editor.execute( new AddObjectCommand( mesh ) );
 
-	} );
+	});
+
 	options.add( option );
 
-	// Box
+//	Box
 
 	var option = new UI.Row();
-	option.setClass( 'option' );
-	option.setTextContent( 'Box' );
+	option.setClass( "option" );
+	option.setTextContent( "Box" );
 	option.onClick( function () {
 
 		var geometry = new THREE.BoxBufferGeometry( 1, 1, 1 );
 		var mesh = new THREE.Mesh( geometry, new THREE.MeshStandardMaterial() );
-		mesh.name = 'Box ' + ( ++ meshCount );
+		mesh.name = "Box " + ( ++ meshCount );
 
 		editor.execute( new AddObjectCommand( mesh ) );
 
-	} );
+	});
+
 	options.add( option );
 
-	// Circle
+//	Circle
 
 	var option = new UI.Row();
-	option.setClass( 'option' );
-	option.setTextContent( 'Circle' );
+	option.setClass( "option" );
+	option.setTextContent( "Circle" );
 	option.onClick( function () {
 
 		var radius = 1;
@@ -94,18 +113,19 @@ Menubar.Add = function ( editor ) {
 
 		var geometry = new THREE.CircleBufferGeometry( radius, segments );
 		var mesh = new THREE.Mesh( geometry, new THREE.MeshStandardMaterial() );
-		mesh.name = 'Circle ' + ( ++ meshCount );
+		mesh.name = "Circle " + ( ++ meshCount );
 
 		editor.execute( new AddObjectCommand( mesh ) );
 
-	} );
+	});
+
 	options.add( option );
 
-	// Cylinder
+//	Cylinder
 
 	var option = new UI.Row();
-	option.setClass( 'option' );
-	option.setTextContent( 'Cylinder' );
+	option.setClass( "option" );
+	option.setTextContent( "Cylinder" );
 	option.onClick( function () {
 
 		var radiusTop = 1;
@@ -117,18 +137,19 @@ Menubar.Add = function ( editor ) {
 
 		var geometry = new THREE.CylinderBufferGeometry( radiusTop, radiusBottom, height, radiusSegments, heightSegments, openEnded );
 		var mesh = new THREE.Mesh( geometry, new THREE.MeshStandardMaterial() );
-		mesh.name = 'Cylinder ' + ( ++ meshCount );
+		mesh.name = "Cylinder " + ( ++ meshCount );
 
 		editor.execute( new AddObjectCommand( mesh ) );
 
-	} );
+	});
+
 	options.add( option );
 
-	// Sphere
+//	Sphere
 
 	var option = new UI.Row();
-	option.setClass( 'option' );
-	option.setTextContent( 'Sphere' );
+	option.setClass( "option" );
+	option.setTextContent( "Sphere" );
 	option.onClick( function () {
 
 		var radius = 1;
@@ -141,18 +162,19 @@ Menubar.Add = function ( editor ) {
 
 		var geometry = new THREE.SphereBufferGeometry( radius, widthSegments, heightSegments, phiStart, phiLength, thetaStart, thetaLength );
 		var mesh = new THREE.Mesh( geometry, new THREE.MeshStandardMaterial() );
-		mesh.name = 'Sphere ' + ( ++ meshCount );
+		mesh.name = "Sphere " + ( ++ meshCount );
 
 		editor.execute( new AddObjectCommand( mesh ) );
 
-	} );
+	});
+
 	options.add( option );
 
-	// Icosahedron
+//	Icosahedron
 
 	var option = new UI.Row();
-	option.setClass( 'option' );
-	option.setTextContent( 'Icosahedron' );
+	option.setClass( "option" );
+	option.setTextContent( "Icosahedron" );
 	option.onClick( function () {
 
 		var radius = 1;
@@ -160,18 +182,19 @@ Menubar.Add = function ( editor ) {
 
 		var geometry = new THREE.IcosahedronGeometry( radius, detail );
 		var mesh = new THREE.Mesh( geometry, new THREE.MeshStandardMaterial() );
-		mesh.name = 'Icosahedron ' + ( ++ meshCount );
+		mesh.name = "Icosahedron " + ( ++ meshCount );
 
 		editor.execute( new AddObjectCommand( mesh ) );
 
-	} );
+	});
+
 	options.add( option );
 
-	// Torus
+//	Torus
 
 	var option = new UI.Row();
-	option.setClass( 'option' );
-	option.setTextContent( 'Torus' );
+	option.setClass( "option" );
+	option.setTextContent( "Torus" );
 	option.onClick( function () {
 
 		var radius = 2;
@@ -182,18 +205,19 @@ Menubar.Add = function ( editor ) {
 
 		var geometry = new THREE.TorusBufferGeometry( radius, tube, radialSegments, tubularSegments, arc );
 		var mesh = new THREE.Mesh( geometry, new THREE.MeshStandardMaterial() );
-		mesh.name = 'Torus ' + ( ++ meshCount );
+		mesh.name = "Torus " + ( ++ meshCount );
 
 		editor.execute( new AddObjectCommand( mesh ) );
 
-	} );
+	});
+
 	options.add( option );
 
-	// TorusKnot
+//	TorusKnot
 
 	var option = new UI.Row();
-	option.setClass( 'option' );
-	option.setTextContent( 'TorusKnot' );
+	option.setClass( "option" );
+	option.setTextContent( "TorusKnot" );
 	option.onClick( function () {
 
 		var radius = 2;
@@ -205,19 +229,20 @@ Menubar.Add = function ( editor ) {
 
 		var geometry = new THREE.TorusKnotBufferGeometry( radius, tube, tubularSegments, radialSegments, p, q );
 		var mesh = new THREE.Mesh( geometry, new THREE.MeshStandardMaterial() );
-		mesh.name = 'TorusKnot ' + ( ++ meshCount );
+		mesh.name = "TorusKnot " + ( ++ meshCount );
 
 		editor.execute( new AddObjectCommand( mesh ) );
 
-	} );
+	});
+
 	options.add( option );
 
-	/*
-	// Teapot
+/*
+// Teapot
 
 	var option = new UI.Row();
-	option.setClass( 'option' );
-	option.setTextContent( 'Teapot' );
+	option.setClass( "option" );
+	option.setTextContent( "Teapot" );
 	option.onClick( function () {
 
 		var size = 50;
@@ -232,20 +257,21 @@ Menubar.Add = function ( editor ) {
 
 		var geometry = new THREE.TeapotBufferGeometry( size, segments, bottom, lid, body, fitLid, blinnScale );
 		var mesh = new THREE.Mesh( geometry, material );
-		mesh.name = 'Teapot ' + ( ++ meshCount );
+		mesh.name = "Teapot " + ( ++ meshCount );
 
 		editor.addObject( mesh );
 		editor.select( mesh );
 
-	} );
-	options.add( option );
-	*/
+	});
 
-	// Lathe
+	options.add( option );
+*/
+
+// Lathe
 
 	var option = new UI.Row();
-	option.setClass( 'option' );
-	option.setTextContent( 'Lathe' );
+	option.setClass( "option" );
+	option.setTextContent( "Lathe" );
 	option.onClick( function() {
 
 		var points = [
@@ -261,43 +287,46 @@ Menubar.Add = function ( editor ) {
 			new THREE.Vector2( 2.5, 5.4 ),
 			new THREE.Vector2( 3, 12 )
 		];
+
 		var segments = 20;
 		var phiStart = 0;
 		var phiLength = 2 * Math.PI;
 
 		var geometry = new THREE.LatheBufferGeometry( points, segments, phiStart, phiLength );
 		var mesh = new THREE.Mesh( geometry, new THREE.MeshStandardMaterial( { side: THREE.DoubleSide } ) );
-		mesh.name = 'Lathe ' + ( ++ meshCount );
+		mesh.name = "Lathe " + ( ++ meshCount );
 
 		editor.execute( new AddObjectCommand( mesh ) );
 
-	} );
+	});
+
 	options.add( option );
 
-	// Sprite
+//	Sprite
 
 	var option = new UI.Row();
-	option.setClass( 'option' );
-	option.setTextContent( 'Sprite' );
+	option.setClass( "option" );
+	option.setTextContent( "Sprite" );
 	option.onClick( function () {
 
 		var sprite = new THREE.Sprite( new THREE.SpriteMaterial() );
-		sprite.name = 'Sprite ' + ( ++ meshCount );
+		sprite.name = "Sprite " + ( ++ meshCount );
 
 		editor.execute( new AddObjectCommand( sprite ) );
 
-	} );
+	});
+
 	options.add( option );
 
-	//
+//
 
 	options.add( new UI.HorizontalRule() );
 
-	// PointLight
+//	PointLight
 
 	var option = new UI.Row();
-	option.setClass( 'option' );
-	option.setTextContent( 'PointLight' );
+	option.setClass( "option" );
+	option.setTextContent( "PointLight" );
 	option.onClick( function () {
 
 		var color = 0xffffff;
@@ -305,18 +334,19 @@ Menubar.Add = function ( editor ) {
 		var distance = 0;
 
 		var light = new THREE.PointLight( color, intensity, distance );
-		light.name = 'PointLight ' + ( ++ lightCount );
+		light.name = "PointLight " + ( ++ lightCount );
 
 		editor.execute( new AddObjectCommand( light ) );
 
-	} );
+	});
+
 	options.add( option );
 
-	// SpotLight
+//	SpotLight
 
 	var option = new UI.Row();
-	option.setClass( 'option' );
-	option.setTextContent( 'SpotLight' );
+	option.setClass( "option" );
+	option.setTextContent( "SpotLight" );
 	option.onClick( function () {
 
 		var color = 0xffffff;
@@ -326,42 +356,44 @@ Menubar.Add = function ( editor ) {
 		var penumbra = 0;
 
 		var light = new THREE.SpotLight( color, intensity, distance, angle, penumbra );
-		light.name = 'SpotLight ' + ( ++ lightCount );
-		light.target.name = 'SpotLight ' + ( lightCount ) + ' Target';
+		light.name = "SpotLight " + ( ++ lightCount );
+		light.target.name = "SpotLight " + ( lightCount ) + " Target";
 
 		light.position.set( 5, 10, 7.5 );
 
 		editor.execute( new AddObjectCommand( light ) );
 
-	} );
+	});
+
 	options.add( option );
 
-	// DirectionalLight
+//	DirectionalLight
 
 	var option = new UI.Row();
-	option.setClass( 'option' );
-	option.setTextContent( 'DirectionalLight' );
+	option.setClass( "option" );
+	option.setTextContent( "DirectionalLight" );
 	option.onClick( function () {
 
 		var color = 0xffffff;
 		var intensity = 1;
 
 		var light = new THREE.DirectionalLight( color, intensity );
-		light.name = 'DirectionalLight ' + ( ++ lightCount );
-		light.target.name = 'DirectionalLight ' + ( lightCount ) + ' Target';
+		light.name = "DirectionalLight " + ( ++ lightCount );
+		light.target.name = "DirectionalLight " + ( lightCount ) + " Target";
 
 		light.position.set( 5, 10, 7.5 );
 
 		editor.execute( new AddObjectCommand( light ) );
 
-	} );
+	});
+
 	options.add( option );
 
-	// HemisphereLight
+//	HemisphereLight
 
 	var option = new UI.Row();
-	option.setClass( 'option' );
-	option.setTextContent( 'HemisphereLight' );
+	option.setClass( "option" );
+	option.setTextContent( "HemisphereLight" );
 	option.onClick( function () {
 
 		var skyColor = 0x00aaff;
@@ -369,49 +401,52 @@ Menubar.Add = function ( editor ) {
 		var intensity = 1;
 
 		var light = new THREE.HemisphereLight( skyColor, groundColor, intensity );
-		light.name = 'HemisphereLight ' + ( ++ lightCount );
+		light.name = "HemisphereLight " + ( ++ lightCount );
 
 		light.position.set( 0, 10, 0 );
 
 		editor.execute( new AddObjectCommand( light ) );
 
-	} );
+	});
+
 	options.add( option );
 
-	// AmbientLight
+//	AmbientLight
 
 	var option = new UI.Row();
-	option.setClass( 'option' );
-	option.setTextContent( 'AmbientLight' );
+	option.setClass( "option" );
+	option.setTextContent( "AmbientLight" );
 	option.onClick( function() {
 
 		var color = 0x222222;
 
 		var light = new THREE.AmbientLight( color );
-		light.name = 'AmbientLight ' + ( ++ lightCount );
+		light.name = "AmbientLight " + ( ++ lightCount );
 
 		editor.execute( new AddObjectCommand( light ) );
 
-	} );
+	});
+
 	options.add( option );
 
-	//
+//
 
 	options.add( new UI.HorizontalRule() );
 
-	// PerspectiveCamera
+//	PerspectiveCamera
 
 	var option = new UI.Row();
-	option.setClass( 'option' );
-	option.setTextContent( 'PerspectiveCamera' );
+	option.setClass( "option" );
+	option.setTextContent( "PerspectiveCamera" );
 	option.onClick( function() {
 
 		var camera = new THREE.PerspectiveCamera( 50, 1, 1, 10000 );
-		camera.name = 'PerspectiveCamera ' + ( ++ cameraCount );
+		camera.name = "PerspectiveCamera " + ( ++ cameraCount );
 
 		editor.execute( new AddObjectCommand( camera ) );
 
-	} );
+	});
+
 	options.add( option );
 
 	return container;

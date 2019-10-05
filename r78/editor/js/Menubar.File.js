@@ -138,6 +138,10 @@ Menubar.File = function ( editor ) {
 
 	options.add( option );
 
+//
+
+	options.add( new UI.HorizontalRule() );
+
 //  Import 3D.
 
 	var fileInput = document.createElement( "input" );
@@ -159,10 +163,6 @@ Menubar.File = function ( editor ) {
 	});
 
 	options.add( option );
-
-//
-
-	options.add( new UI.HorizontalRule() );
 
 //
 

@@ -138,6 +138,32 @@ Menubar.File = function ( editor ) {
 
 	options.add( option );
 
+//  Import 3D.
+
+	var fileInput = document.createElement( "input" );
+	fileInput.type = "file";
+	fileInput.addEventListener( "change", function ( event ) {
+
+		editor.loader.loadFile( fileInput.files[ 0 ] );
+
+	});
+
+	var option = new UI.Row();
+	option.setClass( "option" );
+	option.setTextContent( "Import 3D" );
+	option.onClick( function () {
+
+        fileInput.value = "";
+		fileInput.click();
+
+	});
+
+	options.add( option );
+
+//
+
+	options.add( new UI.HorizontalRule() );
+
 //
 
 	options.add( new UI.HorizontalRule() );
@@ -215,32 +241,6 @@ Menubar.File = function ( editor ) {
 		editor.signals.showModal.dispatch( content );
 
 		debugMode && console.log( text, editor.javascripts );
-
-	});
-
-	options.add( option );
-
-//
-
-	options.add( new UI.HorizontalRule() );
-
-//  Import.
-
-	var fileInput = document.createElement( "input" );
-	fileInput.type = "file";
-	fileInput.addEventListener( "change", function ( event ) {
-
-		editor.loader.loadFile( fileInput.files[ 0 ] );
-
-	});
-
-	var option = new UI.Row();
-	option.setClass( "option" );
-	option.setTextContent( "Import 3D" );
-	option.onClick( function () {
-
-        fileInput.value = "";
-		fileInput.click();
 
 	});
 

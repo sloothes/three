@@ -79,7 +79,6 @@ var APP = {
 			}
 
 			this.dom.appendChild( renderer.domElement );
-
 			this.setScene( loader.parse( json.scene ) );
 			this.setCamera( loader.parse( json.camera ) );
 
@@ -97,7 +96,8 @@ var APP = {
 				touchstart: [],
 				touchend: [],
 				touchmove: [],
-				update: []
+				update: [],
+				dispose: []
 			};
 
 			var scriptWrapParams = "player,renderer,scene,camera,controls";

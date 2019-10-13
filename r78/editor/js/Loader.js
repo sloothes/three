@@ -546,6 +546,7 @@ var Loader = function ( editor ) {
 							if (data.uvs)  source += "var uvs = " + JSON.stringify( data.uvs ) + ";\n";
 							if (data.faces) source += "var faces = " + JSON.stringify( data.faces ) + ";\n";
 							if (data.metadata) source += "var metadata = " + JSON.stringify( data.metadata ) + ";\n";
+							if (data.vertices) source += "var vertices = " + JSON.stringify( data.vertices ) + ";\n";
 							if (data.materials) source += "var materials = " + JSON.stringify( data.materials ) + ";\n";
 							if (data.skinWeights) source += "var skinWeights = " + JSON.stringify( data.skinWeights ) + ";\n";
 							if (data.skinIndices) source += "var skinIndices = " + JSON.stringify( data.skinIndices ) + ";\n";
@@ -559,6 +560,7 @@ var Loader = function ( editor ) {
 							if (data.bones) source += "\tbones: bones,\n";
 							if (data.faces) source += "\tfaces: faces,\n";
 							if (data.metadata) source += "\tmetadata: metadata,\n";
+							if (data.vertices) source += "\tvertices: vertices,\n";
 							if (data.materials) source += "\tmaterials: materials,\n";
 							if (data.skinWeights) source += "\tskinWeights: skinWeights,\n";
 							if (data.skinIndices) source += "\tskinIndices: skinIndices,\n";

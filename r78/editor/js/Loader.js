@@ -588,7 +588,7 @@ var Loader = function ( editor ) {
 						source += "skinned.scale.set( 1, 1, 1 );\n";
 						source += "skinned.castShadow = true;\n";
 						source += "skinned.name = \"\";\n\n\n\n";
-						source += "debugMode && console.log(name+":", skinned);\n\n";
+						source += "debugMode && console.log(name+\":\", skinned);\n\n";
 						source += "scene.remove( this );\n";
 
 						var script = {

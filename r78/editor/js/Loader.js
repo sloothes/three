@@ -568,6 +568,29 @@ var Loader = function ( editor ) {
 
 						source += "};\n";
 
+						source += "var loader = new THREE.JSONLoader();\n";
+						source += "var object = loader.parse( json );\n";
+						source += "var geometry = object.geometry;\n";
+						source += "geometry.name = json.name;\n";
+						source += "geometry.computeFaceNormals();\n";
+						source += "geometry.computeVertexNormals();\n";
+						source += "geometry.computeBoundingBox();\n";
+						source += "geometry.computeBoundingSphere();\n";
+						source += "geometry.sourceType = \"ascii\";\n";
+						source += "geometry.sourceFile = this.geometry.sourceFile;\n\n";
+						source += "var material = this.material.clone(); // important!\n";
+						source += "material.skinning = true; // important!\n\n";
+						source += "var skinned = new THREE.SkinnedMesh( geometry, material );\n";
+						source += "skinned.renderDepth = 1;\n";
+						source += "skinned.frustumCulled = false;\n";
+						source += "skinned.position.set( 0, 0, 0 );\n";
+						source += "skinned.rotation.set( 0, 0, 0 );\n";
+						source += "skinned.scale.set( 1, 1, 1 );\n";
+						source += "skinned.castShadow = true;\n";
+						source += "skinned.name = \"\";\n\n\n\n";
+						source += "debugMode && console.log(name+":", skinned);\n\n";
+						source += "scene.remove( this );\n";
+
 						var script = {
 							name: "skinned-mesh.js",
 							source: source,

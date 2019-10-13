@@ -566,10 +566,10 @@ var Loader = function ( editor ) {
 							if (data.skinIndices) source += "\tskinIndices: skinIndices,\n";
 							if (data.influencesPerVertex) source += "\tinfluencesPerVertex: " + data.influencesPerVertex + ",\n";
 
-						source += "};\n";
+						source += "};\n\n";
 
 						source += "var loader = new THREE.JSONLoader();\n";
-						source += "var object = loader.parse( json );\n";
+						source += "var object = loader.parse( json );\n\n";
 						source += "var geometry = object.geometry;\n";
 						source += "geometry.name = json.name;\n";
 						source += "geometry.computeFaceNormals();\n";

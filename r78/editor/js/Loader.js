@@ -587,7 +587,7 @@ var Loader = function ( editor ) {
 						source += "skinned.rotation.set( 0, 0, 0 );\n";
 						source += "skinned.scale.set( 1, 1, 1 );\n";
 						source += "skinned.castShadow = true;\n";
-						source += "skinned.name = \"\";\n\n\n\n";
+						source += "skinned.name = this.name;\n\n\n\n";
 						source += "scene.remove( this );\n";
 
 						var script = {

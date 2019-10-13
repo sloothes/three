@@ -541,27 +541,28 @@ var Loader = function ( editor ) {
 					if ( data.skinIndices && data.skinWeights ) {
 
 						var source = "";
-						if (data.name) source += "var name = \"" + data.name + "\";\n";
-						if (data.uvs)  source += "var uvs = " + JSON.stringify( data.uvs ) + ";\n";
-						if (data.bones) source += "//\tvar bones = " + JSON.stringify( data.bones ) + ";\n";
-						if (data.faces) source += "var faces = " + JSON.stringify( data.faces ) + ";\n";
-						if (data.metadata) source += "var metadata = " + JSON.stringify( data.metadata ) + ";\n";
-						if (data.materials) source += "var materials = " + JSON.stringify( data.materials ) + ";\n";
-						if (data.skinWeights) source += "var skinWeights = " + JSON.stringify( data.skinWeights ) + ";\n";
-						if (data.skinIndices) source += "var skinIndices = " + JSON.stringify( data.skinIndices ) + ";\n";
-						if (data.influencesPerVertex) source += "var influencesPerVertex = " + data.influencesPerVertex + ";\n\n";
 
-						source += "var json = {\n\t";
+							if (data.name) source += "var name = \"" + data.name + "\";\n";
+							if (data.uvs)  source += "var uvs = " + JSON.stringify( data.uvs ) + ";\n";
+							if (data.faces) source += "var faces = " + JSON.stringify( data.faces ) + ";\n";
+							if (data.metadata) source += "var metadata = " + JSON.stringify( data.metadata ) + ";\n";
+							if (data.materials) source += "var materials = " + JSON.stringify( data.materials ) + ";\n";
+							if (data.skinWeights) source += "var skinWeights = " + JSON.stringify( data.skinWeights ) + ";\n";
+							if (data.skinIndices) source += "var skinIndices = " + JSON.stringify( data.skinIndices ) + ";\n";
+							if (data.influencesPerVertex) source += "var influencesPerVertex = " + data.influencesPerVertex + ";\n\n";
+							if (data.bones) source += "//\tvar bones = " + JSON.stringify( data.bones ) + ";\n";
 
-						if (data.name) source += "\tname: name,\n";
-						if (data.uvs)  source += "\tuvs: uvs,\n";
-						if (data.faces) source += "\tfaces: faces,\n";
-						if (data.metadata) source += "\tmetadata: metadata,\n";
-						if (data.materials) source += "\tmaterials: materials,\n";
-						if (data.skinWeights) source += "\tskinWeights: skinWeights,\n";
-						if (data.skinIndices) source += "\tskinIndices: skinIndices,\n";
-						if (data.influencesPerVertex) source += "\tinfluencesPerVertex: " + data.influencesPerVertex + ",\n";
-						if (data.bones) source += "\tbones: bones,\n";
+						source += "var json = {\n";
+
+							if (data.name) source += "\tname: name,\n";
+							if (data.uvs)  source += "\tuvs: uvs,\n";
+							if (data.bones) source += "\tbones: bones,\n";
+							if (data.faces) source += "\tfaces: faces,\n";
+							if (data.metadata) source += "\tmetadata: metadata,\n";
+							if (data.materials) source += "\tmaterials: materials,\n";
+							if (data.skinWeights) source += "\tskinWeights: skinWeights,\n";
+							if (data.skinIndices) source += "\tskinIndices: skinIndices,\n";
+							if (data.influencesPerVertex) source += "\tinfluencesPerVertex: " + data.influencesPerVertex + ",\n";
 
 						source += "};\n";
 

@@ -549,8 +549,8 @@ var Loader = function ( editor ) {
 							if (data.materials) source += "var materials = " + JSON.stringify( data.materials ) + ";\n";
 							if (data.skinWeights) source += "var skinWeights = " + JSON.stringify( data.skinWeights ) + ";\n";
 							if (data.skinIndices) source += "var skinIndices = " + JSON.stringify( data.skinIndices ) + ";\n";
-							if (data.influencesPerVertex) source += "var influencesPerVertex = " + data.influencesPerVertex + ";\n\n";
-							if (data.bones) source += "//\tvar bones = " + JSON.stringify( data.bones ) + ";\n";
+							if (data.influencesPerVertex) source += "var influencesPerVertex = " + data.influencesPerVertex + ";\n";
+							if (data.bones) source += "//\tvar bones = " + JSON.stringify( data.bones ) + ";\n\n";
 
 						source += "var json = {\n";
 

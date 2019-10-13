@@ -608,7 +608,9 @@ var Loader = function ( editor ) {
 
 				}
 
-				mesh.name = filename;
+				mesh.geometry.name = filename;
+				mesh.geometry.sourceFile = filename;
+				mesh.name = filename.replace(".json", "");
 
 				editor.execute( new AddObjectCommand( mesh ) );
 

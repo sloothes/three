@@ -567,7 +567,7 @@ var Loader = function ( editor ) {
 
 						var script = {
 							name: "skinned-mesh.js",
-							source: source;
+							source: source,
 						}
 
 						debugMode && console.log( script ); // debug!

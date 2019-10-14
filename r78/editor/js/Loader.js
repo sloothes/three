@@ -577,7 +577,7 @@ var Loader = function ( editor ) {
 
 						source += "var loader = new THREE.JSONLoader();\n";
 						source += "var object = loader.parse( json );\n\n";
-						source += "//\tgeometry./n/n";
+						source += "//\tgeometry.\n\n";
 						source += "var geometry = object.geometry;\n\n";
 						source += "geometry.name = json.name;\n";
 						source += "geometry.computeFaceNormals();\n";
@@ -586,10 +586,10 @@ var Loader = function ( editor ) {
 						source += "geometry.computeBoundingSphere();\n";
 						source += "geometry.sourceType = \"ascii\";\n";
 						source += "geometry.sourceFile = this.geometry.sourceFile;\n\n";
-						source += "//\tmaterial./n/n";
+						source += "//\tmaterial.\n\n";
 						source += "this.material.skinning = true; // important!\n\n";
 						source += "var material = this.material.clone(); // important!\n\n";
-						source += "//\tskinned./n/n";
+						source += "//\tskinned.\n\n";
 						source += "var skinned = new THREE.SkinnedMesh( geometry, material );\n\n";
 						source += "skinned.renderDepth = 1;\n";
 						source += "skinned.frustumCulled = false;\n";

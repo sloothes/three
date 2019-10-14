@@ -19,7 +19,7 @@ UI.Texture = function ( mapping ) {
 	});
 
 	var canvas = document.createElement( "canvas" );
-	canvas.width = 32;
+	canvas.width = 16;
 	canvas.height = 16;
 	canvas.style.cursor = "pointer";
 	canvas.style.marginRight = "5px";

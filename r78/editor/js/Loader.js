@@ -587,7 +587,7 @@ var Loader = function ( editor ) {
 						source += "geometry.sourceType = \"ascii\";\n";
 						source += "geometry.sourceFile = this.geometry.sourceFile;\n\n";
 						source += "//\tmaterial.\n\n";
-						source += "this.material.skinning = true; // important!\n\n";
+						source += "this.material.skinning = true;\n\n";
 						source += "var material = this.material.clone(); // important!\n\n";
 						source += "//\tskinned.\n\n";
 						source += "var skinned = new THREE.SkinnedMesh( geometry, material );\n\n";

@@ -132,7 +132,7 @@ var APP = {
 
 		//  Execute scene scripts first.
 
-			var uuid = json.object.uuid;
+			var uuid = json.scene.object.uuid;
 
 			var scripts = json.scripts[ uuid ];
 
@@ -165,9 +165,9 @@ var APP = {
 
 		//  Execute scripts by objects order.
 
-			for ( var j = 0; j < json.object.children; j ++ ) {
+			for ( var j = 0; j < json.scene.object.children; j ++ ) {
 
-				var uuid = json.object.children[ j ].uuid;
+				var uuid = json.scene.object.children[ j ].uuid;
 
 				var scripts = json.scripts[ uuid ];
 

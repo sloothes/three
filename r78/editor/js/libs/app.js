@@ -130,14 +130,11 @@ var APP = {
 		//	...
 
 
-		//  Init scene scripts first.
+		//  Init scene object scripts first.
 
-			var object = json.scene.object; // important!
-
-			var uuid = object.uuid; // json.scene.object.uuid;
+			var uuid = json.scene.object.uuid; // important!
 
 			var scripts = json.scripts[ uuid ]; 
-			debugMode && console.log("scene scripts:", scripts);
 
 			for ( var i = 0; i < scripts.length; i ++ ) {
 
@@ -157,23 +154,22 @@ var APP = {
 
 					}
 
-					events[ name ].push( functions[ name ].bind( object ) );
+					events[ name ].push( functions[ name ].bind( scene ) );
 
 				}
 
 			}
 
 
-		//  Init scripts by scene childrens order.
+		//  Init objects scripts by scene children order.
 
 			for ( var j = 0; j < json.scene.object.children.length; j ++ ) {
 
-				var object = json.scene.object.children[ j ]; // important!
+				var uuid = json.scene.object.children[ j ].uuid;
 
-				var uuid = object.uuid; // json.scene.object.children[ j ].uuid;
+				var object = scene.getObjectByProperty( "uuid", uuid, true ); // important!
 
 				var scripts = json.scripts[ uuid ];
-				debugMode && console.log("child scripts:", scripts);
 
 				for ( var i = 0; i < scripts.length; i ++ ) {
 

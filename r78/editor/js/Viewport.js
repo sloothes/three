@@ -216,6 +216,8 @@ var Viewport = function ( editor ) {
 
 		document.removeEventListener( "mouseup", onMouseUp, false );
 
+	//	Update controls center config.
+
 		editor.config.setKey( "controls/center", controls.center );
 
 	}

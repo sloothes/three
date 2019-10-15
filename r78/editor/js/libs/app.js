@@ -115,9 +115,8 @@ var APP = {
 
 		//	TODO: Execute orphan scripts.
 
+		//	for ( var uuid in json.scripts ) {
 		/*	
-			for ( var uuid in json.scripts ) {
-
 				var object = scene.getObjectByProperty( "uuid", uuid, true );
 
 				if ( object === undefined ) {
@@ -127,14 +126,15 @@ var APP = {
 				//	continue;
 
 				}
-				
-			//	...
-		*/
+			*/
+		//	...
 
 
 		//  Init scene scripts first.
 
-			var uuid = json.scene.object.uuid;
+			var object = json.scene.object; // important!
+
+			var uuid = object.uuid; // json.scene.object.uuid;
 
 			var scripts = json.scripts[ uuid ]; 
 			debugMode && console.log("scene scripts:", scripts);
@@ -166,9 +166,11 @@ var APP = {
 
 		//  Init scripts by scene childrens order.
 
-			for ( var j = 0; j < json.scene.object.children; j ++ ) {
+			for ( var j = 0; j < json.scene.object.children.length; j ++ ) {
 
-				var uuid = json.scene.object.children[ j ].uuid;
+				var object = json.scene.object.children[ j ]; // important!
+
+				var uuid = object.uuid; // json.scene.object.children[ j ].uuid;
 
 				var scripts = json.scripts[ uuid ];
 				debugMode && console.log("child scripts:", scripts);

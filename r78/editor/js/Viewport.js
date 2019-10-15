@@ -216,6 +216,8 @@ var Viewport = function ( editor ) {
 
 		document.removeEventListener( "mouseup", onMouseUp, false );
 
+		editor.config.setKey( "controls/center", controls.center );
+
 	}
 
 	function onTouchStart( event ) {
@@ -280,7 +282,7 @@ var Viewport = function ( editor ) {
 	//	if ( light ) light.position.copy( camera.position );
 
     //	Update center.
-		editor.config.setKey( "controls/center", controls.center );
+	//	editor.config.setKey( "controls/center", controls.center );
 
 		transformControls.update();
 		signals.cameraChanged.dispatch( camera );

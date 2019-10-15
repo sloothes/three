@@ -113,9 +113,10 @@ var APP = {
 
 			var scriptWrapResult = JSON.stringify( scriptWrapResultObj ).replace( /\"/g, "" );
 
-		//	TODO: Execute orphan scripts.
+		//	TODO: Init orphan scripts.
 
 		//	for ( var uuid in json.scripts ) {
+
 		/*	
 				var object = scene.getObjectByProperty( "uuid", uuid, true );
 
@@ -127,8 +128,8 @@ var APP = {
 
 				}
 			*/
-		//	...
 
+		//	...
 
 		//  Init scene object scripts first.
 

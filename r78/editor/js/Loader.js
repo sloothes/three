@@ -603,19 +603,19 @@ var Loader = function ( editor ) {
 
 						source += "function stop(){\n\n";
 
-							source += "\tscene.remove( skinned );\n\n";
+							source += "\tscene.remove( skinned );\n//\n";
 							source += "\tgeometry.dispose();\n\n";
 							source += "\tif (material.map) material.map.dispose();\n";
 							source += "\tif (material.bumpMap) material.bumpMap.dispose();\n";
 							source += "\tif (material.alphaMap) material.alphaMap.dispose();\n";
 							source += "\tif (material.emissiveMap) material.emissiveMap.dispose();\n\n";
-							source += "\tmaterial.dispose();\n\n";
-							source += "\tthis.geometry.dispose();\n\n";
-							source += "\tif (this.material.map) this.material.map.dispose();\n";
-							source += "\tif (this.material.bumpMap) this.material.bumpMap.dispose();\n";
-							source += "\tif (this.material.alphaMap) this.material.alphaMap.dispose();\n";
-							source += "\tif (this.material.emissiveMap) this.material.emissiveMap.dispose();\n\n";
-							source += "\tthis.material.dispose();\n\n";
+							source += "\tmaterial.dispose();\n//\n";
+							source += "\tskinned.geometry.dispose();\n\n";
+							source += "\tif (skinned.material.map) skinned.material.map.dispose();\n";
+							source += "\tif (skinned.material.bumpMap) skinned.material.bumpMap.dispose();\n";
+							source += "\tif (skinned.material.alphaMap) skinned.material.alphaMap.dispose();\n";
+							source += "\tif (skinned.material.emissiveMap) skinned.material.emissiveMap.dispose();\n\n";
+							source += "\tskinned.material.dispose();\n\n";
 
 						source += "}";
 
@@ -636,7 +636,10 @@ var Loader = function ( editor ) {
 
 						editor.addScript( mesh, {
 							name: "remove( this ).js",
-							source: "scene.remove( this );",
+							source: "scene.remove( this );\n\n"
+							+ "function stop(){\n\n\tthis.geometry.dispose();\n\n\tif (this.material.map) this.material.map.dispose();\n"
+							+ "\tif (this.material.bumpMap) this.material.bumpMap.dispose();\n\tif (this.material.alphaMap) this.material.alphaMap.dispose();\n"
+							+ "\tif (this.material.emissiveMap) this.material.emissiveMap.dispose();\n\n\tthis.material.dispose();\n\n}"
 						});
 
 					}

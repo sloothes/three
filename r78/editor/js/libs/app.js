@@ -163,7 +163,7 @@ var APP = {
 			dispatch( events.init, arguments );
 
 
-		//  Execute scripts by objects order.
+		//  Execute scripts by scene childrens order.
 
 			for ( var j = 0; j < json.scene.object.children; j ++ ) {
 

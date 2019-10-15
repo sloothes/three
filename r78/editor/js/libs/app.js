@@ -127,14 +127,17 @@ var APP = {
 				//	continue;
 
 				}
+				
+			//	...
 		*/
 
 
-		//  Execute scene scripts first.
+		//  Init scene scripts first.
 
 			var uuid = json.scene.object.uuid;
 
-			var scripts = json.scripts[ uuid ];
+			var scripts = json.scripts[ uuid ]; 
+			debugMode && console.log("scene scripts:", scripts);
 
 			for ( var i = 0; i < scripts.length; i ++ ) {
 
@@ -160,16 +163,15 @@ var APP = {
 
 			}
 
-			dispatch( events.init, arguments );
 
-
-		//  Execute scripts by scene childrens order.
+		//  Init scripts by scene childrens order.
 
 			for ( var j = 0; j < json.scene.object.children; j ++ ) {
 
 				var uuid = json.scene.object.children[ j ].uuid;
 
 				var scripts = json.scripts[ uuid ];
+				debugMode && console.log("child scripts:", scripts);
 
 				for ( var i = 0; i < scripts.length; i ++ ) {
 

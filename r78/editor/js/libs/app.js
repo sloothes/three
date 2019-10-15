@@ -60,6 +60,7 @@ var APP = {
 
 			}
 
+		//	TODO: Create and bind global functions.
 
 		//	Player renderer.
 
@@ -112,6 +113,9 @@ var APP = {
 
 			var scriptWrapResult = JSON.stringify( scriptWrapResultObj ).replace( /\"/g, "" );
 
+		//	TODO: Execute orphan scripts.
+
+		/*	
 			for ( var uuid in json.scripts ) {
 
 				var object = scene.getObjectByProperty( "uuid", uuid, true );
@@ -123,6 +127,47 @@ var APP = {
 				//	continue;
 
 				}
+		*/
+
+
+		//  Execute scene scripts first.
+
+			var uuid = json.object.uuid;
+
+			var scripts = json.scripts[ uuid ];
+
+			for ( var i = 0; i < scripts.length; i ++ ) {
+
+				var script = scripts[ i ];
+
+				var functions = ( new Function( scriptWrapParams, script.source + "\nreturn " + scriptWrapResult + ";" ).bind( object ) )( this, renderer, scene, camera, controls );
+
+				for ( var name in functions ) {
+
+					if ( functions[ name ] === undefined ) continue;
+
+					if ( events[ name ] === undefined ) {
+
+						console.warn( "APP.Player: Event type not supported (", name, ")" ); 
+
+						continue;
+
+					}
+
+					events[ name ].push( functions[ name ].bind( object ) );
+
+				}
+
+			}
+
+			dispatch( events.init, arguments );
+
+
+		//  Execute scripts by objects order.
+
+			for ( var j = 0; j < json.object.children; j ++ ) {
+
+				var uuid = json.object.children[ j ].uuid;
 
 				var scripts = json.scripts[ uuid ];
 

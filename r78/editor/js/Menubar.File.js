@@ -47,7 +47,7 @@ Menubar.File = function ( editor ) {
 
 			var size = "(" + Math.floor( event.total / 1000 ).format() + " KB)";
 			var progress = Math.floor( ( event.loaded / event.total ) * 100 ) + "%";
-			console.log( "Loading", filename, size, progress );
+			console.log( "Loading", file.name, size, progress );
 
 		});
 

@@ -387,6 +387,8 @@ var APP = {
 
 			renderer.dispose();
 
+			debugMode && console.log( "info:", renderer.info );
+
 		};
 
 	//

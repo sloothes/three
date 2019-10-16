@@ -533,9 +533,9 @@ var Loader = function ( editor ) {
 
 				if ( geometry.bones || ( geometry.animation && geometry.animation.hierarchy ) ) {
 
-					mesh = new THREE.Mesh( geometry, material );
-
 				//	mesh = new THREE.SkinnedMesh( geometry, material ); // TODO.
+
+					mesh = new THREE.Mesh( geometry, material );
 
 				//  Add skinned mesh script.
 

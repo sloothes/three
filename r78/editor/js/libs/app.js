@@ -387,14 +387,6 @@ var APP = {
 
 			renderer.dispose();
 
-		//	programs.
-
-			while ( renderer.info.programs.length ){
-
-				renderer.info.programs.shift().destroy();
-
-			}
-
 			debugMode && console.log( "info:", renderer.info );
 
 		};

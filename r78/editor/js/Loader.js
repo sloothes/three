@@ -23,7 +23,7 @@ var Loader = function ( editor ) {
 			var progress = Math.floor( ( event.loaded / event.total ) * 100 ) + "%";
 			console.log( "Loading", filename, size, progress );
 
-		} );
+		});
 
 		switch ( extension ) {
 
@@ -498,6 +498,7 @@ var Loader = function ( editor ) {
 				loader.setTexturePath( scope.texturePath );
 
 				var result = loader.parse( data );
+				debugMode && console.log( result ); // debug!
 
 				var geometry = result.geometry;
 				geometry.computeFaceNormals();
@@ -527,128 +528,25 @@ var Loader = function ( editor ) {
 
 				}
 
-				debugMode && console.log( result ); // debug!
-
 				var mesh;
 
-				if ( geometry.bones || ( geometry.animation && geometry.animation.hierarchy ) ) {
+			//	if ( geometry.bones || ( geometry.animation && geometry.animation.hierarchy ) ) {
 
-				//	mesh = new THREE.SkinnedMesh( geometry, material ); // TODO.
+				if ( data.bones && data.skinIndices && data.skinWeights ) {
 
-					mesh = new THREE.Mesh( geometry, material );
-
-				//  Add skinned mesh script.
-
-					if ( data.skinIndices && data.skinWeights ) {
-
-					//	data.
-
-						var source = "";
-
-						if (data.name) source += "var name = \"" + data.name + "\";\n";
-						if (data.uvs)  source += "var uvs = " + JSON.stringify( data.uvs ) + ";\n";
-						if (data.faces) source += "var faces = " + JSON.stringify( data.faces ) + ";\n";
-						if (data.metadata) source += "var metadata = " + JSON.stringify( data.metadata ) + ";\n";
-						if (data.vertices) source += "var vertices = " + JSON.stringify( data.vertices ) + ";\n";
-						if (data.materials) source += "var materials = " + JSON.stringify( data.materials ) + ";\n";
-						if (data.skinWeights) source += "var skinWeights = " + JSON.stringify( data.skinWeights ) + ";\n";
-						if (data.skinIndices) source += "var skinIndices = " + JSON.stringify( data.skinIndices ) + ";\n";
-						if (data.bones) source += "//\tvar bones = " + JSON.stringify( data.bones ) + ";\n";
-						if (data.influencesPerVertex) source += "var influencesPerVertex = " + data.influencesPerVertex + ";\n\n";
-
-					//	json.
-
-						source += "var json = {\n";
-
-							if (data.name) source += "\tname: name,\n";
-							if (data.uvs)  source += "\tuvs: uvs,\n";
-							if (data.bones) source += "\tbones: bones,\n";
-							if (data.faces) source += "\tfaces: faces,\n";
-							if (data.metadata) source += "\tmetadata: metadata,\n";
-							if (data.vertices) source += "\tvertices: vertices,\n";
-							if (data.materials) source += "\tmaterials: materials,\n";
-							if (data.skinWeights) source += "\tskinWeights: skinWeights,\n";
-							if (data.skinIndices) source += "\tskinIndices: skinIndices,\n";
-							if (data.influencesPerVertex) source += "\tinfluencesPerVertex: " + data.influencesPerVertex + ",\n";
-
-						source += "};\n\n\n";
-
-					//  loader.
-
-						source += "var loader = new THREE.JSONLoader();\n";
-						source += "var object = loader.parse( json );\n\n";
-						source += "//\tgeometry.\n\n";
-						source += "var geometry = object.geometry;\n\n";
-						source += "geometry.name = json.name;\n";
-						source += "geometry.computeFaceNormals();\n";
-						source += "geometry.computeVertexNormals();\n";
-						source += "geometry.computeBoundingBox();\n";
-						source += "geometry.computeBoundingSphere();\n";
-						source += "geometry.sourceType = \"ascii\";\n";
-						source += "geometry.sourceFile = this.geometry.sourceFile;\n\n";
-						source += "//\tmaterial.\n\n";
-						source += "this.material.skinning = true;\n\n";
-						source += "var material = this.material.clone(); // important!\n\n";
-						source += "//\tskinned.\n\n";
-						source += "var skinned = new THREE.SkinnedMesh( geometry, material );\n\n";
-						source += "skinned.renderDepth = 1;\n";
-						source += "skinned.frustumCulled = false;\n";
-						source += "skinned.position.set( 0, 0, 0 );\n";
-						source += "skinned.rotation.set( 0, 0, 0 );\n";
-						source += "skinned.scale.set( 1, 1, 1 );\n";
-						source += "skinned.castShadow = true;\n";
-						source += "skinned.name = this.name;\n\n\n\n";
-
-					//  on stop.
-
-						source += "function stop(){\n\n";
-
-							source += "\tscene.remove( skinned );\n//\n";
-							source += "\tgeometry.dispose();\n\n";
-							source += "\tif (material.map) material.map.dispose();\n";
-							source += "\tif (material.bumpMap) material.bumpMap.dispose();\n";
-							source += "\tif (material.alphaMap) material.alphaMap.dispose();\n";
-							source += "\tif (material.emissiveMap) material.emissiveMap.dispose();\n\n";
-							source += "\tmaterial.dispose();\n//\n";
-							source += "\tskinned.geometry.dispose();\n\n";
-							source += "\tif (skinned.material.map) skinned.material.map.dispose();\n";
-							source += "\tif (skinned.material.bumpMap) skinned.material.bumpMap.dispose();\n";
-							source += "\tif (skinned.material.alphaMap) skinned.material.alphaMap.dispose();\n";
-							source += "\tif (skinned.material.emissiveMap) skinned.material.emissiveMap.dispose();\n\n";
-							source += "\tskinned.material.dispose();\n\n";
-
-						source += "}";
-
-					//	script.
-
-						var script = {
-
-							name: "skinned-mesh.js",
-							source: source,
-
-						}
-
-					//  Add "skinned-mesh.js" script.
-
-						editor.addScript( mesh, script);
-
-					//  Add "remove( this ).js" script.
-
-						editor.addScript( mesh, {
-							name: "remove( this ).js",
-							source: "scene.remove( this );\n\n"
-							+ "function stop(){\n\n\tthis.geometry.dispose();\n\n\tif (this.material.map) this.material.map.dispose();\n"
-							+ "\tif (this.material.bumpMap) this.material.bumpMap.dispose();\n\tif (this.material.alphaMap) this.material.alphaMap.dispose();\n"
-							+ "\tif (this.material.emissiveMap) this.material.emissiveMap.dispose();\n\n\tthis.material.dispose();\n\n}"
-						});
-
-					}
+					mesh = new THREE.SkinnedMesh( geometry, material ); // TODO: toJSON().
 
 				} else {
 
 					mesh = new THREE.Mesh( geometry, material );
 
 				}
+
+				mesh.renderDepth = 1;
+				mesh.frustumCulled = false;
+				mesh.position.set( 0, 0, 0 );
+				mesh.rotation.set( 0, 0, 0 );
+				mesh.scale.set( 1, 1, 1 );
 
 				mesh.geometry.name = filename;
 				mesh.geometry.sourceFile = filename;
@@ -695,3 +593,112 @@ var Loader = function ( editor ) {
 	}
 
 };
+
+/*
+
+//  Add skinned mesh script.
+
+if ( data.bones && data.skinIndices && data.skinWeights ) {
+
+	var source = "";
+
+	if (data.name) source += "var name = \"" + data.name + "\";\n";
+	if (data.uvs)  source += "var uvs = " + JSON.stringify( data.uvs ) + ";\n";
+	if (data.faces) source += "var faces = " + JSON.stringify( data.faces ) + ";\n";
+	if (data.metadata) source += "var metadata = " + JSON.stringify( data.metadata ) + ";\n";
+	if (data.vertices) source += "var vertices = " + JSON.stringify( data.vertices ) + ";\n";
+	if (data.materials) source += "var materials = " + JSON.stringify( data.materials ) + ";\n";
+	if (data.skinWeights) source += "var skinWeights = " + JSON.stringify( data.skinWeights ) + ";\n";
+	if (data.skinIndices) source += "var skinIndices = " + JSON.stringify( data.skinIndices ) + ";\n";
+	if (data.bones) source += "//\tvar bones = " + JSON.stringify( data.bones ) + ";\n";
+	if (data.influencesPerVertex) source += "var influencesPerVertex = " + data.influencesPerVertex + ";\n\n";
+
+//	json.
+
+	source += "var json = {\n";
+
+	if (data.name) source += "\tname: name,\n";
+	if (data.uvs)  source += "\tuvs: uvs,\n";
+	if (data.bones) source += "\tbones: bones,\n";
+	if (data.faces) source += "\tfaces: faces,\n";
+	if (data.metadata) source += "\tmetadata: metadata,\n";
+	if (data.vertices) source += "\tvertices: vertices,\n";
+	if (data.materials) source += "\tmaterials: materials,\n";
+	if (data.skinWeights) source += "\tskinWeights: skinWeights,\n";
+	if (data.skinIndices) source += "\tskinIndices: skinIndices,\n";
+	if (data.influencesPerVertex) source += "\tinfluencesPerVertex: " + data.influencesPerVertex + ",\n";
+
+	source += "};\n\n\n";
+
+//  loader.
+
+	source += "var loader = new THREE.JSONLoader();\n";
+	source += "var object = loader.parse( json );\n\n";
+	source += "//\tgeometry.\n\n";
+	source += "var geometry = object.geometry;\n\n";
+	source += "geometry.name = json.name;\n";
+	source += "geometry.computeFaceNormals();\n";
+	source += "geometry.computeVertexNormals();\n";
+	source += "geometry.computeBoundingBox();\n";
+	source += "geometry.computeBoundingSphere();\n";
+	source += "geometry.sourceType = \"ascii\";\n";
+	source += "geometry.sourceFile = this.geometry.sourceFile;\n\n";
+	source += "//\tmaterial.\n\n";
+	source += "this.material.skinning = true;\n\n";
+	source += "var material = this.material.clone(); // important!\n\n";
+	source += "//\tskinned.\n\n";
+	source += "var skinned = new THREE.SkinnedMesh( geometry, material );\n\n";
+	source += "skinned.renderDepth = 1;\n";
+	source += "skinned.frustumCulled = false;\n";
+	source += "skinned.position.set( 0, 0, 0 );\n";
+	source += "skinned.rotation.set( 0, 0, 0 );\n";
+	source += "skinned.scale.set( 1, 1, 1 );\n";
+	source += "skinned.castShadow = true;\n";
+	source += "skinned.name = this.name;\n\n\n\n";
+
+//  on stop.
+
+	source += "function stop(){\n\n";
+
+	source += "\tscene.remove( skinned );\n//\n";
+	source += "\tgeometry.dispose();\n\n";
+	source += "\tif (material.map) material.map.dispose();\n";
+	source += "\tif (material.bumpMap) material.bumpMap.dispose();\n";
+	source += "\tif (material.alphaMap) material.alphaMap.dispose();\n";
+	source += "\tif (material.emissiveMap) material.emissiveMap.dispose();\n\n";
+	source += "\tmaterial.dispose();\n//\n";
+	source += "\tskinned.geometry.dispose();\n\n";
+	source += "\tif (skinned.material.map) skinned.material.map.dispose();\n";
+	source += "\tif (skinned.material.bumpMap) skinned.material.bumpMap.dispose();\n";
+	source += "\tif (skinned.material.alphaMap) skinned.material.alphaMap.dispose();\n";
+	source += "\tif (skinned.material.emissiveMap) skinned.material.emissiveMap.dispose();\n\n";
+	source += "\tskinned.material.dispose();\n\n";
+
+	source += "}";
+
+//	script.
+
+	var script = {
+
+		name: "skinned-mesh.js",
+		source: source,
+
+	}
+
+//  Add "skinned-mesh.js" script.
+
+	editor.addScript( mesh, script);
+
+//  Add "remove( this ).js" script.
+
+	editor.addScript( mesh, {
+		name: "remove( this ).js",
+		source: "scene.remove( this );\n\n"
+		+ "function stop(){\n\n\tthis.geometry.dispose();\n\n\tif (this.material.map) this.material.map.dispose();\n"
+		+ "\tif (this.material.bumpMap) this.material.bumpMap.dispose();\n\tif (this.material.alphaMap) this.material.alphaMap.dispose();\n"
+		+ "\tif (this.material.emissiveMap) this.material.emissiveMap.dispose();\n\n\tthis.material.dispose();\n\n}"
+	});
+
+}
+
+*/

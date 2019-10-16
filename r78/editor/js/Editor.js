@@ -470,6 +470,7 @@ Editor.prototype = {
 		var scope = this;
 
 		var loader = new THREE.ObjectLoader();
+	//	var jsonLoader = new THREE.JSONLoader();
 
 	//  backwards.
 
@@ -519,7 +520,7 @@ Editor.prototype = {
 
 		}
 
-	//
+	//	editor to json.
 
 		return {
 
@@ -541,7 +542,7 @@ Editor.prototype = {
 
 			scripts: this.scripts,
 			camera: this.camera.toJSON(),
-			scene: this.scene.toJSON(),
+			scene: this.scene.toJSON(), // TODO: SkinnedMesh toJSON for JSONLoader.
 			history: this.history.toJSON(),
 
 		};

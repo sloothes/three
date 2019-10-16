@@ -55,7 +55,7 @@ Menubar.File = function ( editor ) {
 
             editor.clear();
 
-			debugMode && console.log( JSON.parse( reader.result ); // debug.
+			debugMode && console.log( JSON.parse( reader.result ) ); // debug.
 
             editor.fromJSON( JSON.parse( reader.result ) );
 

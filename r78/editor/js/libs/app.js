@@ -98,7 +98,6 @@ var APP = {
 				touchend: [],
 				touchmove: [],
 				update: [],
-				dispose: []
 			};
 
 			var scriptWrapParams = "player,renderer,scene,camera,controls";

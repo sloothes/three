@@ -4,7 +4,7 @@
 
 var Viewport = function ( editor ) {
 
-	renderer = null; // (TODO: local?)
+	var renderer = null; // local!
 
 	var signals = editor.signals;
 

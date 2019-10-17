@@ -9,7 +9,12 @@ var APP = {
 		var scope = this;
 
 		var loader = new THREE.ObjectLoader();
-		var camera, scene, renderer;
+
+	//	var camera, scene, renderer;
+
+		camera = null;   // (global for debugging)
+		scene = null;    // (global for debugging)
+		renderer = null; // (global for debugging)
 
 		var vr, controls, effect, center;
 
@@ -33,7 +38,6 @@ var APP = {
 			THREE.Cache.enabled = json.project.cache; // important!
 
 			console.log({ "vr": vr, "debugMode": debugMode, "cache": THREE.Cache.enabled });
-
 
 		//	Load external javascirpt libraries.
 
@@ -60,9 +64,11 @@ var APP = {
 
 			}
 
-		//	TODO: Create and bind global functions.
 
-		//	Player renderer.
+		//	TODO: immiplicate for global functions.
+
+
+		//	renderer (global: for debugging).
 
 			renderer = new THREE.WebGLRenderer({ 
 				antialias: true,
@@ -112,7 +118,7 @@ var APP = {
 
 			var scriptWrapResult = JSON.stringify( scriptWrapResultObj ).replace( /\"/g, "" );
 
-		//	TODO: Init orphan scripts.
+		//	TODO: Initialize orphan scripts.
 
 		//	for ( var uuid in json.scripts ) {
 
@@ -126,11 +132,11 @@ var APP = {
 				//	continue;
 
 				}
-			*/
+		*/
 
 		//	...
 
-		//  Init scene object scripts first.
+		//  Initialize scene object scripts first.
 
 			var uuid = json.scene.object.uuid; // important!
 
@@ -164,7 +170,7 @@ var APP = {
 
 			}
 
-		//  Init objects scripts by scene children order.
+		//  Initialize objects scripts by scene children order.
 
 			for ( var j = 0; j < json.scene.object.children.length; j ++ ) {
 

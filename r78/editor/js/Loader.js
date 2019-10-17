@@ -534,19 +534,138 @@ var Loader = function ( editor ) {
 
 				if ( data.bones && data.skinIndices && data.skinWeights ) {
 
-					mesh = new THREE.SkinnedMesh( geometry, material ); // TODO: toJSON().
+				//	mesh = new THREE.SkinnedMesh( geometry, material ); // TODO: toJSON().
+
+					mesh = new THREE.Mesh( geometry, material );
+
+
+				//  skinned-mesh.js
+
+					var source = (function(){
+
+						var source = "";
+
+					//	data.
+
+						if (data.name) source += "var name = \"" + data.name + "\";\n";
+						if (data.uvs)  source += "var uvs = " + JSON.stringify( data.uvs ) + ";\n";
+						if (data.faces) source += "var faces = " + JSON.stringify( data.faces ) + ";\n";
+						if (data.metadata) source += "var metadata = " + JSON.stringify( data.metadata ) + ";\n";
+						if (data.vertices) source += "var vertices = " + JSON.stringify( data.vertices ) + ";\n";
+						if (data.materials) source += "var materials = " + JSON.stringify( data.materials ) + ";\n";
+						if (data.skinWeights) source += "var skinWeights = " + JSON.stringify( data.skinWeights ) + ";\n";
+						if (data.skinIndices) source += "var skinIndices = " + JSON.stringify( data.skinIndices ) + ";\n";
+						if (data.bones) source += "//\tvar bones = " + JSON.stringify( data.bones ) + ";\n";
+						if (data.influencesPerVertex) source += "var influencesPerVertex = " + data.influencesPerVertex + ";\n\n";
+
+					//	json.
+
+						source += "var json = {\n";
+
+						if (data.name) source += "\tname: name,\n";
+						if (data.uvs)  source += "\tuvs: uvs,\n";
+						if (data.bones) source += "\tbones: bones,\n";
+						if (data.faces) source += "\tfaces: faces,\n";
+						if (data.metadata) source += "\tmetadata: metadata,\n";
+						if (data.vertices) source += "\tvertices: vertices,\n";
+						if (data.materials) source += "\tmaterials: materials,\n";
+						if (data.skinWeights) source += "\tskinWeights: skinWeights,\n";
+						if (data.skinIndices) source += "\tskinIndices: skinIndices,\n";
+						if (data.influencesPerVertex) source += "\tinfluencesPerVertex: " + data.influencesPerVertex + ",\n";
+
+						source += "};\n\n\n";
+
+					//  loader.
+
+						source += "var loader = new THREE.JSONLoader();\n";
+						source += "var object = loader.parse( json );\n\n";
+						source += "//\tgeometry.\n\n";
+						source += "var geometry = object.geometry;\n\n";
+						source += "geometry.name = json.name;\n";
+						source += "geometry.computeFaceNormals();\n";
+						source += "geometry.computeVertexNormals();\n";
+						source += "geometry.computeBoundingBox();\n";
+						source += "geometry.computeBoundingSphere();\n";
+						source += "geometry.sourceType = \"ascii\";\n";
+						source += "geometry.sourceFile = this.geometry.sourceFile;\n\n";
+						source += "//\tmaterial.\n\n";
+						source += "this.material.skinning = true;\n\n";
+						source += "var material = this.material.clone(); // important!\n\n";
+						source += "//\tskinned.\n\n";
+						source += "var skinned = new THREE.SkinnedMesh( geometry, material );\n\n";
+						source += "skinned.renderDepth = 1;\n";
+						source += "skinned.frustumCulled = false;\n";
+						source += "skinned.position.set( 0, 0, 0 );\n";
+						source += "skinned.rotation.set( 0, 0, 0 );\n";
+						source += "skinned.scale.set( 1, 1, 1 );\n";
+						source += "skinned.castShadow = true;\n";
+						source += "skinned.name = this.name;\n\n\n\n";
+
+						return source;
+
+					})();
+
+				//  Add "skinned-mesh.js" script.
+
+					editor.addScript( mesh, {
+
+						name: "skinned-mesh.js",
+						source: source,
+
+					});
+
+
+				//  remove( this ).js
+
+					var source = (function(){
+
+						var source = "";
+
+					//	remove.
+
+						source += "scene.remove( this );\n\n";
+
+					//	dispose.
+
+						source += "// dispose.\n\n";
+						source += "this.traverse(function( object ){\n\n";
+						source += "\tvar geometry = object.geometry;\n";
+						source += "\tvar material = object.material;\n";
+						source += "\tvar skeleton = object.skeleton;\n\n";
+						source += "\tmaterial && material.map && material.map.dispose && material.map.dispose();\n";
+						source += "\tmaterial && material.bumpMap && material.bumpMap.dispose && material.bumpMap.dispose();\n";
+						source += "\tmaterial && material.alphaMap && material.alphaMap.dispose && material.alphaMap.dispose();\n";
+						source += "\tmaterial && material.normalMap && material.normalMap.dispose && material.normalMap.dispose();\n";
+						source += "\tmaterial && material.emissiveMap && material.emissiveMap.dispose && material.emissiveMap.dispose();\n";
+						source += "\tmaterial && material.roughnessMap && material.roughnessMap.dispose && material.roughnessMap.dispose();\n";
+						source += "\tmaterial && material.metalnessMap && material.metalnessMap.dispose && material.metalnessMap.dispose();\n";
+						source += "\tmaterial && material.displacementMap && material.displacementMap.dispose && material.displacementMap.dispose();\n";
+						source += "\tmaterial && material.lightMap && material.lightMap.dispose && material.lightMap.dispose();\n";
+						source += "\tmaterial && material.envMap && material.envMap.dispose && material.envMap.dispose();\n";
+						source += "\tmaterial && material.aoMap && material.aoMap.dispose && material.aoMap.dispose();\n\n";
+						source += "\tgeometry && geometry.dispose && geometry.dispose();\n";
+						source += "\tmaterial && material.dispose && material.dispose();\n";
+						source += "\tskeleton && skeleton.boneTexture && skeleton.boneTexture.dispose && skeleton.boneTexture.dispose();\n\n";
+						source += "});";
+						
+						return source;
+
+					})();
+
+				//  Add "remove( this ).js" script.
+
+					editor.addScript( mesh, {
+
+						name: "remove( this ).js",
+						source: source,
+
+					});
 
 				} else {
 
 					mesh = new THREE.Mesh( geometry, material );
 
 				}
-
-				mesh.renderDepth = 1;
-				mesh.frustumCulled = false;
-				mesh.position.set( 0, 0, 0 );
-				mesh.rotation.set( 0, 0, 0 );
-				mesh.scale.set( 1, 1, 1 );
 
 				mesh.geometry.name = filename;
 				mesh.geometry.sourceFile = filename;

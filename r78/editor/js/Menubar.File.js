@@ -48,12 +48,8 @@ Menubar.File = function ( editor ) {
 	option.setTextContent( "Open" );
 	option.onClick( function () {
 
-		if ( confirm( "Any unsaved data will be lost. Are you sure?" ) ) {
-
-            appFileInput.value = "";
-            appFileInput.click();
-
-        }
+		appFileInput.value = "";
+		appFileInput.click();
 
 	});
 

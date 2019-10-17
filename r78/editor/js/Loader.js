@@ -623,12 +623,13 @@ var Loader = function ( editor ) {
 
 					//	remove.
 
-						source += "scene.remove( this );\n\n";
+						source += "scene.remove( this );\n";
+						source += "this.traverse( dispose );\n\n";
 
 					//	dispose.
 
-						source += "// dispose.\n\n";
-						source += "this.traverse(function( object ){\n\n";
+						source += "/*\n\n// dispose.\n\n";
+						source += "function dispose( object ){\n\n";
 						source += "\tvar geometry = object.geometry;\n";
 						source += "\tvar material = object.material;\n";
 						source += "\tvar skeleton = object.skeleton;\n\n";
@@ -646,7 +647,7 @@ var Loader = function ( editor ) {
 						source += "\tgeometry && geometry.dispose && geometry.dispose();\n";
 						source += "\tmaterial && material.dispose && material.dispose();\n";
 						source += "\tskeleton && skeleton.boneTexture && skeleton.boneTexture.dispose && skeleton.boneTexture.dispose();\n\n";
-						source += "});";
+						source += "}\n\n*/";
 						
 						return source;
 
@@ -795,27 +796,53 @@ if ( data.bones && data.skinIndices && data.skinWeights ) {
 
 	source += "}";
 
-//	script.
+//  Add "skinned-mesh.js" script.
 
-	var script = {
+	editor.addScript( mesh, {
 
 		name: "skinned-mesh.js",
 		source: source,
 
-	}
+	});
 
-//  Add "skinned-mesh.js" script.
+//  "remove( this ).js" script.
 
-	editor.addScript( mesh, script);
+	var source = "";
+
+	source += "scene.remove( this );\n";
+	source += "this.traverse( dispose );\n\n";
+	source += "// dispose.\n\n";
+	source += "function dispose( object ){\n\n";
+
+		source += "\tvar geometry = object.geometry;\n";
+		source += "\tvar material = object.material;\n";
+		source += "\tvar skeleton = object.skeleton;\n\n";
+
+		source += "\tmaterial && material.map && material.map.dispose && material.map.dispose();\n";
+		source += "\tmaterial && material.bumpMap && material.bumpMap.dispose && material.bumpMap.dispose();\n";
+		source += "\tmaterial && material.alphaMap && material.alphaMap.dispose && material.alphaMap.dispose();\n";
+		source += "\tmaterial && material.normalMap && material.normalMap.dispose && material.normalMap.dispose();\n";
+		source += "\tmaterial && material.emissiveMap && material.emissiveMap.dispose && material.emissiveMap.dispose();\n";
+		source += "\tmaterial && material.roughnessMap && material.roughnessMap.dispose && material.roughnessMap.dispose();\n";
+		source += "\tmaterial && material.metalnessMap && material.metalnessMap.dispose && material.metalnessMap.dispose();\n";
+		source += "\tmaterial && material.displacementMap && material.displacementMap.dispose && material.displacementMap.dispose();\n";
+		source += "\tmaterial && material.lightMap && material.lightMap.dispose && material.lightMap.dispose();\n";
+		source += "\tmaterial && material.envMap && material.envMap.dispose && material.envMap.dispose();\n";
+		source += "\tmaterial && material.aoMap && material.aoMap.dispose && material.aoMap.dispose();\n\n";
+
+		source += "\tgeometry && geometry.dispose && geometry.dispose();\n";
+		source += "\tmaterial && material.dispose && material.dispose();\n";
+		source += "\tskeleton && skeleton.boneTexture && skeleton.boneTexture.dispose && skeleton.boneTexture.dispose();\n\n";
+
+	source += "}";
 
 //  Add "remove( this ).js" script.
 
 	editor.addScript( mesh, {
+
 		name: "remove( this ).js",
-		source: "scene.remove( this );\n\n"
-		+ "function stop(){\n\n\tthis.geometry.dispose();\n\n\tif (this.material.map) this.material.map.dispose();\n"
-		+ "\tif (this.material.bumpMap) this.material.bumpMap.dispose();\n\tif (this.material.alphaMap) this.material.alphaMap.dispose();\n"
-		+ "\tif (this.material.emissiveMap) this.material.emissiveMap.dispose();\n\n\tthis.material.dispose();\n\n}"
+		source: source,
+
 	});
 
 }

@@ -39,7 +39,7 @@ Menubar.File = function ( editor ) {
 	appFileInput.type = "file";
 	appFileInput.addEventListener( "change", function ( event ) {
 
-		editor.loader.loadFile( fileInput.files[ 0 ] );
+		editor.loader.loadFile( appFileInput.files[ 0 ] );
 
 	});
 

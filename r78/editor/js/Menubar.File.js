@@ -39,29 +39,7 @@ Menubar.File = function ( editor ) {
 	appFileInput.type = "file";
 	appFileInput.addEventListener( "change", function ( event ) {
 
-        var file = appFileInput.files[ 0 ];
-
-        var reader = new FileReader();
-
-		reader.addEventListener( "progress", function ( event ) {
-
-			var size = "(" + Math.floor( event.total / 1000 ).format() + " KB)";
-			var progress = Math.floor( ( event.loaded / event.total ) * 100 ) + "%";
-			console.log( "Loading", file.name, size, progress );
-
-		});
-
-        reader.addEventListener( "load", function ( event ) {
-
-            editor.clear();
-
-			debugMode && console.log( JSON.parse( reader.result ) ); // debug.
-
-            editor.fromJSON( JSON.parse( reader.result ) );
-
-        });
-
-        reader.readAsText(file);
+		editor.loader.loadFile( fileInput.files[ 0 ] );
 
 	});
 
@@ -691,3 +669,29 @@ Menubar.File = function ( editor ) {
 	options.add( option );
 */
 
+/*
+        var file = appFileInput.files[ 0 ];
+
+        var reader = new FileReader();
+
+		reader.addEventListener( "progress", function ( event ) {
+
+			var size = "(" + Math.floor( event.total / 1000 ).format() + " KB)";
+			var progress = Math.floor( ( event.loaded / event.total ) * 100 ) + "%";
+			console.log( "Loading", file.name, size, progress );
+
+		});
+
+        reader.addEventListener( "load", function ( event ) {
+
+            editor.clear();
+
+			debugMode && console.log( JSON.parse( reader.result ) ); // debug.
+
+            editor.fromJSON( JSON.parse( reader.result ) );
+
+        });
+
+        reader.readAsText(file);
+
+*/

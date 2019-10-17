@@ -550,29 +550,27 @@ var Loader = function ( editor ) {
 						if (data.name) source += "var name = \"" + data.name + "\";\n";
 						if (data.uvs)  source += "var uvs = " + JSON.stringify( data.uvs ) + ";\n";
 						if (data.faces) source += "var faces = " + JSON.stringify( data.faces ) + ";\n";
-						if (data.metadata) source += "var metadata = " + JSON.stringify( data.metadata ) + ";\n";
 						if (data.vertices) source += "var vertices = " + JSON.stringify( data.vertices ) + ";\n";
-						if (data.materials) source += "var materials = " + JSON.stringify( data.materials ) + ";\n";
-						if (data.skinWeights) source += "var skinWeights = " + JSON.stringify( data.skinWeights ) + ";\n";
 						if (data.skinIndices) source += "var skinIndices = " + JSON.stringify( data.skinIndices ) + ";\n";
+						if (data.skinWeights) source += "var skinWeights = " + JSON.stringify( data.skinWeights ) + ";\n";
+						if (data.materials) source += "var materials = " + JSON.stringify( data.materials ) + ";\n";
+						if (data.metadata) source += "var metadata = " + JSON.stringify( data.metadata ) + ";\n";
 						if (data.bones) source += "//\tvar bones = " + JSON.stringify( data.bones ) + ";\n";
 						if (data.influencesPerVertex) source += "var influencesPerVertex = " + data.influencesPerVertex + ";\n\n";
 
 					//	json.
 
 						source += "var json = {\n";
-
 						if (data.name) source += "\tname: name,\n";
 						if (data.uvs)  source += "\tuvs: uvs,\n";
-						if (data.bones) source += "\tbones: bones,\n";
 						if (data.faces) source += "\tfaces: faces,\n";
-						if (data.metadata) source += "\tmetadata: metadata,\n";
 						if (data.vertices) source += "\tvertices: vertices,\n";
-						if (data.materials) source += "\tmaterials: materials,\n";
-						if (data.skinWeights) source += "\tskinWeights: skinWeights,\n";
 						if (data.skinIndices) source += "\tskinIndices: skinIndices,\n";
-						if (data.influencesPerVertex) source += "\tinfluencesPerVertex: " + data.influencesPerVertex + ",\n";
-
+						if (data.skinWeights) source += "\tskinWeights: skinWeights,\n";
+						if (data.materials) source += "\tmaterials: materials,\n";
+						if (data.metadata) source += "\tmetadata: metadata,\n";
+						if (data.bones) source += "\tbones: bones,\n";
+						if (data.influencesPerVertex) source += "\tinfluencesPerVertex: " + data.influencesPerVertex + "\n";
 						source += "};\n\n\n";
 
 					//  loader.
@@ -581,13 +579,13 @@ var Loader = function ( editor ) {
 						source += "var object = loader.parse( json );\n\n";
 						source += "//\tgeometry.\n\n";
 						source += "var geometry = object.geometry;\n\n";
-						source += "geometry.name = json.name;\n";
+						source += "geometry.name = json.name || \"\";\n";
 						source += "geometry.computeFaceNormals();\n";
 						source += "geometry.computeVertexNormals();\n";
 						source += "geometry.computeBoundingBox();\n";
 						source += "geometry.computeBoundingSphere();\n";
 						source += "geometry.sourceType = \"ascii\";\n";
-						source += "geometry.sourceFile = this.geometry.sourceFile;\n\n";
+						source += "geometry.sourceFile = JSON.stringify(json); // this.geometry.sourceFile;\n\n";
 						source += "//\tmaterial.\n\n";
 						source += "this.material.skinning = true;\n\n";
 						source += "var material = this.material.clone(); // important!\n\n";
@@ -600,6 +598,17 @@ var Loader = function ( editor ) {
 						source += "skinned.scale.set( 1, 1, 1 );\n";
 						source += "skinned.castShadow = true;\n";
 						source += "skinned.name = this.name;\n\n\n\n";
+
+					//	on stop.
+
+						source += "function stop(){\n\n";
+						source += "//\tremove.\n\n";
+						source += "\tscene.remove( skinned );\n\n";
+						source += "//\tdispose\n\n";
+						source += "\tskinned && skinned.traverse( dispose );\n\n";
+						source += "//\tdelete.\n\n";
+						source += "\tdelete skinned;\n\n";
+						source += "}";
 
 						return source;
 
@@ -626,6 +635,8 @@ var Loader = function ( editor ) {
 						source += "scene.remove( this );\n";
 						source += "this.traverse( dispose );\n\n";
 
+						return source;
+
 					//	dispose.
 
 						source += "/*\n\n// dispose.\n\n";
@@ -648,8 +659,6 @@ var Loader = function ( editor ) {
 						source += "\tmaterial && material.dispose && material.dispose();\n";
 						source += "\tskeleton && skeleton.boneTexture && skeleton.boneTexture.dispose && skeleton.boneTexture.dispose();\n\n";
 						source += "}\n\n*/";
-						
-						return source;
 
 					})();
 

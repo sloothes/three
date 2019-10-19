@@ -183,7 +183,7 @@ Sidebar.Project = function ( editor ) {
     var libsRow = new UI.Row();
 	libsRow.setTextAlign("center");
 
-	var addLibs = new UI.Button( "Add JS files" );
+	var addLibs = new UI.Button( "Add JS Libraries" );
 	addLibs.onClick( function () {
 
         libsInput.value = "";
@@ -195,7 +195,7 @@ Sidebar.Project = function ( editor ) {
 
 //
 
-	var clearLibs = new UI.Button( "Clear JS files" );
+	var clearLibs = new UI.Button( "Clear JS Libraries" );
 	clearLibs.setMarginLeft("5px");
 	clearLibs.onClick( function () {
 

@@ -217,6 +217,9 @@ Sidebar.Project = function ( editor ) {
 	container.add( libsRow );
 
 //
+	container.add( new UI.HorizontalRule() );
+
+//
 
 	function updateRenderer() {
 

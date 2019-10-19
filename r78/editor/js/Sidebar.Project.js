@@ -149,7 +149,7 @@ Sidebar.Project = function ( editor ) {
 	libsInput.accept = ".js";
 	libsInput.addEventListener( "change", function ( event ) {
 
-		var files = libraryInput.files;
+		var files = libsInput.files;
 		debugMode && console.log(files);
 
 		for ( var i = 0; i < files.length; i++ ){

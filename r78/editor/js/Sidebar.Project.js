@@ -139,6 +139,78 @@ Sidebar.Project = function ( editor ) {
 	container.add( vrRow );
 
 //
+	container.add( new UI.HorizontalRule() );
+
+//	JS libraries.
+
+	var libsInput = document.createElement( "input" );
+	libsInput.type = "file";
+	libsInput.multiple = true;
+	libsInput.accept = ".js";
+	libsInput.addEventListener( "change", function ( event ) {
+
+		var files = libraryInput.files;
+		debugMode && console.log(files);
+
+		for ( var i = 0; i < files.length; i++ ){
+
+			(function(file){
+
+				debugMode && console.log("file:", file);
+
+				var reader = new FileReader();
+				reader.addEventListener("load", function(e){
+
+					var script = {
+						"_id": file.name.split(".").shift(),
+						"name": file.name,
+						"source": JSON.stringify( reader.result ),
+					}
+
+					editor.javascripts.push( script );
+					debugMode && console.log( "script:", script );
+
+				});
+
+				reader.readAsText(file);
+
+			})( files[i] );
+
+		}
+		
+	});
+
+	var addLibs = new UI.Button( "Add JS files" );
+	addLibs.onClick( function () {
+
+        libsInput.value = "";
+		libsInput.click();
+
+	});
+
+	container.add( addLibs );
+
+//
+
+	var clearLibs = new UI.Button( "Clear JS files" );
+	clearLibs.onClick( function () {
+
+        editor.javascripts.length = 0;
+
+		var text = "Javascript libraries cleared.";
+		var element = document.createElement("h4");
+		var content = new UI.Element( element );
+		content.setTextAlign("center");
+		content.setTextContent( text );
+		editor.signals.showModal.dispatch( content );
+
+		debugMode && console.log( text, editor.javascripts );
+
+	});
+
+	container.add( clearLibs );
+
+//
 
 	function updateRenderer() {
 

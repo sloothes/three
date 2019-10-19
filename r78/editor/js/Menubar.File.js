@@ -124,7 +124,6 @@ Menubar.File = function ( editor ) {
 	options.add( option );
 
 //
-
 	options.add( new UI.HorizontalRule() );
 
 //  Import 3D.
@@ -150,7 +149,6 @@ Menubar.File = function ( editor ) {
 	options.add( option );
 
 //
-
 	options.add( new UI.HorizontalRule() );
 
 //	Import js Libraries.
@@ -174,18 +172,13 @@ Menubar.File = function ( editor ) {
 				reader.addEventListener("load", function(e){
 
 					var script = {
-						"name": file.name,
 						"_id": file.name.split(".").shift(),
+						"name": file.name,
 						"source": JSON.stringify( reader.result ),
 					}
 
 					editor.javascripts.push( script );
 					debugMode && console.log( "script:", script );
-
-					//	var text = reader.result;
-					//	var script = new Function("scope", text);
-					//	editor.javascripts.push( script );	
-					//	debugMode && console.log( script );
 
 				});
 
@@ -199,7 +192,7 @@ Menubar.File = function ( editor ) {
 
 	var option = new UI.Row();
 	option.setClass( "option" );
-	option.setTextContent( "Import JS" );
+	option.setTextContent( "Import JS files" );
 	option.onClick( function () {
 
         libraryInput.value = "";
@@ -210,10 +203,10 @@ Menubar.File = function ( editor ) {
 	options.add( option );
 
 //	Clear js Libraries.
-
+/*
 	var option = new UI.Row();
 	option.setClass( "option" );
-	option.setTextContent( "Clear JS Libs" );
+	option.setTextContent( "Clear JS files" );
 	option.onClick( function () {
 
         editor.javascripts.length = 0;
@@ -230,7 +223,7 @@ Menubar.File = function ( editor ) {
 	});
 
 	options.add( option );
-
+*/
 //
 
 	options.add( new UI.HorizontalRule() );

@@ -180,6 +180,9 @@ Sidebar.Project = function ( editor ) {
 		
 	});
 
+    var libsRow = new UI.Row();
+	libsRow.setTextAlign("center");
+
 	var addLibs = new UI.Button( "Add JS files" );
 	addLibs.onClick( function () {
 
@@ -188,11 +191,12 @@ Sidebar.Project = function ( editor ) {
 
 	});
 
-	container.add( addLibs );
+	libsRow.add( addLibs );
 
 //
 
 	var clearLibs = new UI.Button( "Clear JS files" );
+	clearLibs.setMarginLeft("5px");
 	clearLibs.onClick( function () {
 
         editor.javascripts.length = 0;
@@ -208,7 +212,9 @@ Sidebar.Project = function ( editor ) {
 
 	});
 
-	container.add( clearLibs );
+	libsRow.add( clearLibs );
+
+	container.add( libsRow );
 
 //
 

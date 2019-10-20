@@ -119,7 +119,7 @@ var properties = [
 	"border", "borderLeft", "borderTop", "borderRight", "borderBottom", "borderColor", "display", "overflow", "margin", "marginLeft", 
 	"marginTop", "marginRight", "marginBottom", "padding", "paddingLeft", "paddingTop", "paddingRight", "paddingBottom", "color", 
 	"background", "backgroundColor", "opacity", "fontSize", "fontWeight", "textAlign", "textDecoration", "textTransform", "cursor", 
-	"float", "zIndex"
+	"float", "overflowX", "overflowY", "zIndex"
 ];
 
 properties.forEach( function ( property ) {

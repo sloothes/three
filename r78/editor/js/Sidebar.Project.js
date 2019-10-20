@@ -217,6 +217,120 @@ Sidebar.Project = function ( editor ) {
 	container.add( libsRow );
 
 //
+
+	container.add( new UI.HorizontalRule() );
+
+//	Upload to imgur.com
+
+	var uploadPanel = new UI.Panel();
+	container.add( uploadPanel );
+
+    var uploadRow = new UI.Row();
+	uploadRow.setTextAlign("center");
+
+	var uploadImg = new UI.Button( "Upload Texture images" );
+	uploadImg.onClick( function () {
+
+		var images = editor.toJSON().images;
+
+		if ( !images || !images.length ) {
+
+			console.warn( "[Editor]:", "There are not images for upload.", images );
+
+			return;
+		}
+
+		for ( var i = 0; i < images.length; i++ ) {
+
+			var row = new UI.Row();
+
+			var upload = new UI.Button( "Upload" );
+			var remove = new UI.Button( "Remove" ).setFloat("right");
+			var progress = new UI.Span().setMarginLeft("5px").setWidth("100px");
+
+			var bar = document.createElement( "input" );
+			bar.disabled = true;
+			bar.style.width = "0px";
+			bar.style.maxWidth = "100%";
+			bar.style.marginLeft = "5px";
+			bar.style.background = "#0f0";
+			progress.dom.appendChild( bar );
+
+			row.dom.appendChild( upload );
+			row.dom.appendChild( progress );
+			row.dom.appendChild( remove );
+			
+
+
+
+
+			setTimeout( function(){
+
+			//	For upload to imgur.com, "data" must be pure dataURL,
+			//	without prefix "data:image/[type];base64," so we replace it.
+
+				var array = images[i].url.replace("data:", "").split(";base64,");
+
+				if ( array.length !== 2 ) {
+					throw "Error: data array out of length range.";
+					return;
+				}
+
+				var type = array[0];
+				var data = array[1];
+				var name = "texture";
+
+				debugMode && console.log({name:name, type:type, data:data});
+
+			});
+
+		}
+
+	});
+
+	uploadRow.add( uploadImg );
+	container.add( uploadRow );
+
+	function uploadDataURL(data, type, name){
+
+	//  Returns a resolved promise with record data from imgur.com.
+		debugMode && console.log("uploading", file.name);
+		return new Promise(function( resolve, reject ){
+
+			var formdata = new FormData();
+			formdata.append("image", data);
+			formdata.append("type",  type);
+			formdata.append("name",  name);
+
+			var endpoint = "https://api.imgur.com/3/image";
+			var clientID = "06217f601180652";  // sloothes app Client-ID.
+
+			var xhttp = new XMLHttpRequest();
+			xhttp.open("POST", endpoint, true);
+			xhttp.setRequestHeader("Authorization", "Client-ID " + clientID);
+			xhttp.onreadystatechange = function () {
+				if (this.readyState === 4) {
+					var response = "";
+					if (this.status >= 200 && this.status < 300) {
+						response = JSON.parse(this.responseText);
+						debugMode && console.log(response.data);
+						resolve(response.data); // resolve promise.
+					} else {
+						var err = JSON.parse(this.responseText).data.error;
+						console.error( err.type, err );
+						throw err;
+					}
+				}
+			};
+
+			xhttp.send(formdata);
+			xhttp = null;
+		});
+
+	}
+
+//
+
 	container.add( new UI.HorizontalRule() );
 
 //

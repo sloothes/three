@@ -22,7 +22,7 @@ UI.Texture = function ( mapping ) {
 	canvas.width = 16;
 	canvas.height = 16;
 	canvas.style.cursor = "pointer";
-	canvas.style.marginRight = "5px";
+	canvas.style.marginLeft = "5px";
 	canvas.style.border = "1px solid #888";
 	canvas.addEventListener( "click", function ( event ) {
 
@@ -43,6 +43,7 @@ UI.Texture = function ( mapping ) {
 	var name = document.createElement( "input" );
 	name.disabled = true;
 	name.style.width = "64px";
+	name.style.marginLeft = "5px";
 	name.style.border = "1px solid #ccc";
 	dom.appendChild( name );
 

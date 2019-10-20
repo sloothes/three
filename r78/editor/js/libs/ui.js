@@ -115,10 +115,11 @@ UI.Element.prototype = {
 // properties
 
 var properties = [ 
-	"position", "left", "top", "right", "bottom", "minWidth", "width", "height", "border", "borderLeft",
-	"borderTop", "borderRight", "borderBottom", "borderColor", "display", "overflow", "margin", "marginLeft", "marginTop", 
-	"marginRight", "marginBottom", "padding", "paddingLeft", "paddingTop", "paddingRight", "paddingBottom", "color", "background", 
-	"backgroundColor", "opacity", "fontSize", "fontWeight", "textAlign", "textDecoration", "textTransform", "cursor", "zIndex" 
+	"position", "left", "top", "right", "bottom", "minWidth", "width", "height", "maxWidth", "maxHeight", "minWidth", "minHeight", 
+	"border", "borderLeft", "borderTop", "borderRight", "borderBottom", "borderColor", "display", "overflow", "margin", "marginLeft", 
+	"marginTop", "marginRight", "marginBottom", "padding", "paddingLeft", "paddingTop", "paddingRight", "paddingBottom", "color", 
+	"background", "backgroundColor", "opacity", "fontSize", "fontWeight", "textAlign", "textDecoration", "textTransform", "cursor", 
+	"float", "zIndex"
 ];
 
 properties.forEach( function ( property ) {

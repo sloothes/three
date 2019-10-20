@@ -241,16 +241,15 @@ Sidebar.Project = function ( editor ) {
 				var row = new UI.Row();
 				var upload = new UI.Button( "Upload" );
 				var remove = new UI.Button( "Remove" ).setFloat("right");
-				var progress = new UI.Span().setMarginLeft("5px").setWidth("100px");
+				var progress = new UI.Span().setMarginLeft("5px").setBorder("1px solid #fff");
 
 				var bar = document.createElement( "input" );
 				bar.disabled = true;
 				bar.style.width = "0px";
-				bar.style.maxWidth = "100%";
-				bar.style.marginLeft = "5px";
+				bar.style.maxWidth = "100px";
 				bar.style.color = "#fff";
-				bar.style.background = "#0f0";
 				bar.style.textAlign = "center";
+				bar.style.background = "#18b91b";
 				progress.dom.appendChild( bar );
 
 				upload.dom.addEventListener("click", uploadHandler);
@@ -258,11 +257,11 @@ Sidebar.Project = function ( editor ) {
 				function uploadHandler(){
 
 				//	Avoid multiply uploads.
-
 					clearTimeout( this.interval );
 
 					this.interval = setTimeout(function(){
 
+					//	Remove upload event listener (disable button).
 						upload.dom.removeEventListener("click", uploadHandler); // important!
 
 					//	For upload to imgur.com, "data" must be pure dataURL,
@@ -279,7 +278,11 @@ Sidebar.Project = function ( editor ) {
 						var type = array[0];
 						var data = array[1];
 
-
+					//	Demo.
+						function increase(){ bar.width += 1; bar.textContent = bar.width + "%"; }
+						var requestID = requestAnimationFrame(increase){ 
+							if ( bar.width >= 100 ) cancelAnimationFrame(requestID); increase();
+						}
 
 
 

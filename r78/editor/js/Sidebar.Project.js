@@ -138,8 +138,8 @@ Sidebar.Project = function ( editor ) {
 
 	container.add( vrRow );
 
-//
 	container.add( new UI.HorizontalRule() );
+
 
 //	JS libraries.
 
@@ -216,18 +216,17 @@ Sidebar.Project = function ( editor ) {
 
 	container.add( libsRow );
 
-//
-
 	container.add( new UI.HorizontalRule() );
 
-//	Upload to imgur.com
+
+//	Texture upload.
 
 	var uploadPanel = new UI.Panel();
 	container.add( uploadPanel );
 
+
     var uploadRow = new UI.Row();
 	uploadRow.setTextAlign("center");
-
 	var uploadImg = new UI.Button( "Upload Texture images" );
 	uploadImg.onClick( function () {
 
@@ -243,7 +242,6 @@ Sidebar.Project = function ( editor ) {
 		for ( var i = 0; i < images.length; i++ ) {
 
 			var row = new UI.Row();
-
 			var upload = new UI.Button( "Upload" );
 			var remove = new UI.Button( "Remove" ).setFloat("right");
 			var progress = new UI.Span().setMarginLeft("5px").setWidth("100px");
@@ -256,11 +254,10 @@ Sidebar.Project = function ( editor ) {
 			bar.style.background = "#0f0";
 			progress.dom.appendChild( bar );
 
-			row.dom.appendChild( upload );
-			row.dom.appendChild( progress );
-			row.dom.appendChild( remove );
-			
-
+			row.add( upload );
+			row.add( progress );
+			row.add( remove );
+			uploadPanel.add(row);
 
 
 
@@ -289,7 +286,7 @@ Sidebar.Project = function ( editor ) {
 	});
 
 	uploadRow.add( uploadImg );
-	container.add( uploadRow );
+	uploadPanel.add( uploadRow );
 
 	function uploadDataURL(data, type, name){
 

@@ -290,7 +290,7 @@ Sidebar.Project = function ( editor ) {
 						var type = array[0];
 						var data = array[1];
 
-					//	Demo.
+					//	Demo (simulation).
 
 						var requestID = requestAnimationFrame(updateProgressBar);
 						function updateProgressBar(){ 

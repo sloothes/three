@@ -143,7 +143,7 @@ Sidebar.Project = function ( editor ) {
 //	JS libraries.
 
     var libRow = new UI.Row();
-	libsRow.setTextAlign("center");
+	libRow.setTextAlign("center");
 
 	var libInput = document.createElement( "input" );
 	libInput.type = "file";

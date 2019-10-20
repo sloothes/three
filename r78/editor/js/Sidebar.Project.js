@@ -279,10 +279,11 @@ Sidebar.Project = function ( editor ) {
 						var data = array[1];
 
 					//	Demo.
-						function increase(){ bar.width += 1; bar.textContent = bar.width + "%"; }
-						var requestID = requestAnimationFrame(increase){ 
-							if ( bar.width >= 100 ) cancelAnimationFrame(requestID); increase();
-						}
+						(function demo(){ 
+							var requestID = requestAnimationFrame(demo);
+							bar.width += 1; bar.textContent = bar.width + "%"; 
+							if ( bar.width > 99 ) cancelAnimationFrame(requestID);
+						})();
 
 
 

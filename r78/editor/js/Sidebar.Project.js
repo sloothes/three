@@ -138,18 +138,20 @@ Sidebar.Project = function ( editor ) {
 
 	container.add( vrRow );
 
-	container.add( new UI.HorizontalRule() );
-
+//	container.add( new UI.HorizontalRule() );
 
 //	JS libraries.
 
-	var libsInput = document.createElement( "input" );
-	libsInput.type = "file";
-	libsInput.multiple = true;
-	libsInput.accept = ".js";
-	libsInput.addEventListener( "change", function ( event ) {
+    var libRow = new UI.Row();
+	libsRow.setTextAlign("center");
 
-		var files = libsInput.files;
+	var libInput = document.createElement( "input" );
+	libInput.type = "file";
+	libInput.multiple = true;
+	libInput.accept = ".js";
+	libInput.addEventListener( "change", function ( event ) {
+
+		var files = libInput.files;
 		debugMode && console.log(files);
 
 		for ( var i = 0; i < files.length; i++ ){
@@ -180,24 +182,19 @@ Sidebar.Project = function ( editor ) {
 		
 	});
 
-    var libsRow = new UI.Row();
-	libsRow.setTextAlign("center");
+	var addlib = new UI.Button( "Add JS Libraries" );
+	addlib.onClick( function () {
 
-	var addLibs = new UI.Button( "Add JS Libraries" );
-	addLibs.onClick( function () {
-
-        libsInput.value = "";
-		libsInput.click();
+        libInput.value = "";
+		libInput.click();
 
 	});
 
-	libsRow.add( addLibs );
-
 //
 
-	var clearLibs = new UI.Button( "Clear JS Libraries" );
-	clearLibs.setMarginLeft("5px");
-	clearLibs.onClick( function () {
+	var clearlib = new UI.Button( "Clear JS Libraries" );
+	clearlib.setMarginLeft("5px");
+	clearlib.onClick( function () {
 
         editor.javascripts.length = 0;
 
@@ -212,23 +209,18 @@ Sidebar.Project = function ( editor ) {
 
 	});
 
-	libsRow.add( clearLibs );
+	libRow.add( addlib );
+	libRow.add( clearlib );
+	container.add( libRow );
 
-	container.add( libsRow );
-
-	container.add( new UI.HorizontalRule() );
-
+//	container.add( new UI.HorizontalRule() );
 
 //	Texture upload.
 
 	var uploadPanel = new UI.Panel();
-	container.add( uploadPanel );
 
-
-    var uploadRow = new UI.Row();
-	uploadRow.setTextAlign("center");
-	var uploadImg = new UI.Button( "Upload Texture images" );
-	uploadImg.onClick( function () {
+	var uploadTextures = new UI.Button( "Upload Texture images" ).setWidth("100%");
+	uploadTextures.onClick( function () {
 
 		var images = editor.toJSON().scene.images; // important!
 
@@ -251,17 +243,12 @@ Sidebar.Project = function ( editor ) {
 			bar.style.width = "0px";
 			bar.style.maxWidth = "100%";
 			bar.style.marginLeft = "5px";
+			bar.style.color = "#fff";
 			bar.style.background = "#0f0";
+			bar.style.textAlign = "center";
 			progress.dom.appendChild( bar );
 
-			row.add( upload );
-			row.add( progress );
-			row.add( remove );
-			uploadPanel.add(row);
-
-
-
-			setTimeout( function(){
+			upload.addEventListener("click" function(){
 
 			//	For upload to imgur.com, "data" must be pure dataURL,
 			//	without prefix "data:image/[type];base64," so we replace it.
@@ -281,12 +268,26 @@ Sidebar.Project = function ( editor ) {
 
 			});
 
+			remove.addEventListener("click" function(){
+
+				row.remove();
+				remove.remove();
+				progress.remove();
+				upload.remove();
+
+			});
+
+			row.add( upload );
+			row.add( progress );
+			row.add( remove );
+			uploadPanel.add(row);
+
 		}
 
 	});
 
-	uploadRow.add( uploadImg );
-	uploadPanel.add( uploadRow );
+	container.add( uploadPanel );
+	container.add( uploadTextures );
 
 	function uploadDataURL(data, type, name){
 

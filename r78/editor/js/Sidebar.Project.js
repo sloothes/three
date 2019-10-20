@@ -248,7 +248,7 @@ Sidebar.Project = function ( editor ) {
 			bar.style.textAlign = "center";
 			progress.dom.appendChild( bar );
 
-			upload.addEventListener("click" function(){
+			upload.addEventListener("click", function(){
 
 			//	For upload to imgur.com, "data" must be pure dataURL,
 			//	without prefix "data:image/[type];base64," so we replace it.
@@ -268,7 +268,7 @@ Sidebar.Project = function ( editor ) {
 
 			});
 
-			remove.addEventListener("click" function(){
+			remove.addEventListener("click", function(){
 
 				row.remove();
 				remove.remove();

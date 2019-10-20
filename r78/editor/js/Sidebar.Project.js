@@ -231,7 +231,7 @@ Sidebar.Project = function ( editor ) {
 	var uploadImg = new UI.Button( "Upload Texture images" );
 	uploadImg.onClick( function () {
 
-		var images = editor.toJSON().images;
+		var images = editor.toJSON().scene.images; // important!
 
 		if ( !images || !images.length ) {
 

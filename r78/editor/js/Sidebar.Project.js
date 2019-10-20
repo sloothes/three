@@ -233,55 +233,61 @@ Sidebar.Project = function ( editor ) {
 
 		for ( var i = 0; i < images.length; i++ ) {
 
-			var row = new UI.Row();
-			var upload = new UI.Button( "Upload" );
-			var remove = new UI.Button( "Remove" ).setFloat("right");
-			var progress = new UI.Span().setMarginLeft("5px").setWidth("100px");
+			(function(object){
 
-			var bar = document.createElement( "input" );
-			bar.disabled = true;
-			bar.style.width = "0px";
-			bar.style.maxWidth = "100%";
-			bar.style.marginLeft = "5px";
-			bar.style.color = "#fff";
-			bar.style.background = "#0f0";
-			bar.style.textAlign = "center";
-			progress.dom.appendChild( bar );
+				var url = object.url;
+				var uuid = object.uuid;
 
-			upload.addEventListener("click", function(){
+				var row = new UI.Row();
+				var upload = new UI.Button( "Upload" );
+				var remove = new UI.Button( "Remove" ).setFloat("right");
+				var progress = new UI.Span().setMarginLeft("5px").setWidth("100px");
 
-			//	For upload to imgur.com, "data" must be pure dataURL,
-			//	without prefix "data:image/[type];base64," so we replace it.
+				var bar = document.createElement( "input" );
+				bar.disabled = true;
+				bar.style.width = "0px";
+				bar.style.maxWidth = "100%";
+				bar.style.marginLeft = "5px";
+				bar.style.color = "#fff";
+				bar.style.background = "#0f0";
+				bar.style.textAlign = "center";
+				progress.dom.appendChild( bar );
 
-				var array = images[i].url.replace("data:", "").split(";base64,");
+				upload.addEventListener("click", function(){
 
-				if ( array.length !== 2 ) {
-					throw "Error: data array out of length range.";
-					return;
-				}
+				//	For upload to imgur.com, "data" must be pure dataURL,
+				//	without prefix "data:image/[type];base64," so we replace it.
 
-				var type = array[0];
-				var data = array[1];
-				var name = "texture";
+					var array = url.replace("data:", "").split(";base64,");
 
-				debugMode && console.log({name:name, type:type, data:data});
+					if ( array.length !== 2 ) {
+						throw "Error: data array out of length range.";
+						return;
+					}
 
-			});
+					var name = uuid;
+					var type = array[0];
+					var data = array[1];
 
-			remove.addEventListener("click", function(){
+					debugMode && console.log({name:name, type:type, data:data});
 
-				row.remove();
-				remove.remove();
-				progress.remove();
-				upload.remove();
+				});
 
-			});
+				remove.addEventListener("click", function(){
 
-			row.add( upload );
-			row.add( progress );
-			row.add( remove );
-			uploadPanel.add(row);
+					row.remove();
+					remove.remove();
+					progress.remove();
+					upload.remove();
 
+				});
+
+				row.add( upload );
+				row.add( progress );
+				row.add( remove );
+				uploadPanel.add(row);
+
+			})(images[i]);
 		}
 
 	});

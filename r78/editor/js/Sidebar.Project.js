@@ -222,8 +222,11 @@ Sidebar.Project = function ( editor ) {
 	uploadTextures = new UI.Button( "Upload Texture images" ).setWidth("100%");
 	uploadTextures.onClick( function() {
 
-	//	Remove click event listener (disable button).
+	//	Remove "click" listener to avoid multipe uploaders (disable button).
 
+		uploadTextures.off("click"); // important!
+
+	//  Get texture images.
 
 		var images = editor.toJSON().scene.images; // important!
 
@@ -233,6 +236,8 @@ Sidebar.Project = function ( editor ) {
 
 			return;
 		}
+
+	//	Create texture uploaders.
 
 		for ( var i = 0; i < images.length; i++ ) {
 
@@ -261,17 +266,20 @@ Sidebar.Project = function ( editor ) {
 				function uploadHandler(){
 
 				//	Avoid multiply uploads.
+
 					clearTimeout( this.interval );
 
 					this.interval = setTimeout(function(){
 
-					//	Remove upload event listener (disable button).
+					//	Remove "click" listener to avoid multiply uploads (disable button).
 						upload.dom.removeEventListener("click", uploadHandler); // important!
 
 					//	For upload to imgur.com, "data" must be pure dataURL,
 					//	without prefix "data:image/[type];base64," so we replace it.
 
 						var array = url.replace("data:", "").split(";base64,");
+
+					//  Validate data.
 
 						if ( array.length !== 2 ) {
 							throw "Error: data array out of length range.";
@@ -296,6 +304,12 @@ Sidebar.Project = function ( editor ) {
 
 							cancelAnimationFrame(requestID);
 							debugMode && console.log({name:name, type:type, data:data});
+
+						//	Remove success uploader.
+							setTimeout(function(){
+								row.setClass("fade out");
+							}, 3000);
+
 						}
 
 
@@ -305,10 +319,11 @@ Sidebar.Project = function ( editor ) {
 
 				remove.dom.addEventListener("click", function(){
 
-					row.remove();
 				//	remove.remove();
 				//	progress.remove();
 				//	upload.remove();
+
+					row.remove();
 
 				});
 

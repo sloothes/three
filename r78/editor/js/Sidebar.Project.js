@@ -249,6 +249,7 @@ Sidebar.Project = function ( editor ) {
 				bar.style.maxWidth = "100px";
 				bar.style.color = "#fff";
 				bar.style.textAlign = "center";
+				bar.style.borderRadius = "4px";
 				bar.style.background = "#18b91b";
 				progress.dom.appendChild( bar );
 
@@ -279,12 +280,14 @@ Sidebar.Project = function ( editor ) {
 						var data = array[1];
 
 					//	Demo.
-						(function demo(){ 
-							var requestID = requestAnimationFrame(demo);
-							bar.width += 1; bar.textContent = bar.width + "%"; 
-							if ( bar.width > 99 ) cancelAnimationFrame(requestID);
-						})();
-
+						var requestID = requestAnimationFrame(updateProgressBar);
+						function updateProgressBar(){ 
+							var width = bar.offsetWidth + 1;
+							bar.value = width + "%"; 
+							bar.style.width = width + "px"; 
+							if ( bar.offsetWidth > 99 ) cancelAnimationFrame(requestID);
+							return requestAnimationFrame(updateProgressBar);
+						}
 
 
 

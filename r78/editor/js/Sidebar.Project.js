@@ -219,8 +219,11 @@ Sidebar.Project = function ( editor ) {
 
 	var uploadPanel = new UI.Panel();
 
-	var uploadTextures = new UI.Button( "Upload Texture images" ).setWidth("100%");
-	uploadTextures.onClick( function () {
+	uploadTextures = new UI.Button( "Upload Texture images" ).setWidth("100%");
+	uploadTextures.onClick( function() {
+
+	//	Remove click event listener (disable button).
+
 
 		var images = editor.toJSON().scene.images; // important!
 
@@ -318,6 +321,8 @@ Sidebar.Project = function ( editor ) {
 		}
 
 	});
+
+	debugMode && console.log("uploadTextures:", uploadTextures);
 
 	container.add( uploadPanel );
 	container.add( uploadTextures );

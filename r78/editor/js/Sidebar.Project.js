@@ -280,22 +280,21 @@ Sidebar.Project = function ( editor ) {
 						var data = array[1];
 
 					//	Demo.
+
 						var requestID = requestAnimationFrame(updateProgressBar);
 						function updateProgressBar(){ 
-							var width = bar.offsetWidth + 1;
-							bar.value = width + "%"; 
-							bar.style.width = width + "px"; 
-							if ( bar.offsetWidth > 99 ) cancelAnimationFrame(requestID);
-							return requestAnimationFrame(updateProgressBar);
+
+							while ( bar.offsetWidth < 100 ){
+								var width = bar.offsetWidth + 1;
+								bar.style.width = width + "px"; 
+								bar.value = width + "%"; 
+								return requestAnimationFrame(updateProgressBar);
+							}
+
+							cancelAnimationFrame(requestID);
+							debugMode && console.log({name:name, type:type, data:data});
 						}
 
-
-
-
-
-
-
-						debugMode && console.log({name:name, type:type, data:data});
 
 					}, 250);
 

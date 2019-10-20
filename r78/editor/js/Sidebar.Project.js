@@ -253,32 +253,53 @@ Sidebar.Project = function ( editor ) {
 				bar.style.textAlign = "center";
 				progress.dom.appendChild( bar );
 
-				upload.addEventListener("click", function(){
+				upload.dom.addEventListener("click", uploadHandler);
 
-				//	For upload to imgur.com, "data" must be pure dataURL,
-				//	without prefix "data:image/[type];base64," so we replace it.
+				function uploadHandler(){
 
-					var array = url.replace("data:", "").split(";base64,");
+				//	Avoid multiply uploads.
 
-					if ( array.length !== 2 ) {
-						throw "Error: data array out of length range.";
-						return;
-					}
+					clearTimeout( this.interval );
 
-					var name = uuid;
-					var type = array[0];
-					var data = array[1];
+					this.interval = setTimeout(function(){
 
-					debugMode && console.log({name:name, type:type, data:data});
+						upload.dom.removeEventListener("click", uploadHandler); // important!
 
-				});
+					//	For upload to imgur.com, "data" must be pure dataURL,
+					//	without prefix "data:image/[type];base64," so we replace it.
 
-				remove.addEventListener("click", function(){
+						var array = url.replace("data:", "").split(";base64,");
+
+						if ( array.length !== 2 ) {
+							throw "Error: data array out of length range.";
+							return;
+						}
+
+						var name = uuid;
+						var type = array[0];
+						var data = array[1];
+
+
+
+
+
+
+
+
+
+
+						debugMode && console.log({name:name, type:type, data:data});
+
+					}, 250);
+
+				}
+
+				remove.dom.addEventListener("click", function(){
 
 					row.remove();
-					remove.remove();
-					progress.remove();
-					upload.remove();
+				//	remove.remove();
+				//	progress.remove();
+				//	upload.remove();
 
 				});
 

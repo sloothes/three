@@ -146,7 +146,17 @@ events.forEach( function ( event ) {
 
 	UI.Element.prototype[ method ] = function ( callback ) {
 
-		this.dom.addEventListener( event.toLowerCase(), callback.bind( this ), false );
+		var listener = callback.bind( this );
+
+		this.dom.addEventListener( event.toLowerCase(), listener, false );
+
+		this.off = off.bind( this, event );
+
+		function off( event ){
+
+			this.dom.removeEventListener( event.toLowerCase(), listener, false );
+
+		}
 
 		return this;
 

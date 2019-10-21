@@ -234,6 +234,9 @@ Sidebar.Project = function ( editor ) {
 
 //	Texture upload.
 
+	const endpoint = "https://api.imgur.com/3/image";
+	const clientID = "06217f601180652";  // sloothes app Client-ID.
+
 	var uploadPanel = new UI.Panel().setId("upload-panel");
 
 	var uploadTextures = new UI.Button( "Upload Texture images" ).setWidth("100%");
@@ -254,9 +257,13 @@ Sidebar.Project = function ( editor ) {
 
 		uploadTextures.off("click"); // important!
 
+	//	TODO: Get textures direct from editor.materials???
+
 	//  Get texture images from "editor.toJSON".
 
-		var images = editor.toJSON().scene.images; // important!
+		var json = editor.toJSON();
+
+		var images = json.scene.images; // important!
 
 		if ( !images || !images.length ) {
 
@@ -264,14 +271,6 @@ Sidebar.Project = function ( editor ) {
 
 			return;
 		}
-
-	//	Get textures direct from editor.materials.
-
-
-
-
-
-
 
 	//	Create texture uploaders.
 
@@ -389,9 +388,6 @@ Sidebar.Project = function ( editor ) {
 						formdata.append("type",  type);
 						formdata.append("name",  name);
 
-						var endpoint = "https://api.imgur.com/3/image";
-						var clientID = "06217f601180652";  // sloothes app Client-ID.
-
 						var xhttp = new XMLHttpRequest();
 
                         xhttp.upload.onloadstart = function(){
@@ -437,6 +433,9 @@ Sidebar.Project = function ( editor ) {
                             throw Error(err);
                         };
 
+					//	var endpoint = "https://api.imgur.com/3/image";
+					//	var clientID = "06217f601180652";  // sloothes app Client-ID.
+
 						xhttp.open("POST", endpoint, true);
 						xhttp.setRequestHeader("Authorization", "Client-ID " + clientID);
 						xhttp.onreadystatechange = function () {
@@ -444,8 +443,8 @@ Sidebar.Project = function ( editor ) {
 								var response = "";
 								if (this.status > 199 && this.status < 300) {
 									response = JSON.parse(this.responseText);
-									debugMode && console.log(response.data);
-									resolve(response.data); // resolve promise.
+								//	debugMode && console.log(response.data);
+									resolve( response.data ); // resolve promise.
 								} else {
 									var err = JSON.parse(this.responseText).data.error;
 									console.error( err.type, err );
@@ -459,17 +458,15 @@ Sidebar.Project = function ( editor ) {
 
 					}).then( function( data ){
 
-						object._id = data.id;
 						object.url = data.link;
-						object.deletehash = data.deletehash;
-						object.type = data.type;
-						object.width = data.width;
-						object.height = data.height;
-						object.size = data.size;
-						object["Client-ID"] = clientID;
-						debugMode && console.log(object);
 
-						editor.images[ object.uuid ] = object;
+						data.clientID = clientID;
+						data.endpoint = endpoint;
+						editor.images[ object.uuid ] = data;
+
+						debugMode && console.log( json );
+
+						return json;
 
 					}).catch(function(err){
 						console.error(err);

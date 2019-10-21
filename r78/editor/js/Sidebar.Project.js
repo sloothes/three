@@ -327,9 +327,32 @@ Sidebar.Project = function ( editor ) {
 					var type = array[0];
 					var data = array[1];
 
+				//	Demo.
+
+					function fakeProgress(requestID){ 
+
+						while ( bar.offsetWidth < 100 ){
+							var width = bar.offsetWidth + 1;
+							bar.style.width = width + "px"; 
+							bar.value = width + "%"; 
+							return requestAnimationFrame(fakeProgress);
+						}
+
+						cancelAnimationFrame(requestID);
+						debugMode && console.log({name:name, type:type, data:data});
+
+					//	Remove successfull uploader.
+
+						setTimeout(function(){
+							row.setClass("fade out");
+							setTimeout(function(){
+								row.remove();
+							}, 500);
+						}, 3000);
+
+					}
+
 					var requestID = requestAnimationFrame(fakeProgress); // demo!
-
-
 
 				}
 
@@ -337,31 +360,6 @@ Sidebar.Project = function ( editor ) {
 				row.add( progress );
 				row.add( remove );
 				uploadPanel.add(row);
-
-			//	Demo.
-
-				function fakeProgress(requestID){ 
-
-					while ( bar.offsetWidth < 100 ){
-						var width = bar.offsetWidth + 1;
-						bar.style.width = width + "px"; 
-						bar.value = width + "%"; 
-						return requestAnimationFrame(fakeProgress);
-					}
-
-					cancelAnimationFrame(requestID);
-					debugMode && console.log({name:name, type:type, data:data});
-
-				//	Remove successfull uploader.
-
-					setTimeout(function(){
-						row.setClass("fade out");
-						setTimeout(function(){
-							row.remove();
-						}, 500);
-					}, 3000);
-
-				}
 
 			})(images[i]);
 		}

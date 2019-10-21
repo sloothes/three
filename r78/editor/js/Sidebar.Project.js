@@ -210,13 +210,17 @@ Sidebar.Project = function ( editor ) {
 	var clearLibraries = new UI.Button( "Clear JS Libraries" ).setWidth("150px").setOverflow("hidden").setTextOverflow("ellipsis");
 	clearLibraries.onClick( function () {
 
-        editor.javascripts.length = 0;
+		if ( confirm("Are you sure?") ) {
 
-		var dom = document.createElement("h4");
-		var dialog = new UI.Element( dom ).setTextAlign("center");
-		dialog.setTextContent( "Javascript libraries cleared." );
-		editor.signals.showModal.dispatch( dialog );
-		debugMode && console.log( dom.textContent, editor.javascripts );
+			editor.javascripts.length = 0;
+
+			var dom = document.createElement("h4");
+			var dialog = new UI.Element( dom ).setTextAlign("center");
+			dialog.setTextContent( "Javascript libraries cleared." );
+			editor.signals.showModal.dispatch( dialog );
+			debugMode && console.log( dom.textContent, editor.javascripts );
+
+		}
 
 	});
 

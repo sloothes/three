@@ -123,6 +123,10 @@ Sidebar.Material = function ( editor ) {
 
 	var materialProgramFragment = new UI.Button( 'Fragment' );
 	materialProgramFragment.setMarginLeft( '4px' );
+	materialProgramFragment.setMaxWidth( '60px' );
+	materialProgramFragment.setOverflow( 'hidden' );
+	materialProgramFragment.setTextOverflow( 'ellipsis' );
+
 	materialProgramFragment.onClick( function () {
 
 		signals.editScript.dispatch( currentObject, 'fragmentShader' );

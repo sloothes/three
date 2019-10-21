@@ -138,6 +138,15 @@ Sidebar.Project = function ( editor ) {
 
 	container.add( vrRow );
 
+//	Imgur.
+
+	var ImgurRow = new UI.Row();
+	var imgur = new UI.Checkbox( false ).setId("imgur").setLeft( "100px" );
+	ImgurRow.add( new UI.Text( "IMGUR" ).setWidth( "90px" ) );
+	ImgurRow.add( imgur );
+
+	container.add( ImgurRow );
+
 //	container.add( new UI.HorizontalRule() );
 
 //	JS libraries.
@@ -219,8 +228,16 @@ Sidebar.Project = function ( editor ) {
 
 	var uploadPanel = new UI.Panel();
 
-	uploadTextures = new UI.Button( "Upload Texture images" ).setWidth("100%");
+	var uploadTextures = new UI.Button( "Upload Texture images" ).setWidth("100%");
 	uploadTextures.onClick( function() {
+
+	//	"imgur" must be checked to allow uploading.
+
+		if ( imgur.getValue() === false ) return;
+
+	//	Reset imgur checkbox.
+
+		imgur.setValue( false ); // important?
 
 	//	Remove "click" listener to avoid multipe uploaders (disable button).
 
@@ -261,7 +278,14 @@ Sidebar.Project = function ( editor ) {
 				bar.style.background = "#18b91b";
 				progress.dom.appendChild( bar );
 
-				upload.dom.addEventListener("click", uploadHandler);
+			//	Event listeners.
+
+				remove.onClick( function(){
+					row.setClass("fade out");
+					setTimeout(function(){
+						row.remove();
+					}, 500);
+				});
 
 				function uploadHandler(){
 
@@ -269,75 +293,75 @@ Sidebar.Project = function ( editor ) {
 
 					clearTimeout( this.interval );
 
-					this.interval = setTimeout(function(){
-
-					//	Remove "click" listener to avoid multiply uploads (disable button).
-						upload.dom.removeEventListener("click", uploadHandler); // important!
-
-					//	For upload to imgur.com, "data" must be pure dataURL,
-					//	without prefix "data:image/[type];base64," so we replace it.
-
-						var array = url.replace("data:", "").split(";base64,");
-
-					//  Validate data.
-
-						if ( array.length !== 2 ) {
-							throw "Error: data array out of length range.";
-							return;
-						}
-
-						var name = uuid;
-						var type = array[0];
-						var data = array[1];
-
-					//	Demo (simulation).
-
-						var requestID = requestAnimationFrame(updateProgressBar);
-						function updateProgressBar(){ 
-
-							while ( bar.offsetWidth < 100 ){
-								var width = bar.offsetWidth + 1;
-								bar.style.width = width + "px"; 
-								bar.value = width + "%"; 
-								return requestAnimationFrame(updateProgressBar);
-							}
-
-							cancelAnimationFrame(requestID);
-							debugMode && console.log({name:name, type:type, data:data});
-
-						//	Remove success uploader.
-							setTimeout(function(){
-								row.setClass("fade out");
-							}, 3000);
-
-						}
-
-
-					}, 250);
+					this.interval = setTimeout( uploader, 250);
 
 				}
 
-				remove.dom.addEventListener("click", function(){
+				upload.onClick( uploadHandler );
 
-				//	remove.remove();
-				//	progress.remove();
-				//	upload.remove();
+				function uploader(){
 
-					row.remove();
+				//	Remove "click" listener to avoid 
+				//	multiply uploads (disable button).
 
-				});
+					upload.off("click"); // important!
+
+				//	For upload to imgur.com, "data" must be pure dataURL,
+				//	without prefix "data:image/[type];base64," so we replace it.
+
+					var array = url.replace("data:", "").split(";base64,");
+
+				//  Validate.
+
+					if ( array.length !== 2 ) {
+						throw "Error: data array out of length range.";
+						return;
+					}
+
+					var name = uuid;
+					var type = array[0];
+					var data = array[1];
+
+					var requestID = requestAnimationFrame(fakeProgress); // demo!
+
+
+
+				}
 
 				row.add( upload );
 				row.add( progress );
 				row.add( remove );
 				uploadPanel.add(row);
 
+			//	Demo.
+
+				function fakeProgress(){ 
+
+					while ( bar.offsetWidth < 100 ){
+						var width = bar.offsetWidth + 1;
+						bar.style.width = width + "px"; 
+						bar.value = width + "%"; 
+						return requestAnimationFrame(updateProgressBar);
+					}
+
+					cancelAnimationFrame(requestID);
+					debugMode && console.log({name:name, type:type, data:data});
+
+				//	Remove successfull uploader.
+
+					setTimeout(function(){
+						row.setClass("fade out");
+						setTimeout(function(){
+							row.remove();
+						}, 500);
+					}, 3000);
+
+				}
+
 			})(images[i]);
 		}
 
 	});
-
-	debugMode && console.log("uploadTextures:", uploadTextures);
 
 	container.add( uploadPanel );
 	container.add( uploadTextures );
@@ -376,6 +400,7 @@ Sidebar.Project = function ( editor ) {
 
 			xhttp.send(formdata);
 			xhttp = null;
+
 		});
 
 	}

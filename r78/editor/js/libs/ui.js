@@ -112,14 +112,16 @@ UI.Element.prototype = {
 
 };
 
-// properties
+//  Style properties.
+
+//	var properties = Object.keys( this.dom.style );
 
 var properties = [ 
 	"position", "left", "top", "right", "bottom", "minWidth", "width", "height", "maxWidth", "maxHeight", "minWidth", "minHeight", 
 	"border", "borderLeft", "borderTop", "borderRight", "borderBottom", "borderColor", "display", "overflow", "margin", "marginLeft", 
 	"marginTop", "marginRight", "marginBottom", "padding", "paddingLeft", "paddingTop", "paddingRight", "paddingBottom", "color", 
 	"background", "backgroundColor", "opacity", "fontSize", "fontWeight", "textAlign", "textDecoration", "textTransform", "cursor", 
-	"float", "overflowX", "overflowY", "zIndex"
+	"float", "overflowX", "overflowY", "textOverflow", "zIndex"
 ];
 
 properties.forEach( function ( property ) {

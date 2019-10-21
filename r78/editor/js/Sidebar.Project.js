@@ -100,8 +100,11 @@ Sidebar.Project = function ( editor ) {
 	var cacheRow = new UI.Row();
 	var cache = new UI.Checkbox( config.getKey( "project/cache" ) ).setLeft( "100px" ).onChange( function () {
 
+		THREE.Cache.enabled = this.getValue();
+
 		config.setKey( "project/cache", this.getValue() );
 
+		console.log( "Cache enabled:", THREE.Cache.enabled );
 	});
 
 	cacheRow.add( new UI.Text( "Cache" ).setWidth( "90px" ) );
@@ -271,6 +274,9 @@ Sidebar.Project = function ( editor ) {
 				var url = object.url;
 				var uuid = object.uuid;
 
+			//  Find editor material and
+			//  texture that image belong.
+
 				var row = new UI.Row();
 				var upload = new UI.Button( "Upload" );
 				var remove = new UI.Button( "Remove" ).setFloat("right");
@@ -345,6 +351,7 @@ Sidebar.Project = function ( editor ) {
 					var type = array[0];
 					var data = array[1];
 
+			/*
 				//	Demo.
 
 					function fakeProgress(requestID){ 
@@ -365,7 +372,104 @@ Sidebar.Project = function ( editor ) {
 					}
 
 					var requestID = requestAnimationFrame(fakeProgress); // demo!
+			*/
 
+					return new Promise(function( resolve, reject ){
+
+						var formdata = new FormData();
+						formdata.append("image", data);
+						formdata.append("type",  type);
+						formdata.append("name",  name);
+
+						var endpoint = "https://api.imgur.com/3/image";
+						var clientID = "06217f601180652";  // sloothes app Client-ID.
+
+						var xhttp = new XMLHttpRequest();
+
+                        xhttp.upload.onloadstart = function(){
+							bar.value = "0%"; 
+							bar.style.width = "0px";
+							bar.style.background = "##18b91b";
+                            debugMode && console.log("Starting upload of", name);
+                        };
+
+                        xhttp.upload.onprogress = function( event ){
+                            if ( event.lengthComputable ) {
+                                var percentComplete = event.loaded / event.total * 100;
+                                var width = parseInt(percentComplete);
+								bar.value = width + "%"; 
+								bar.style.width = width + "px"; 
+                            } else {
+								var width = bar.offsetWidth + 1;
+								bar.value = "Uploading..."; 
+								bar.style.width = width + "px"; 
+                            }
+                        };
+
+                        xhttp.upload.onload = function() {
+							bar.value = "Complete 100%"; 
+							bar.style.width = "100px";
+							bar.style.background = "##18b91b";
+                            debugMode && console.log(name, "Upload completed.");
+                        };
+
+                        xhttp.upload.onerror = function() {
+                            var err = "An error occurred while uploading " + name;
+							bar.value = "Failed"; 
+							bar.style.width = "100px";
+							bar.style.background = "##ee0404";
+                            throw Error(err);
+                        };
+
+                        xhttp.upload.onabort = function() {
+                            var err = "Upload has been canceled by the user.";
+							bar.value = "Canceled"; 
+							bar.style.width = "100px";
+							bar.style.background = "##ee0404";
+                            throw Error(err);
+                        };
+
+						xhttp.open("POST", endpoint, true);
+						xhttp.setRequestHeader("Authorization", "Client-ID " + clientID);
+						xhttp.onreadystatechange = function () {
+							if (this.readyState === 4) {
+								var response = "";
+								if (this.status > 199 && this.status < 300) {
+									response = JSON.parse(this.responseText);
+									debugMode && console.log(response.data);
+									resolve(response.data); // resolve promise.
+								} else {
+									var err = JSON.parse(this.responseText).data.error;
+									console.error( err.type, err );
+									throw err;
+								}
+							}
+						};
+
+						xhttp.send(formdata);
+						xhttp = null;
+
+					}).then( function( data ){
+
+						object._id = data.id;
+						object.url = data.link;
+						object.deletehash = data.deletehash;
+						object.type = data.type;
+						object.width = data.width;
+						object.height = data.height;
+						object.size = data.size;
+						object["Client-ID"] = clientID;
+						debugMode && console.log(object);
+
+						editor.images[ object.uuid ] = object;
+
+
+
+
+					}).catch(function(err){
+						console.error(err);
+					});
+	
 				}
 
 				row.add( upload );
@@ -384,7 +488,7 @@ Sidebar.Project = function ( editor ) {
 	function uploadDataURL(data, type, name){
 
 	//  Returns a resolved promise with record data from imgur.com.
-		debugMode && console.log("uploading", file.name);
+		debugMode && console.log("uploading", name);
 		return new Promise(function( resolve, reject ){
 
 			var formdata = new FormData();

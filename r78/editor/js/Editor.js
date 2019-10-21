@@ -452,7 +452,8 @@ Editor.prototype = {
 		this.stylesheets = [];
 		this.javascripts = [];
 
-		this.images = {};
+		this.images = [];
+
 		this.scripts = {};
 		this.textures = {};
 		this.materials = {};
@@ -491,31 +492,41 @@ Editor.prototype = {
 		this.camera.aspect = this.DEFAULT_CAMERA.aspect;
 		this.camera.updateProjectionMatrix();
 
-	//  javascript libraries.
+	//	TODO: stylesheet css.
+	//	TODO: global functions.
 
-		if ( json.javascripts == undefined ) {
+	//  js libraries.
+
+		if ( json.javascripts === undefined ) {
 			this.javascripts = []; // important!
 		} else {
 			this.javascripts = json.javascripts;
 		}
 
-	//	texture images.
+	//	uploaded images.
 
-		if ( json.images == undefined ) {
-			this.images = {}; // important!
+		if ( json.images === undefined ) {
+			this.images = []; // important!
 		} else {
 			this.images = json.images;
 		}
 
-	//	app scripts.
+	//	application scripts.
 
-		if ( json.scripts == undefined ) {
+		if ( json.scripts === undefined ) {
 			this.scripts = {}; // important!
 		} else {
 			this.scripts = json.scripts;
 		}
 
-		this.scripts = json.scripts;
+	//	material textures.
+
+		if ( json.textures === undefined ) {
+			this.textures = {}; // important!
+		} else {
+			this.textures = json.textures;
+		}
+
 		this.history.fromJSON( json.history );
 		this.setScene( loader.parse( json.scene ) );
 

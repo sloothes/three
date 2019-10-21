@@ -251,6 +251,11 @@ Sidebar.Project = function ( editor ) {
 
 		uploadTextures.off("click"); // important!
 
+		function enableButton(){
+			if (uploadPanel.dom.childElementCount) return;
+			uploadTextures.onClick( createUploads );
+		}
+
 	//  Get texture images.
 
 		var images = editor.toJSON().scene.images; // important!
@@ -292,6 +297,7 @@ Sidebar.Project = function ( editor ) {
 					row.addClass("fade","out");
 					setTimeout(function(){
 						row.dom.remove();
+						setTimeout( enableButton );
 					}, 500);
 				});
 
@@ -350,7 +356,7 @@ Sidebar.Project = function ( editor ) {
 							row.addClass("fade","out");
 							setTimeout(function(){
 								row.dom.remove();
-								setTimeout( enableUploadTextures );
+								setTimeout( enableButton );
 							}, 500);
 						}, 3000);
 
@@ -366,11 +372,6 @@ Sidebar.Project = function ( editor ) {
 				uploadPanel.add(row);
 
 			})(images[i]);
-		}
-
-		function enableButton(){
-			if (uploadPanel.dom.childElementCount) return;
-			uploadTextures.onClick( createUploads );
 		}
 
 	}

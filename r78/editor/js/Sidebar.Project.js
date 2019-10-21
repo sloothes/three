@@ -276,10 +276,10 @@ Sidebar.Project = function ( editor ) {
 
 		for ( var i = 0; i < images.length; i++ ) {
 
-			(function(object){
+			(function(image){
 
-				var url = object.url;
-				var uuid = object.uuid;
+				var url = image.url;
+				var uuid = image.uuid;
 
 			//  Find editor material and
 			//  texture that image belong.
@@ -458,7 +458,7 @@ Sidebar.Project = function ( editor ) {
 
 					}).then( function( data ){
 
-						object.url = data.link; // important!
+						image.url = data.link; // important!
 
 						data.clientID = clientID;
 						data.endpoint = endpoint;
@@ -481,8 +481,8 @@ Sidebar.Project = function ( editor ) {
 						var loader = new THREE.TextureLoader();
 						loader.setCrossOrigin = "anonymous"; // important!
 						var texture = loader.load( data.link, function( texture ){
-							object.url = texture.image.src;
-							editor.images[ object.uuid ] = object;
+							image.url = data.link; // important!
+							texture.image.img.src = data.link; // important!
 							editor.textures[ texture.uuid ] = texture;
 						});
 
@@ -513,15 +513,16 @@ Sidebar.Project = function ( editor ) {
 
 	//  Returns a resolved promise with record data from imgur.com.
 		debugMode && console.log("uploading", name);
+
+		var formdata = new FormData();
+		formdata.append("image", data);
+		formdata.append("type",  type);
+		formdata.append("name",  name);
+
+		var endpoint = "https://api.imgur.com/3/image";
+		var clientID = "06217f601180652";  // sloothes app Client-ID.
+
 		return new Promise(function( resolve, reject ){
-
-			var formdata = new FormData();
-			formdata.append("image", data);
-			formdata.append("type",  type);
-			formdata.append("name",  name);
-
-			var endpoint = "https://api.imgur.com/3/image";
-			var clientID = "06217f601180652";  // sloothes app Client-ID.
 
 			var xhttp = new XMLHttpRequest();
 			xhttp.open("POST", endpoint, true);
@@ -542,6 +543,44 @@ Sidebar.Project = function ( editor ) {
 			};
 
 			xhttp.send(formdata);
+			xhttp = null;
+
+		});
+
+	}
+
+//
+
+	function deleteUploadedImage( data ){
+
+	//  Returns a resolved promise with success data from imgur.com.
+		debugMode && console.log("deleting", data.name);
+
+		var endpoint = data.endpoint || "https://api.imgur.com/3/image";
+		var clientID = data.clientID || "06217f601180652"; // sloothes app Client-ID.
+		var deletepoint = data.deletepoint || "https://api.imgur.com/3/image/" + data.deletehash;
+
+		return new Promise(function( resolve, reject ){
+
+			xhttp = new XMLHttpRequest();
+			xhttp.open("DELETE", deletepoint, true);
+			xhttp.setRequestHeader("Authorization", "Client-ID " + clientID);
+			xhttp.onreadystatechange = function () {
+				if (this.readyState === 4) {
+					var response = "";
+					if (this.status > 199 && this.status < 300) {
+						response = JSON.parse(this.responseText);
+						debugMode && console.log(response);
+						resolve(response); // resolve promise.
+					} else {
+						var err = JSON.parse(this.responseText).data.error;
+						console.error( err.type, err );
+						throw err;
+					}
+				}
+			};
+
+			xhttp.send();
 			xhttp = null;
 
 		});

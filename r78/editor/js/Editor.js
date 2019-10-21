@@ -89,6 +89,7 @@ var Editor = function () {
 	this.camera = this.DEFAULT_CAMERA.clone();
 
 	this.lights = this.DEFAULT_CAMERA_LIGHT.clone();
+
 //  Camera light is added in editor scene "only after" 
 //  editor has been cleared: this.clear() => 
 //  this.signals.editorCleared.dispatch(); => 
@@ -490,12 +491,30 @@ Editor.prototype = {
 		this.camera.aspect = this.DEFAULT_CAMERA.aspect;
 		this.camera.updateProjectionMatrix();
 
-		this.javascripts = json.javascripts;
-		if ( this.javascripts == undefined ) {
+	//  javascript libraries.
+
+		if ( json.javascripts == undefined ) {
 			this.javascripts = []; // important!
+		} else {
+			this.javascripts = json.javascripts;
 		}
 
-		this.images = json.images;
+	//	texture images.
+
+		if ( json.images == undefined ) {
+			this.images = {}; // important!
+		} else {
+			this.images = json.images;
+		}
+
+	//	app scripts.
+
+		if ( json.scripts == undefined ) {
+			this.scripts = {}; // important!
+		} else {
+			this.scripts = json.scripts;
+		}
+
 		this.scripts = json.scripts;
 		this.history.fromJSON( json.history );
 		this.setScene( loader.parse( json.scene ) );

@@ -286,9 +286,9 @@ Sidebar.Project = function ( editor ) {
 			//	Event listeners.
 
 				remove.onClick( function(){
-					row.setClass("fade out");
+					row.addClass("fade","out");
 					setTimeout(function(){
-						row.remove();
+						row.dom.remove();
 					}, 500);
 				});
 
@@ -344,9 +344,9 @@ Sidebar.Project = function ( editor ) {
 					//	Remove successfull uploader.
 
 						setTimeout(function(){
-							row.setClass("fade out");
+							row.addClass("fade","out");
 							setTimeout(function(){
-								row.remove();
+								row.dom.remove();
 							}, 500);
 						}, 3000);
 

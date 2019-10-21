@@ -286,6 +286,7 @@ Sidebar.Project = function ( editor ) {
 
 				var row = new UI.Row();
 				var upload = new UI.Button( "Upload" );
+				var del = new UI.Button( "Delete" )setDisplay("none");
 				var remove = new UI.Button( "Remove" ).setFloat("right");
 				var progress = new UI.Span().setMarginLeft("5px").setBorder("1px solid #fff");
 
@@ -301,6 +302,7 @@ Sidebar.Project = function ( editor ) {
 
 			//	Event listeners.
 
+				del.onClick( deleteUploaded );
 				upload.onClick( uploadHandler );
 				remove.onClick( removeUploader );
 
@@ -311,7 +313,7 @@ Sidebar.Project = function ( editor ) {
 
 				function uploadHandler(){
 
-				//	Avoid multiply uploads.
+				//	Avoid multiple uploads.
 					clearTimeout( this.interval );
 
 				//	Reset "#imgur" checkbox value.
@@ -332,6 +334,22 @@ Sidebar.Project = function ( editor ) {
 						row.dom.remove();
 						setTimeout( enableButton );
 					}, 500);
+
+				}
+
+				function deleteUploaded(){
+
+					if ( this.data === undefined ) return;
+
+				//	Avoid multiple clicks.
+					clearTimeout( this.interval );
+
+					if ( confirm("Are you sure?") ) {
+						var data = this.data;
+						deleteUploadedImage( data ).then( function( results ){
+							console.log( "results:", {deleted:data, results:results} );
+						});
+					}
 
 				}
 
@@ -469,7 +487,9 @@ Sidebar.Project = function ( editor ) {
 
 					}).then( function( data ){
 
-						json.images.push( data );
+						if ( del ) del.data = data; // for delete button.
+
+						json && json.images && json.images.push && json.images.push( data );
 
 					//	Ensure THREE.Cache.enabled.
 						THREE.Cache.enabled = false;
@@ -486,7 +506,7 @@ Sidebar.Project = function ( editor ) {
 							editor.textures[ texture.uuid ] = texture;
 						});
 
-						debugMode && console.log( json );
+						debugMode && console.log( "editor json:", json );
 
 						return json;
 
@@ -502,6 +522,7 @@ Sidebar.Project = function ( editor ) {
 				uploadPanel.add(row);
 
 			})(images[i]);
+
 		}
 
 	}

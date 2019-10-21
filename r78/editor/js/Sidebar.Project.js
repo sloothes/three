@@ -251,11 +251,6 @@ Sidebar.Project = function ( editor ) {
 
 		uploadTextures.off("click"); // important!
 
-		function enableButton(){
-			if (uploadPanel.dom.childElementCount) return;
-			uploadTextures.onClick( createUploads );
-		}
-
 	//  Get texture images.
 
 		var images = editor.toJSON().scene.images; // important!
@@ -373,7 +368,12 @@ Sidebar.Project = function ( editor ) {
 			})(images[i]);
 		}
 
-	});
+		function enableButton(){
+			if (uploadPanel.dom.childElementCount) return;
+			uploadTextures.onClick( createUploads );
+		}
+
+	}
 
 	container.add( uploadPanel );
 	container.add( uploadTextures );

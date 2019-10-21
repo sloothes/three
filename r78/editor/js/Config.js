@@ -43,6 +43,9 @@ var Config = function ( name ) {
 //	First setup of debugMode (global).
 	debugMode = storage["project/debugMode"];
 
+//	Setup of THREE.Cache.
+	THREE.Cache.enabled = storage["project/cache"];
+
 	return {
 
 		getKey: function ( key ) {

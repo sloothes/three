@@ -103,6 +103,7 @@ var Editor = function () {
 //	Editor.
 
 	this.object = {};
+	this.images = {};
 	this.scripts = {};
 	this.textures = {};
 	this.materials = {};
@@ -450,6 +451,7 @@ Editor.prototype = {
 		this.stylesheets = [];
 		this.javascripts = [];
 
+		this.images = {};
 		this.scripts = {};
 		this.textures = {};
 		this.materials = {};
@@ -493,6 +495,7 @@ Editor.prototype = {
 			this.javascripts = []; // important!
 		}
 
+		this.images = json.images;
 		this.scripts = json.scripts;
 		this.history.fromJSON( json.history );
 		this.setScene( loader.parse( json.scene ) );
@@ -539,6 +542,8 @@ Editor.prototype = {
 			functions: this.functions,
 			stylesheets: this.stylesheets,
 			javascripts: this.javascripts,
+
+			images: this.images,
 
 			scripts: this.scripts,
 			camera: this.camera.toJSON(),

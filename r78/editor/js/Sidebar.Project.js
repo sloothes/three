@@ -340,13 +340,13 @@ Sidebar.Project = function ( editor ) {
 
 			//	Demo.
 
-				function fakeProgress(){ 
+				function fakeProgress(requestID){ 
 
 					while ( bar.offsetWidth < 100 ){
 						var width = bar.offsetWidth + 1;
 						bar.style.width = width + "px"; 
 						bar.value = width + "%"; 
-						return requestAnimationFrame(updateProgressBar);
+						return requestAnimationFrame(fakeProgress);
 					}
 
 					cancelAnimationFrame(requestID);

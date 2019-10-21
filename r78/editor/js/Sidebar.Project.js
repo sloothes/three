@@ -307,21 +307,20 @@ Sidebar.Project = function ( editor ) {
 
 				});
 
+
+				upload.onClick( uploadHandler );
+
 				function uploadHandler(){
 
 				//	Avoid multiply uploads.
-
 					clearTimeout( this.interval );
 
 				//	Reset "#imgur" checkbox value.
-
 					ImgUpload.setValue( false ); // important!
 
-					this.interval = setTimeout( uploader, 250);
+					this.interval = setTimeout( uploader, 250 );
 
 				}
-
-				upload.onClick( uploadHandler );
 
 				function uploader(){
 

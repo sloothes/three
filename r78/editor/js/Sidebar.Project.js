@@ -458,11 +458,33 @@ Sidebar.Project = function ( editor ) {
 
 					}).then( function( data ){
 
-						object.url = data.link;
+						object.url = data.link; // important!
 
 						data.clientID = clientID;
 						data.endpoint = endpoint;
-						editor.images[ object.uuid ] = data;
+						data.getpoint = endpoint + "/" + data.id; // important!
+						data.deletepoint = endpoint + "/" + data.deletehash; // important!
+
+						return data;
+
+					}).then( function( data ){
+
+						json.images.push( data );
+
+					//	Ensure THREE.Cache.enabled.
+						THREE.Cache.enabled = false;
+
+					//	TODO: Find and replace texture image 
+					//  dataURL in editor materials with data.link.
+
+					//	Load texture.
+						var loader = new THREE.TextureLoader();
+						loader.setCrossOrigin = "anonymous"; // important!
+						var texture = loader.load( data.link, function( texture ){
+							object.url = texture.image.src;
+							editor.images[ object.uuid ] = object;
+							editor.textures[ texture.uuid ] = texture;
+						});
 
 						debugMode && console.log( json );
 

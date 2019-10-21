@@ -231,10 +231,13 @@ Sidebar.Project = function ( editor ) {
 
 //	Texture upload.
 
-	var uploadPanel = new UI.Panel();
+	var uploadPanel = new UI.Panel().setId("upload-panel");
 
 	var uploadTextures = new UI.Button( "Upload Texture images" ).setWidth("100%");
-	uploadTextures.onClick( function() {
+
+	uploadTextures.onClick( createUploads );
+
+	function createUploads() {
 
 	//	"#imgur" must be checked to allow uploading.
 
@@ -247,6 +250,11 @@ Sidebar.Project = function ( editor ) {
 	//	Remove "click" listener to avoid multipe uploaders (disable button).
 
 		uploadTextures.off("click"); // important!
+
+		function enableButton(){
+			if (uploadPanel.dom.childElementCount) return;
+			uploadTextures.onClick( createUploads );
+		}
 
 	//  Get texture images.
 
@@ -347,6 +355,7 @@ Sidebar.Project = function ( editor ) {
 							row.addClass("fade","out");
 							setTimeout(function(){
 								row.dom.remove();
+								setTimeout( enableUploadTextures );
 							}, 500);
 						}, 3000);
 

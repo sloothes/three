@@ -141,18 +141,17 @@ Sidebar.Project = function ( editor ) {
 //	Imgur.
 
 	var ImgurRow = new UI.Row();
-	var imgur = new UI.Checkbox( false ).setId("imgur").setLeft( "100px" );
-	ImgurRow.add( new UI.Text( "IMGUR" ).setWidth( "90px" ) );
-	ImgurRow.add( imgur );
+	var ImgUpload = new UI.Checkbox( false ).setId("imgur").setLeft( "100px" );
+	ImgurRow.add( new UI.Text( "ImgUpload" ).setWidth( "90px" ) );
+	ImgurRow.add( ImgUpload );
 
 	container.add( ImgurRow );
 
-//	container.add( new UI.HorizontalRule() );
 
-//	JS libraries.
+//	Import js libraries.
 
-    var libRow = new UI.Row();
-	libRow.setTextAlign("center");
+    var importLibrariesRow = new UI.Row();
+	importLibrariesRow.add( new UI.Text( "" ).setWidth( "90px" ) );
 
 	var libInput = document.createElement( "input" );
 	libInput.type = "file";
@@ -191,38 +190,40 @@ Sidebar.Project = function ( editor ) {
 		
 	});
 
-	var addlib = new UI.Button( "Add JS Libraries" );
-	addlib.onClick( function () {
+	var importLibraries = new UI.Button( "Import JS Libraries" ).setMaxWidth("150px").setOverflow("hidden").setTextOverflow("ellipsis");
+	importLibraries.onClick( function () {
 
         libInput.value = "";
 		libInput.click();
 
 	});
 
-//
+	importLibrariesRow.add( importLibraries );
 
-	var clearlib = new UI.Button( "Clear JS Libraries" );
-	clearlib.setMarginLeft("5px");
-	clearlib.onClick( function () {
+	container.add( importLibrariesRow );
+
+//	Clear js libraries
+
+    var clearLibrariesRow = new UI.Row();
+	clearLibrariesRow.add( new UI.Text( "" ).setWidth( "90px" ) );
+
+	var clearLibraries = new UI.Button( "Clear JS Libraries" ).setMaxWidth("150px").setOverflow("hidden").setTextOverflow("ellipsis");
+	clearLibraries.onClick( function () {
 
         editor.javascripts.length = 0;
 
-		var text = "Javascript libraries cleared.";
-		var element = document.createElement("h4");
-		var content = new UI.Element( element );
-		content.setTextAlign("center");
-		content.setTextContent( text );
-		editor.signals.showModal.dispatch( content );
-
-		debugMode && console.log( text, editor.javascripts );
+		var dom = document.createElement("h4");
+		var dialog = new UI.Element( dom ).setTextAlign("center");
+		dialog.setTextContent( "Javascript libraries cleared." );
+		editor.signals.showModal.dispatch( dialog );
+		debugMode && console.log( dom.textContent, editor.javascripts );
 
 	});
 
-	libRow.add( addlib );
-	libRow.add( clearlib );
-	container.add( libRow );
+	clearLibrariesRow.add( clearLibraries );
 
-//	container.add( new UI.HorizontalRule() );
+	container.add( clearLibrariesRow );
+
 
 //	Texture upload.
 
@@ -231,13 +232,13 @@ Sidebar.Project = function ( editor ) {
 	var uploadTextures = new UI.Button( "Upload Texture images" ).setWidth("100%");
 	uploadTextures.onClick( function() {
 
-	//	"imgur" must be checked to allow uploading.
+	//	"#imgur" must be checked to allow uploading.
 
-		if ( imgur.getValue() === false ) return;
+		if ( ImgUpload.getValue() === false ) return;
 
-	//	Reset imgur checkbox.
+	//	Reset "#imgur" checkbox value.
 
-		imgur.setValue( false ); // important?
+		ImgUpload.setValue( false ); // important?
 
 	//	Remove "click" listener to avoid multipe uploaders (disable button).
 

@@ -286,7 +286,7 @@ Sidebar.Project = function ( editor ) {
 
 				var row = new UI.Row();
 				var upload = new UI.Button( "Upload" );
-				var del = new UI.Button( "Delete" )setDisplay("none");
+				var del = new UI.Button( "Delete" ).setDisplay("none");
 				var remove = new UI.Button( "Remove" ).setFloat("right");
 				var progress = new UI.Span().setMarginLeft("5px").setBorder("1px solid #fff");
 

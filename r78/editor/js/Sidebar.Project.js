@@ -245,7 +245,7 @@ Sidebar.Project = function ( editor ) {
 
 	//	Reset "#imgur" checkbox value.
 
-		ImgUpload.setValue( false ); // important?
+		ImgUpload.setValue( false ); // important!
 
 	//	Remove "click" listener to avoid multipe uploaders (disable button).
 
@@ -294,11 +294,17 @@ Sidebar.Project = function ( editor ) {
 			//	Event listeners.
 
 				remove.onClick( function(){
+
 					row.addClass("fade","out");
+
+				//	Reset "#imgur" checkbox value.
+					ImgUpload.setValue( false ); // important!
+
 					setTimeout(function(){
 						row.dom.remove();
 						setTimeout( enableButton );
 					}, 500);
+
 				});
 
 				function uploadHandler(){
@@ -306,6 +312,10 @@ Sidebar.Project = function ( editor ) {
 				//	Avoid multiply uploads.
 
 					clearTimeout( this.interval );
+
+				//	Reset "#imgur" checkbox value.
+
+					ImgUpload.setValue( false ); // important!
 
 					this.interval = setTimeout( uploader, 250);
 

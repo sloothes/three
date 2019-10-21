@@ -190,7 +190,7 @@ Sidebar.Project = function ( editor ) {
 		
 	});
 
-	var importLibraries = new UI.Button( "Import JS Libraries" ).setMaxWidth("150px").setOverflow("hidden").setTextOverflow("ellipsis");
+	var importLibraries = new UI.Button( "Import JS Libraries" ).setWidth("150px").setOverflow("hidden").setTextOverflow("ellipsis");
 	importLibraries.onClick( function () {
 
         libInput.value = "";
@@ -207,7 +207,7 @@ Sidebar.Project = function ( editor ) {
     var clearLibrariesRow = new UI.Row();
 	clearLibrariesRow.add( new UI.Text( "" ).setWidth( "90px" ) );
 
-	var clearLibraries = new UI.Button( "Clear JS Libraries" ).setMaxWidth("150px").setOverflow("hidden").setTextOverflow("ellipsis");
+	var clearLibraries = new UI.Button( "Clear JS Libraries" ).setWidth("150px").setOverflow("hidden").setTextOverflow("ellipsis");
 	clearLibraries.onClick( function () {
 
         editor.javascripts.length = 0;

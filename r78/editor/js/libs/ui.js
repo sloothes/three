@@ -82,6 +82,34 @@ UI.Element.prototype = {
 
 	},
 
+	addClass: function () {
+
+		for ( var i = 0; i < arguments.length; i ++ ) {
+
+			var argument = arguments[ i ];
+
+			this.dom.classList.add( argument );
+
+		}
+
+		return this;
+
+	},
+
+	removeClass: function () {
+
+		for ( var i = 0; i < arguments.length; i ++ ) {
+
+			var argument = arguments[ i ];
+
+			this.dom.classList.remove( argument );
+
+		}
+
+		return this;
+
+	},
+
 	setStyle: function ( style, array ) {
 
 		for ( var i = 0; i < array.length; i ++ ) {

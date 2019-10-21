@@ -251,11 +251,6 @@ Sidebar.Project = function ( editor ) {
 
 		uploadTextures.off("click"); // important!
 
-		function enableButton(){
-			if (uploadPanel.dom.childElementCount) return;
-			uploadTextures.onClick( createUploads );
-		}
-
 	//  Get texture images.
 
 		var images = editor.toJSON().scene.images; // important!
@@ -293,22 +288,13 @@ Sidebar.Project = function ( editor ) {
 
 			//	Event listeners.
 
-				remove.onClick( function(){
-
-					row.addClass("fade","out");
-
-				//	Reset "#imgur" checkbox value.
-					ImgUpload.setValue( false ); // important!
-
-					setTimeout(function(){
-						row.dom.remove();
-						setTimeout( enableButton );
-					}, 500);
-
-				});
-
-
 				upload.onClick( uploadHandler );
+				remove.onClick( removeUploader );
+
+				function enableButton(){
+					if (uploadPanel.dom.childElementCount) return;
+					uploadTextures.onClick( createUploads );
+				}
 
 				function uploadHandler(){
 
@@ -321,6 +307,20 @@ Sidebar.Project = function ( editor ) {
 					this.interval = setTimeout( uploader, 250 );
 
 				}
+
+				function removeUploader(){
+
+					row.addClass("fade","out");
+
+				//	Reset "#imgur" checkbox value.
+					ImgUpload.setValue( false ); // important!
+
+					setTimeout(function(){
+						row.dom.remove();
+						setTimeout( enableButton );
+					}, 500);
+
+				});
 
 				function uploader(){
 
@@ -360,14 +360,7 @@ Sidebar.Project = function ( editor ) {
 						debugMode && console.log({name:name, type:type, data:data});
 
 					//	Remove successfull uploader.
-
-						setTimeout(function(){
-							row.addClass("fade","out");
-							setTimeout(function(){
-								row.dom.remove();
-								setTimeout( enableButton );
-							}, 500);
-						}, 3000);
+						setTimeout( removeUploader, 3000 );
 
 					}
 

@@ -320,7 +320,7 @@ Sidebar.Project = function ( editor ) {
 						setTimeout( enableButton );
 					}, 500);
 
-				});
+				}
 
 				function uploader(){
 

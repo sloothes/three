@@ -272,6 +272,8 @@ Sidebar.Project = function ( editor ) {
 			return;
 		}
 
+		debugMode && console.log("editor toJSON:", json);
+
 	//	Create texture uploaders.
 
 		for ( var i = 0; i < images.length; i++ ) {

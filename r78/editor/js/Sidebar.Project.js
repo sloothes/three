@@ -254,7 +254,7 @@ Sidebar.Project = function ( editor ) {
 
 		uploadTextures.off("click"); // important!
 
-	//  Get texture images.
+	//  Get texture images from "editor.toJSON".
 
 		var images = editor.toJSON().scene.images; // important!
 
@@ -264,6 +264,14 @@ Sidebar.Project = function ( editor ) {
 
 			return;
 		}
+
+	//	Get textures direct from editor.materials.
+
+
+
+
+
+
 
 	//	Create texture uploaders.
 
@@ -462,9 +470,6 @@ Sidebar.Project = function ( editor ) {
 						debugMode && console.log(object);
 
 						editor.images[ object.uuid ] = object;
-
-
-
 
 					}).catch(function(err){
 						console.error(err);

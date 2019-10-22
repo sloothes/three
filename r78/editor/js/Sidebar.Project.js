@@ -145,7 +145,7 @@ Sidebar.Project = function ( editor ) {
 
 	var ImgurRow = new UI.Row();
 	var ImgUpload = new UI.Checkbox( false ).setId("imgur").setLeft( "100px" );
-	ImgurRow.add( new UI.Text( "ImgUpload" ).setWidth( "90px" ) );
+	ImgurRow.add( new UI.Text( "Upload" ).setWidth( "90px" ) );
 	ImgurRow.add( ImgUpload );
 
 	container.add( ImgurRow );

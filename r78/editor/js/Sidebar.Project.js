@@ -534,7 +534,7 @@ Sidebar.Project = function ( editor ) {
 				isPlaying = true;
 				play.setTextContent( "Stop" );
 
-				container.setDisplay( "" );
+				container.style.display = "";
 
 				player.load( json );
 				player.setSize( container.dom.clientWidth, container.dom.clientHeight );
@@ -546,7 +546,7 @@ Sidebar.Project = function ( editor ) {
 				isPlaying = false;
 				play.setTextContent( "Play" );
 
-				container.setDisplay( "none" );
+				container.style.display = "none";
 
 				player.stop();
 				player.dispose();

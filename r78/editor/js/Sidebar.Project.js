@@ -522,14 +522,13 @@ Sidebar.Project = function ( editor ) {
 	//	Play.
 
 		var isPlaying = false;
+		var player = new APP.Player();
+		var container = document.getElementById("player");
 
 		var play = new UI.Button( "Play" ).setWidth("100%").onClick( function(){
-
-			var container = document.getElementById("player");
 			
 			if ( isPlaying === false ) {
 
-				var player = new APP.Player();
 				container.appendChild( player.dom );
 
 				isPlaying = true;

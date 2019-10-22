@@ -498,22 +498,33 @@ Sidebar.Project = function ( editor ) {
 
 					//	TODO: Find and replace texture image 
 					//  dataURL in editor materials with data.link.
-
-					//	Load texture.
+					/*
 						var loader = new THREE.TextureLoader();
 						loader.setCrossOrigin = "anonymous"; // important!
 						loader.load( data.link, function( texture ){
 							debugMode && console.log( "texture:", texture );
-
 							editor.textures[ texture.uuid ] = texture;
-
 							try {
 								texture.image.img.src = data.link; // important!
 							} catch(err){
 								console.error(err);
 							}
-
 						});
+					*/
+
+					//	Load texture.
+
+						var texture;
+						var img = new Image();
+						img.crossOrigin = "anonymous"; // important!
+						img.addEventListener("load", function(){ 
+							texture = new THREE.Texture( img );
+							debugMode && console.log( "texture:", texture );
+							editor.textures[ texture.uuid ] = texture;
+							texture.image.img.src = data.link; // important!
+							return texture; // ???
+						});
+						img.src = data.link;
 
 						debugMode && console.log( "editor json:", json );
 

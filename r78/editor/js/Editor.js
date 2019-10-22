@@ -119,6 +119,91 @@ var Editor = function () {
 	this.selected = null;
 	this.helpers = {};
 
+//
+
+	this.uploadImage = uploadDataURL;
+	this.deleteImage = deleteUploadedImage;
+
+//
+
+	function uploadDataURL(data, type, name){
+
+	//  Returns a resolved promise with record data from imgur.com.
+		debugMode && console.log("uploading", name);
+
+		var formdata = new FormData();
+		formdata.append("image", data);
+		formdata.append("type",  type);
+		formdata.append("name",  name);
+
+		var endpoint = "https://api.imgur.com/3/image";
+		var clientID = "06217f601180652";  // sloothes app Client-ID.
+
+		return new Promise(function( resolve, reject ){
+
+			var xhttp = new XMLHttpRequest();
+			xhttp.open("POST", endpoint, true);
+			xhttp.setRequestHeader("Authorization", "Client-ID " + clientID);
+			xhttp.onreadystatechange = function () {
+				if (this.readyState === 4) {
+					var response = "";
+					if (this.status >= 200 && this.status < 300) {
+						response = JSON.parse(this.responseText);
+						debugMode && console.log(response.data);
+						resolve(response.data); // resolve promise.
+					} else {
+						var err = JSON.parse(this.responseText).data.error;
+						console.error( err.type, err );
+						throw err;
+					}
+				}
+			};
+
+			xhttp.send(formdata);
+			xhttp = null;
+
+		});
+
+	}
+
+//
+
+	function deleteUploadedImage( data ){
+
+	//  Returns a resolved promise with success data from imgur.com.
+		debugMode && console.log("deleting", data.name);
+
+		var endpoint = data.endpoint || "https://api.imgur.com/3/image";
+		var clientID = data.clientID || "06217f601180652"; // sloothes app Client-ID.
+		var deletepoint = data.deletepoint || "https://api.imgur.com/3/image/" + data.deletehash;
+
+		return new Promise(function( resolve, reject ){
+
+			xhttp = new XMLHttpRequest();
+			xhttp.open("DELETE", deletepoint, true);
+			xhttp.setRequestHeader("Authorization", "Client-ID " + clientID);
+			xhttp.onreadystatechange = function () {
+				if (this.readyState === 4) {
+					var response = "";
+					if (this.status > 199 && this.status < 300) {
+						response = JSON.parse(this.responseText);
+						debugMode && console.log(response);
+						resolve(response); // resolve promise.
+					} else {
+						var err = JSON.parse(this.responseText).data.error;
+						console.error( err.type, err );
+						throw err;
+					}
+				}
+			};
+
+			xhttp.send();
+			xhttp = null;
+
+		});
+
+	}
+
 };
 
 Editor.prototype = {

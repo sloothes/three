@@ -521,16 +521,16 @@ Sidebar.Project = function ( editor ) {
 
 	//	Play.
 
+		var isPlaying = false;
+
 		var play = new UI.Button( "Play" ).setWidth("100%").onClick( function(){
 
 			var container = document.getElementById("player");
-
-			var player = new APP.Player();
-			container.appendChild( player.dom );
-
-			var isPlaying = false;
 			
 			if ( isPlaying === false ) {
+
+				var player = new APP.Player();
+				container.appendChild( player.dom );
 
 				isPlaying = true;
 				play.setTextContent( "Stop" );

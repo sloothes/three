@@ -9,7 +9,7 @@ Menubar.Play = function ( editor ) {
 	var container = new UI.Panel();
 	container.setClass( "menu" );
 
-	var isPlaying = false;
+	isPlaying = false; // global!
 
 	var title = new UI.Panel();
 	title.setClass( "title" );

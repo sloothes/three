@@ -231,6 +231,9 @@ Sidebar.Project = function ( editor ) {
 
 	container.add( clearLibrariesRow );
 
+	container.add( uploadTextures );
+	container.add( new UI.HorizontalRule() );
+
 
 //	Texture upload.
 
@@ -244,7 +247,6 @@ Sidebar.Project = function ( editor ) {
 
 	container.add( uploadPanel );
 	container.add( uploadTextures );
-	container.add( new UI.HorizontalRule() );
 
 	function createUploads() {
 
@@ -521,42 +523,33 @@ Sidebar.Project = function ( editor ) {
 
 	//	Play.
 
-		var isPlaying = false;
-		var player = new APP.Player();
-		var container = document.getElementById("player");
+	//	var isPlaying = false; // global!
 
 		var play = new UI.Button( "Play" ).setWidth("100%").onClick( function(){
 			
 			if ( isPlaying === false ) {
 
-				container.appendChild( player.dom );
-
 				isPlaying = true;
 				play.setTextContent( "Stop" );
-
-				container.style.display = "";
-
-				player.load( json );
-				player.setSize( container.clientWidth, container.clientHeight );
-				player.play();
-
+				signals.startPlayer.dispatch();
 
 			} else {
 
 				isPlaying = false;
 				play.setTextContent( "Play" );
-
-				container.style.display = "none";
-
-				player.stop();
-				player.dispose();
+				signals.stopPlayer.dispatch();
 
 			}
 
 		});
 
-		uploadPanel.add( play );
+		if ( isPlaying === true ) 
+			play.setTextContent( "Stop" );
+		else 
+			play.setTextContent( "Play" );
 
+		container.add( play );
+		container.add( new UI.HorizontalRule() );
 
 	//	Save.
 
@@ -616,6 +609,8 @@ Sidebar.Project = function ( editor ) {
 		container.add( SaveRow );
 
 	}
+
+//
 
 	var link = document.createElement( "a" );
 	link.style.display = "none";

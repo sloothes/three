@@ -13,8 +13,8 @@ var Player = function ( editor ) {
 
 //
 
-//	var player = new APP.Player();
-//	container.dom.appendChild( player.dom );
+	var player = new APP.Player();
+	container.dom.appendChild( player.dom );
 
 	window.addEventListener( "resize", function () {
 
@@ -25,9 +25,6 @@ var Player = function ( editor ) {
 	signals.startPlayer.add( function () {
 
 		container.setDisplay( "" );
-
-		var player = new APP.Player();
-		container.dom.appendChild( player.dom );
 
 		player.load( editor.toJSON() );
 		player.setSize( container.dom.clientWidth, container.dom.clientHeight );

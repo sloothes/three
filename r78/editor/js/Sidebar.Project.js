@@ -231,9 +231,6 @@ Sidebar.Project = function ( editor ) {
 
 	container.add( clearLibrariesRow );
 
-	container.add( uploadTextures );
-	container.add( new UI.HorizontalRule() );
-
 
 //	Texture upload.
 

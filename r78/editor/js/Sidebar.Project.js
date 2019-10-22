@@ -537,7 +537,7 @@ Sidebar.Project = function ( editor ) {
 				container.style.display = "";
 
 				player.load( json );
-				player.setSize( container.dom.clientWidth, container.dom.clientHeight );
+				player.setSize( container.clientWidth, container.clientHeight );
 				player.play();
 
 

@@ -518,6 +518,51 @@ Sidebar.Project = function ( editor ) {
 
 		}
 
+
+	//	Play.
+
+		var play = new UI.Button( "Play" ).setWidth("100%").onClick( function(){
+
+			var container = document.getElementById("player");
+
+			var player = new APP.Player();
+			container.dom.appendChild( player.dom );
+
+			window.addEventListener( "resize", function () {
+				player.setSize( container.dom.clientWidth, container.dom.clientHeight );
+			});
+
+			var isPlaying = false;
+			
+			if ( isPlaying === false ) {
+
+				isPlaying = true;
+				play.setTextContent( "Stop" );
+
+				container.setDisplay( "" );
+
+				player.load( json );
+				player.setSize( container.dom.clientWidth, container.dom.clientHeight );
+				player.play();
+
+
+			} else {
+
+				isPlaying = false;
+				play.setTextContent( "Play" );
+
+				container.setDisplay( "none" );
+
+				player.stop();
+				player.dispose();
+
+			}
+
+		});
+
+		uploadPanel.add( play );
+
+
 	//	Save.
 
 		var save = new UI.Button( "Save" ).setWidth("49%").onClick( function(){

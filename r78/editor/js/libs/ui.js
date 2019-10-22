@@ -56,6 +56,14 @@ UI.Element.prototype = {
 
 	},
 
+	replaceWith: function( dom ){
+
+		this.dom.replaceWith( dom );
+
+		return this;
+
+	},
+
 	clear: function () {
 
 		while ( this.dom.children.length ) {

@@ -244,7 +244,7 @@ Sidebar.Project = function ( editor ) {
 
 	container.add( uploadPanel );
 	container.add( uploadTextures );
-
+	container.add( new UI.HorizontalRule() );
 
 	function createUploads() {
 
@@ -264,7 +264,7 @@ Sidebar.Project = function ( editor ) {
 
 	//  Get texture images from "editor.toJSON".
 
-		var json = editor.toJSON();
+		var json = editor.toJSON(); // important!
 
 		var images = json.scene.images; // important!
 
@@ -411,7 +411,7 @@ Sidebar.Project = function ( editor ) {
                         };
 
                         xhttp.upload.onload = function() {
-							bar.value = "Complete 100%"; 
+							bar.value = "Completed"; 
 							bar.style.width = "100px";
 							bar.style.background = "##18b91b";
                             debugMode && console.log(name, "Upload completed.");
@@ -577,6 +577,7 @@ Sidebar.Project = function ( editor ) {
 
 	}
 
+/*
 	function uploadDataURL(data, type, name){
 
 	//  Returns a resolved promise with record data from imgur.com.
@@ -655,9 +656,7 @@ Sidebar.Project = function ( editor ) {
 
 	}
 
-//
-
-	container.add( new UI.HorizontalRule() );
+*/
 
 //
 

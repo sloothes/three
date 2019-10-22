@@ -528,7 +528,7 @@ Sidebar.Project = function ( editor ) {
 
 				isPlaying = true;
 				play.setTextContent( "Stop" );
-				signals.startPlayer.dispatch();
+				signals.startPlayer.dispatch( json );
 
 			} else {
 

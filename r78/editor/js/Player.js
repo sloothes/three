@@ -22,11 +22,11 @@ var Player = function ( editor ) {
 
 	});
 
-	signals.startPlayer.add( function () {
+	signals.startPlayer.add( function (json) {
 
 		container.setDisplay( "" );
 
-		player.load( editor.toJSON() );
+		player.load( json || editor.toJSON() );
 		player.setSize( container.dom.clientWidth, container.dom.clientHeight );
 		player.play();
 

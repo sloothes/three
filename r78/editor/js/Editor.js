@@ -119,23 +119,22 @@ var Editor = function () {
 	this.selected = null;
 	this.helpers = {};
 
-//
+//	Upload texture imate to imgur.com.
 
 	this.uploadImage = uploadDataURL;
-	this.deleteImage = deleteUploadedImage;
-//	Usage: editor.deleteImage( editor.toJSON().images[i] );
 
-//
+	function uploadDataURL(dataURL, type, name){
 
-	function uploadDataURL(data, type, name){
-
+	//	Remove prefix "data:image/<ext>;base64," before upload image.
+	// "dataURL" must be pure data without "data:image/<ext>;base64,"
 	//  Returns a resolved promise with record data from imgur.com.
+
 		debugMode && console.log("uploading", name);
 
 		var formdata = new FormData();
-		formdata.append("image", data);
-		formdata.append("type",  type);
 		formdata.append("name",  name);
+		formdata.append("type",  type);
+		formdata.append("image", dataURL);
 
 		var endpoint = "https://api.imgur.com/3/image";
 		var clientID = "06217f601180652";  // sloothes app Client-ID.
@@ -167,6 +166,16 @@ var Editor = function () {
 
 	}
 
+//	Delete uploaded image from imgur.com 
+
+	this.deleteImage = deleteUploadedImage;
+
+//	Usage:
+//
+//		var json = editor.toJSON();
+//		for (var i = 0; i < json.images.length; i++ ) {
+//			editor.deleteImage( json.images[i] );
+//		}
 //
 
 	function deleteUploadedImage( data ){

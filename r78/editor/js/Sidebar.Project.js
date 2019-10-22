@@ -293,7 +293,7 @@ Sidebar.Project = function ( editor ) {
 				var upload = new UI.Button( "Upload" );
 				var del = new UI.Button( "Delete" ).setDisplay("none");
 				var remove = new UI.Button( "Remove" ).setFloat("right");
-				var progress = new UI.Span().setMarginLeft("5px").setBorder("1px solid #fff");
+				var progress = new UI.Span().setMarginLeft("5px");
 
 				var bar = document.createElement( "input" );
 				bar.disabled = true;

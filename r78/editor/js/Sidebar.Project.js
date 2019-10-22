@@ -526,6 +526,7 @@ Sidebar.Project = function ( editor ) {
 			var container = document.getElementById("player").firstChild;
 
 			var player = new APP.Player();
+			container.appendChild( player.dom );
 
 			var isPlaying = false;
 			

@@ -381,29 +381,6 @@ Sidebar.Project = function ( editor ) {
 					var type = array[0];
 					var data = array[1];
 
-			/*
-				//	Demo.
-
-					function fakeProgress(requestID){ 
-
-						while ( bar.offsetWidth < 100 ){
-							var width = bar.offsetWidth + 1;
-							bar.style.width = width + "px"; 
-							bar.value = width + "%"; 
-							return requestAnimationFrame(fakeProgress);
-						}
-
-						cancelAnimationFrame(requestID);
-						debugMode && console.log({name:name, type:type, data:data});
-
-					//	Remove successfull uploader.
-						setTimeout( removeUploader, 3000 );
-
-					}
-
-					var requestID = requestAnimationFrame(fakeProgress); // demo!
-			*/
-
 					return new Promise(function( resolve, reject ){
 
 						var formdata = new FormData();
@@ -506,37 +483,25 @@ Sidebar.Project = function ( editor ) {
 
 						var loader = new THREE.TextureLoader();
 						loader.setCrossOrigin = "anonymous"; // important!
-						loader.load( data.link, function( texture ){
-						//	texture.image.src = data.link; // loop!
-							debugMode && console.log( "texture:", texture );
-							editor.textures[ texture.uuid ] = texture;
-						});
 
-					/*
-						var texture;
-						var img = new Image();
-						img.crossOrigin = "anonymous"; // important!
-						new Promise( function( resolve, reject ){
-
-							img.addEventListener("load", function(){ 
-								texture = new THREE.Texture( img );
+						return new Promise( function( resolve, reject ){
+							loader.load( data.link, function( texture ){
 								debugMode && console.log( "texture:", texture );
 								editor.textures[ texture.uuid ] = texture;
-								resolve( texture.image.src = data.link ); // important!
+								resolve( texture );
 							});
 
-							img.src = data.link;
+						}).then(function( texture ){
+							texture.image.src = data.link; // important!
 
-						}).then(function( result ){
-							debugMode && console.log( result );
-						}).catch( function(err){
+						}).then(function( texture ){
+							debugMode && console.log( "editor json:", json );
+
+							return json;
+
+						}).catch(function(err){
 							console.error(err);
 						});
-					*/
-
-						debugMode && console.log( "editor json:", json );
-
-						return json;
 
 					}).catch(function(err){
 						console.error(err);
@@ -730,3 +695,51 @@ Sidebar.Project = function ( editor ) {
 	return container;
 
 };
+
+/*
+
+//	Demo.
+
+	function fakeProgress(requestID){ 
+
+		while ( bar.offsetWidth < 100 ){
+			var width = bar.offsetWidth + 1;
+			bar.style.width = width + "px"; 
+			bar.value = width + "%"; 
+			return requestAnimationFrame(fakeProgress);
+		}
+
+		cancelAnimationFrame(requestID);
+		debugMode && console.log({name:name, type:type, data:data});
+
+		//	Remove successfull uploader.
+		setTimeout( removeUploader, 3000 );
+
+	}
+
+	var requestID = requestAnimationFrame(fakeProgress); // demo!
+*/
+
+/*
+
+	var texture;
+	var img = new Image();
+	img.crossOrigin = "anonymous"; // important!
+	new Promise( function( resolve, reject ){
+
+		img.addEventListener("load", function(){ 
+			texture = new THREE.Texture( img );
+			debugMode && console.log( "texture:", texture );
+			editor.textures[ texture.uuid ] = texture;
+			resolve( texture.image.src = data.link ); // important!
+		});
+
+		img.src = data.link;
+
+	}).then(function( result ){
+		debugMode && console.log( result );
+	}).catch( function(err){
+		console.error(err);
+	});
+*/
+

@@ -238,10 +238,13 @@ Sidebar.Project = function ( editor ) {
 	const clientID = "06217f601180652";  // sloothes app Client-ID.
 
 	var uploadPanel = new UI.Panel().setId("upload-panel");
-
 	var uploadTextures = new UI.Button( "Upload Texture images" ).setWidth("100%");
 
 	uploadTextures.onClick( createUploads );
+
+	container.add( uploadPanel );
+	container.add( uploadTextures );
+
 
 	function createUploads() {
 
@@ -550,10 +553,64 @@ Sidebar.Project = function ( editor ) {
 
 		}
 
-	}
+	//	Save.
 
-	container.add( uploadPanel );
-	container.add( uploadTextures );
+		var save = new UI.Button( "Save" ).setWidth("49%").onClick( function(){
+
+			clearTimeout( save.interval );
+
+			save.interval = setTimeout( function () {
+
+				editor.signals.savingStarted.dispatch();
+
+				save.interval = setTimeout( function () {
+
+					editor.storage.set( json );
+
+					editor.signals.savingFinished.dispatch();
+
+					var text = "Editor json saved.";
+					var element = document.createElement("h4");
+					var content = new UI.Element( element );
+					content.setTextAlign("center");
+					content.setTextContent( text );
+					editor.signals.showModal.dispatch( content );
+
+				}, 100 );
+
+			}, 1000 );
+
+		});
+
+	//	Save As...
+
+		var saveAs = new UI.Button( "Save As File" ).setWidth("49%").setFloat("right").onClick( function(){
+
+			var output = json;
+			output.metadata.type = "App";
+			delete output.history;
+
+			try {
+
+				output = JSON.stringify( output, null, "\t" );
+				output = output.replace( /[\n\t]+([\d\.e\-\[\]]+)/g, "$1" );
+
+			} catch ( e ) {
+
+				output = JSON.stringify( output );
+
+			}
+
+			saveString( output, "app.json" );
+
+		});
+
+		var SaveRow = new UI.Row();
+		SaveRow.add( save );
+		SaveRow.add( saveAs );
+		container.add( SaveRow );
+
+	}
 
 	function uploadDataURL(data, type, name){
 

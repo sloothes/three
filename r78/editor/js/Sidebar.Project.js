@@ -523,7 +523,7 @@ Sidebar.Project = function ( editor ) {
 
 		var play = new UI.Button( "Play" ).setWidth("100%").onClick( function(){
 
-			var container = document.getElementById("player").firstChild;
+			var container = document.getElementById("player");
 
 			var player = new APP.Player();
 			container.appendChild( player.dom );

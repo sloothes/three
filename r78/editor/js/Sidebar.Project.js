@@ -526,7 +526,7 @@ Sidebar.Project = function ( editor ) {
 			var container = document.getElementById("player");
 
 			var player = new APP.Player();
-			container.dom.appendChild( player.dom );
+			container.appendChild( player.dom );
 
 			window.addEventListener( "resize", function () {
 				player.setSize( container.dom.clientWidth, container.dom.clientHeight );

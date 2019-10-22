@@ -504,7 +504,7 @@ Sidebar.Project = function ( editor ) {
 						var loader = new THREE.TextureLoader();
 						loader.setCrossOrigin = "anonymous"; // important!
 						loader.load( data.link, function( texture ){
-							texture.image.src = data.link; // important!
+						//	texture.image.src = data.link; // loop!
 							debugMode && console.log( "texture:", texture );
 							editor.textures[ texture.uuid ] = texture;
 						});

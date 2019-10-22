@@ -123,6 +123,7 @@ var Editor = function () {
 
 	this.uploadImage = uploadDataURL;
 	this.deleteImage = deleteUploadedImage;
+//	Usage: editor.deleteImage( editor.toJSON().images[i] );
 
 //
 

@@ -517,14 +517,23 @@ Sidebar.Project = function ( editor ) {
 						var texture;
 						var img = new Image();
 						img.crossOrigin = "anonymous"; // important!
-						img.addEventListener("load", function(){ 
-							texture = new THREE.Texture( img );
-							debugMode && console.log( "texture:", texture );
-							editor.textures[ texture.uuid ] = texture;
-							texture.image.img.src = data.link; // important!
-							return texture; // ???
+						new Promise( function( resolve, reject ){
+
+							img.addEventListener("load", function(){ 
+								texture = new THREE.Texture( img );
+								debugMode && console.log( "texture:", texture );
+								editor.textures[ texture.uuid ] = texture;
+								resolve( texture.image.img.src = data.link ); // important!
+							});
+
+							img.src = data.link;
+
+						}).then(function( result ){
+							debugMode && console.log( result );
+
+						}).catch( function(err){
+							console.error(err);
 						});
-						img.src = data.link;
 
 						debugMode && console.log( "editor json:", json );
 

@@ -523,14 +523,7 @@ Sidebar.Project = function ( editor ) {
 
 		var play = new UI.Button( "Play" ).setWidth("100%").onClick( function(){
 
-			var container = document.getElementById("player");
-
 			var player = new APP.Player();
-			container.appendChild( player.dom );
-
-			window.addEventListener( "resize", function () {
-				player.setSize( container.dom.clientWidth, container.dom.clientHeight );
-			});
 
 			var isPlaying = false;
 			
@@ -539,10 +532,10 @@ Sidebar.Project = function ( editor ) {
 				isPlaying = true;
 				play.setTextContent( "Stop" );
 
-				container.setDisplay( "" );
+			//	container.setDisplay( "" );
 
 				player.load( json );
-				player.setSize( container.dom.clientWidth, container.dom.clientHeight );
+			//	player.setSize( container.dom.clientWidth, container.dom.clientHeight );
 				player.play();
 
 
@@ -551,7 +544,7 @@ Sidebar.Project = function ( editor ) {
 				isPlaying = false;
 				play.setTextContent( "Play" );
 
-				container.setDisplay( "none" );
+			//	container.setDisplay( "none" );
 
 				player.stop();
 				player.dispose();

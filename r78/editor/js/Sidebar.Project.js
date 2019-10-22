@@ -504,6 +504,7 @@ Sidebar.Project = function ( editor ) {
 						loader.setCrossOrigin = "anonymous"; // important!
 						loader.load( data.link, function( texture ){
 							debugMode && console.log( "texture:", texture );
+
 							editor.textures[ texture.uuid ] = texture;
 
 							try {

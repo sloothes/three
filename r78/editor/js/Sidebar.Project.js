@@ -271,6 +271,8 @@ Sidebar.Project = function ( editor ) {
 
 			console.warn( "[Editor]:", "There are not images for upload.", images );
 
+			uploadTextures.onClick( createUploads );
+
 			return;
 		}
 

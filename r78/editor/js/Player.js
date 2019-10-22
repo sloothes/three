@@ -38,8 +38,6 @@ var Player = function ( editor ) {
 
 		player.stop();
 		player.dispose();
-		
-		container.clear();
 
 	});
 

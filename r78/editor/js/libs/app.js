@@ -171,35 +171,39 @@ var APP = {
 
 		//  Initialize objects scripts by scene children order.
 
-			for ( var j = 0; j < json.scene.object.children.length; j ++ ) {
+			if ( json.scene.object.children && json.scene.object.children.length ) {
 
-				var uuid = json.scene.object.children[ j ].uuid;
+				for ( var j = 0; j < json.scene.object.children.length; j ++ ) {
 
-				var object = scene.getObjectByProperty( "uuid", uuid, true ); // important!
+					var uuid = json.scene.object.children[ j ].uuid;
 
-				var scripts = json.scripts[ uuid ];
+					var object = scene.getObjectByProperty( "uuid", uuid, true ); // important!
 
-				if ( scripts == undefined || scripts.length == 0 ) continue; // important!
+					var scripts = json.scripts[ uuid ];
 
-				for ( var i = 0; i < scripts.length; i ++ ) {
+					if ( scripts == undefined || scripts.length == 0 ) continue; // important!
 
-					var script = scripts[ i ];
+					for ( var i = 0; i < scripts.length; i ++ ) {
 
-					var functions = ( new Function( scriptWrapParams, script.source + "\nreturn " + scriptWrapResult + ";" ).bind( object ) )( this, renderer, scene, camera, controls );
+						var script = scripts[ i ];
 
-					for ( var name in functions ) {
+						var functions = ( new Function( scriptWrapParams, script.source + "\nreturn " + scriptWrapResult + ";" ).bind( object ) )( this, renderer, scene, camera, controls );
 
-						if ( functions[ name ] === undefined ) continue;
+						for ( var name in functions ) {
 
-						if ( events[ name ] === undefined ) {
+							if ( functions[ name ] === undefined ) continue;
 
-							console.warn( "APP.Player: Event type not supported (", name, ")" ); 
+							if ( events[ name ] === undefined ) {
 
-							continue;
+								console.warn( "APP.Player: Event type not supported (", name, ")" ); 
+
+								continue;
+
+							}
+
+							events[ name ].push( functions[ name ].bind( object ) );
 
 						}
-
-						events[ name ].push( functions[ name ].bind( object ) );
 
 					}
 

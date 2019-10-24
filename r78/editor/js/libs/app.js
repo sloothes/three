@@ -29,14 +29,13 @@ var APP = {
 
 		this.load = function ( json ) {
 
-			console.clear(); // debug!
+			console.clear();
+
+		//	Config.
 
 			vr = json.project.vr;
-
 			debugMode = json.project.debugMode; // (global) important! 
-
 			THREE.Cache.enabled = json.project.cache; // important!
-
 			console.log({ "vr": vr, "debugMode": debugMode, "cache": THREE.Cache.enabled });
 
 		//	Load external javascirpt libraries.

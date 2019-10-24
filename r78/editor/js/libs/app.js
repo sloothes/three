@@ -10,8 +10,9 @@ var APP = {
 
 		var loader = new THREE.ObjectLoader();
 
-	//	var camera, scene, renderer;
+	//	var app, camera, scene, renderer;
 
+		app = null;		 // (global - for hacking)
 		camera = null;   // (global for debugging)
 		scene = null;    // (global for debugging)
 		renderer = null; // (global for debugging)
@@ -85,6 +86,8 @@ var APP = {
 			}
 
 			this.dom.appendChild( renderer.domElement );
+
+			this.setApp( loader.parse( json.application ) );
 			this.setScene( loader.parse( json.scene ) );
 			this.setCamera( loader.parse( json.camera ) );
 
@@ -245,6 +248,12 @@ var APP = {
 		};
 
 //
+
+		this.setApp = function ( value ) {
+
+			app = value;
+
+		};
 
 		this.setCamera = function ( value ) {
 

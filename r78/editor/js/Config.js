@@ -11,6 +11,7 @@ var Config = function ( name ) {
 
 		"project/vr": false,
 		"project/cache":false,
+		"project/upload": false,
 		"project/editable": false,
         "project/debugMode": true,
 		"project/renderer/shadows": true,
@@ -40,11 +41,12 @@ var Config = function ( name ) {
 
 	}
 
-//	First setup of debugMode (global).
-	debugMode = storage["project/debugMode"];
+//	on Startup.
 
-//	Setup of THREE.Cache.
+	debugMode = storage["project/debugMode"];
 	THREE.Cache.enabled = storage["project/cache"];
+
+//
 
 	return {
 
@@ -62,8 +64,12 @@ var Config = function ( name ) {
 
 			}
 
-		//  Update debugMode (global).
+		//  Update.
+
 			debugMode = storage["project/debugMode"];
+			THREE.Cache.enabled = storage["project/cache"];
+
+		//	Save storage.
 
 			window.localStorage[ name ] = JSON.stringify( storage );
 

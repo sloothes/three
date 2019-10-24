@@ -86,7 +86,7 @@ Sidebar.Project = function ( editor ) {
     var debugRow = new UI.Row();
 	var debugMode = new UI.Checkbox( config.getKey( "project/debugMode" ) ).setLeft( "100px" ).onChange( function () {
 
-		config.setKey( "project/debugMode", this.getValue() );
+		config.setKey( "project/debugMode", this.getValue() ); // update from "storage" in Config.js.
 
 	});
 
@@ -100,17 +100,28 @@ Sidebar.Project = function ( editor ) {
 	var cacheRow = new UI.Row();
 	var cache = new UI.Checkbox( config.getKey( "project/cache" ) ).setLeft( "100px" ).onChange( function () {
 
-		THREE.Cache.enabled = this.getValue();
+		config.setKey( "project/cache", this.getValue() ); // update from "storage" in Config.js.
 
-		config.setKey( "project/cache", this.getValue() );
-
-		console.log( "Cache enabled:", THREE.Cache.enabled );
 	});
 
 	cacheRow.add( new UI.Text( "Cache" ).setWidth( "90px" ) );
 	cacheRow.add( cache );
 
 	container.add( cacheRow );
+
+//	Upload.
+
+	var uploadRow = new UI.Row();
+	var upload = new UI.Checkbox( config.getKey( "project/upload" ) ).setId("imgur").setLeft( "100px" ).onChange( function () {
+
+		config.setKey( "project/upload", this.getValue() );
+
+	});
+
+	uploadRow.add( new UI.Text( "Upload" ).setWidth( "90px" ) );
+	uploadRow.add( upload );
+
+	container.add( uploadRow );
 
 //	Editable.
 
@@ -140,15 +151,6 @@ Sidebar.Project = function ( editor ) {
 	vrRow.add( vr );
 
 	container.add( vrRow );
-
-//	Imgur.
-
-	var ImgurRow = new UI.Row();
-	var ImgUpload = new UI.Checkbox( false ).setId("imgur").setLeft( "100px" );
-	ImgurRow.add( new UI.Text( "Upload" ).setWidth( "90px" ) );
-	ImgurRow.add( ImgUpload );
-
-	container.add( ImgurRow );
 
 
 //	Import js libraries.

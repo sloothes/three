@@ -87,7 +87,8 @@ var APP = {
 
 			this.dom.appendChild( renderer.domElement );
 
-			this.setApp( loader.parse( json.application ) );
+			this.setApp( loader.parse( json.application ) ); // hack!
+
 			this.setScene( loader.parse( json.scene ) );
 			this.setCamera( loader.parse( json.camera ) );
 
@@ -247,13 +248,15 @@ var APP = {
 
 		};
 
-//
+
+	//	Hacking.
 
 		this.setApp = function ( value ) {
 
 			app = value;
 
 		};
+
 
 		this.setCamera = function ( value ) {
 

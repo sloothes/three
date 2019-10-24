@@ -103,6 +103,8 @@ var Editor = function () {
 
 //	Editor.
 
+	this.app = {};
+
 	this.object = {};
 	this.images = {};
 	this.scripts = {};
@@ -121,9 +123,7 @@ var Editor = function () {
 
 //	Upload texture imate to imgur.com.
 
-	this.uploadImage = uploadDataURL;
-
-	function uploadDataURL(dataURL, type, name){
+	this.uploadImage = function uploadDataURL(dataURL, type, name){
 
 	//	Remove prefix "data:image/<ext>;base64," before upload image.
 	// "dataURL" must be pure data without "data:image/<ext>;base64,"
@@ -168,8 +168,6 @@ var Editor = function () {
 
 //	Delete uploaded image from imgur.com 
 
-	this.deleteImage = deleteUploadedImage;
-
 //	Usage:
 //
 //		var json = editor.toJSON();
@@ -178,7 +176,7 @@ var Editor = function () {
 //		}
 //
 
-	function deleteUploadedImage( data ){
+	this.deleteImage = function deleteUploadedImage( data ){
 
 	//  Returns a resolved promise with success data from imgur.com.
 		debugMode && console.log("deleting", data.name);
@@ -223,6 +221,22 @@ Editor.prototype = {
 		document.getElementById( "theme" ).href = value;
 
 		this.signals.themeChanged.dispatch( value );
+
+	},
+
+//
+
+	setApp: function( app ) {
+
+		this.app.uuid = app.uuid;
+		this.app.name = app.name;
+		this.app.userData = JSON.parse( JSON.stringify( app.userData ) );
+		
+		while ( app.children && app.children.length > 0 ) {
+
+			this.app.add( app.children[ 0 ] );
+
+		}
 
 	},
 
@@ -581,8 +595,15 @@ Editor.prototype = {
 
 		}
 
-		var camera = loader.parse( json.camera );
 
+	//	Application (hacking).
+
+		this.setApp( loader.parse( json.application ) );
+
+
+	//	Camera.
+
+		var camera = loader.parse( json.camera );
 		this.camera.copy( camera );
 		this.camera.aspect = this.DEFAULT_CAMERA.aspect;
 		this.camera.updateProjectionMatrix();
@@ -674,6 +695,8 @@ Editor.prototype = {
 			camera: this.camera.toJSON(),
 			scene: this.scene.toJSON(), // TODO: SkinnedMesh toJSON for JSONLoader.
 			history: this.history.toJSON(),
+
+			application: this.app.toJSON()
 
 		};
 

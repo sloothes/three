@@ -34,7 +34,7 @@ var APP = {
 		//	Config.
 
 			vr = json.project.vr;
-			debugMode = json.project.debugMode; // (global) important! 
+			debugMode = json.project.debugMode; // global! 
 			THREE.Cache.enabled = json.project.cache; // important!
 			console.log({ "vr": vr, "debugMode": debugMode, "cache": THREE.Cache.enabled });
 

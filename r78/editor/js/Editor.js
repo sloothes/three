@@ -81,6 +81,14 @@ var Editor = function () {
 
 	};
 
+//	App (hacking).
+
+	var app = new THREE.Group();
+	app.name = "Application";
+	this.app = app; // group.
+
+//
+
 	this.config = new Config( "threejs-editor" );
 	this.history = new History( this );
 	this.storage = new Storage();
@@ -88,7 +96,7 @@ var Editor = function () {
 
 	this.camera = this.DEFAULT_CAMERA.clone();
 
-	this.lights = this.DEFAULT_CAMERA_LIGHT.clone();
+	this.lights = this.DEFAULT_CAMERA_LIGHT.clone(); // hacking!
 
 //  Camera light is added in editor scene "only after" 
 //  editor has been cleared: this.clear() => 
@@ -103,8 +111,6 @@ var Editor = function () {
 
 //	Editor.
 
-	this.app = {};
-
 	this.object = {};
 	this.images = {};
 	this.scripts = {};
@@ -112,14 +118,12 @@ var Editor = function () {
 	this.materials = {};
 	this.geometries = {};
 
-	this.functions = [];
-	this.stylesheets = [];
-	this.javascripts = [];
+	this.functions   = [];	// hacking! TODO.
+	this.stylesheets = [];	// hacking! TODO.
+	this.javascripts = [];	// hacking! DONE.
 
-//	Editor.
-
-	this.selected = null;
 	this.helpers = {};
+	this.selected = null;
 
 //	Upload texture imate to imgur.com.
 
@@ -231,12 +235,16 @@ Editor.prototype = {
 		this.app.uuid = app.uuid;
 		this.app.name = app.name;
 		this.app.userData = JSON.parse( JSON.stringify( app.userData ) );
-		
+
+	//	avoid refreshUI per object.
+		this.signals.sceneGraphChanged.active = false; 
+
 		while ( app.children && app.children.length > 0 ) {
-
 			this.app.add( app.children[ 0 ] );
-
 		}
+
+		this.signals.sceneGraphChanged.active = true;
+		this.signals.sceneGraphChanged.dispatch();
 
 	},
 
@@ -543,11 +551,19 @@ Editor.prototype = {
 
 	clear: function () {
 
+	//	App (hacking).
+		var children = this.app.children;
+		while ( children && children.length) {
+			this.app.remove( children[0] );
+		}
+
 		this.history.clear();
 		this.storage.clear();
 
 		this.camera.copy( this.DEFAULT_CAMERA );
 		this.lights.copy( this.DEFAULT_CAMERA_LIGHT );
+
+	//	Scene.
 
 		var objects = this.scene.children;
 
@@ -596,7 +612,7 @@ Editor.prototype = {
 		}
 
 
-	//	Application (hacking).
+	//	App (hacking).
 
 		this.setApp( loader.parse( json.application ) );
 
@@ -652,6 +668,7 @@ Editor.prototype = {
 
 	//	scripts clean up.
 
+		var app = this.app;
 		var scene = this.scene;
 		var scripts = this.scripts;
 
@@ -661,7 +678,9 @@ Editor.prototype = {
 
 		//	if ( script.length === 0 ) delete scripts[ key ];
 
-			if ( script.length === 0 || scene.getObjectByProperty( "uuid", key ) === undefined ) {
+			if ( script.length === 0 
+				|| app.getObjectByProperty( "uuid", key ) === undefined
+				|| scene.getObjectByProperty( "uuid", key ) === undefined ) {
 
 				delete scripts[ key ]; 
 

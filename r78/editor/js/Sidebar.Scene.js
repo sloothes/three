@@ -170,11 +170,13 @@ Sidebar.Scene = function ( editor ) {
 
 	var refreshUI = function () {
 
+		var app = editor.app;
 		var camera = editor.camera;
 		var scene = editor.scene;
 
 		var options = [];
 
+		options.push( buildOption( app, false ) );
 		options.push( buildOption( camera, false ) );
 		options.push( buildOption( scene, false ) );
 

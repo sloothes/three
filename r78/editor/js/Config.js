@@ -41,10 +41,9 @@ var Config = function ( name ) {
 
 	}
 
-//	on Startup.
-
-	debugMode = storage["project/debugMode"];
-	THREE.Cache.enabled = storage["project/cache"];
+//	on Startup: update from "json.project" in app.js.
+//	debugMode = storage["project/debugMode"];
+//	THREE.Cache.enabled = storage["project/cache"];
 
 //
 

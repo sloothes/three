@@ -553,10 +553,10 @@ Editor.prototype = {
 	clear: function () {
 
 	//	App (hacking).
-		var children = this.app.children;
-		while ( children && children.length) {
-			this.app.remove( children[0] );
-		}
+	//	var children = this.app.children;
+	//	while ( children && children.length) {
+	//		this.app.remove( children[0] );
+	//	}
 
 		this.history.clear();
 		this.storage.clear();

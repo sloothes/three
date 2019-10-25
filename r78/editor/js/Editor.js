@@ -678,9 +678,7 @@ Editor.prototype = {
 
 		//	if ( script.length === 0 ) delete scripts[ key ];
 
-			if ( script.length === 0 
-			//	|| app.getObjectByProperty( "uuid", key ) === undefined // app hack!
-				|| scene.getObjectByProperty( "uuid", key ) === undefined ) {
+			if ( script.length === 0 || scene.getObjectByProperty( "uuid", key ) === undefined ) {
 
 				delete scripts[ key ]; 
 

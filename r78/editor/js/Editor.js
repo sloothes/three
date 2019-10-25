@@ -81,11 +81,12 @@ var Editor = function () {
 
 	};
 
-//	App (hacking).
+//
 
-	var app = new THREE.Group();
-	app.name = "Application";
-	this.app = app; // group.
+//	App (hacking).
+//	var app = new THREE.Group();
+//	app.name = "Application";
+//	this.app = app; // group.
 
 //
 
@@ -228,7 +229,7 @@ Editor.prototype = {
 
 	},
 
-//
+/*
 
 	setApp: function( app ) {
 
@@ -248,7 +249,7 @@ Editor.prototype = {
 
 	},
 
-//
+*/
 
 	setScene: function ( scene ) {
 
@@ -613,8 +614,7 @@ Editor.prototype = {
 
 
 	//	App (hacking).
-
-		this.setApp( loader.parse( json.application ) );
+	//	this.setApp( loader.parse( json.application ) );
 
 
 	//	Camera.
@@ -715,7 +715,8 @@ Editor.prototype = {
 			scene: this.scene.toJSON(), // TODO: SkinnedMesh toJSON for JSONLoader.
 			history: this.history.toJSON(),
 
-			application: this.app.toJSON()
+		//  App (hack).
+		//	application: this.app.toJSON()
 
 		};
 

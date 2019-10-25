@@ -176,7 +176,7 @@ Sidebar.Scene = function ( editor ) {
 
 		var options = [];
 
-		options.push( buildOption( app, false ) );
+//		options.push( buildOption( app, false ) ); // hack.
 		options.push( buildOption( camera, false ) );
 		options.push( buildOption( scene, false ) );
 

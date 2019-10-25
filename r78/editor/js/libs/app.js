@@ -6,6 +6,8 @@ var APP = {
 
 	Player: function () {
 
+		app = this; // global!
+
 		var scope = this;
 
 		var loader = new THREE.ObjectLoader();

@@ -112,7 +112,7 @@ Sidebar.Project = function ( editor ) {
 //	Imgur.
 
 	var imgurRow = new UI.Row();
-	var imgur = new UI.Checkbox( config.getKey( "project/imgur" ) ).setId("imgur").setLeft( "100px" ).onChange( function () {
+	var imgur = new UI.Checkbox( config.getKey( false ) ).setId("imgur").setLeft( "100px" ).onChange( function () {
 
 		config.setKey( "project/imgur", this.getValue() );
 
@@ -143,7 +143,7 @@ Sidebar.Project = function ( editor ) {
 	var vr = new UI.Checkbox( config.getKey( "project/vr" ) ).setLeft( "100px" ).onChange( function () {
 
 		config.setKey( "project/vr", this.getValue() );
-	//	updateRenderer();
+		//	updateRenderer();
 
 	});
 
@@ -249,16 +249,20 @@ Sidebar.Project = function ( editor ) {
 
 	function createUploads() {
 
+	//	config "project/imgur" must be true to allow uploading.
+		if ( config.getKey("project/imgur") === false ) return;
+
 	//	"#imgur" must be checked to allow uploading.
+	//	if ( imgur.getValue() === false ) return;
 
-		if ( imgur.getValue() === false ) return;
+	//	Reset config "project/imgur" value.
+		config.setKey( "project/imgur", false ); // important!
 
-	//	Reset "#imgur" checkbox value.
+	//	Update imgur checkbox value from config.
+		imgur.setValue( config.getKey("project/imgur") );
 
-		imgur.setValue( false ); // important!
-
-	//	Remove "click" listener to avoid multipe uploaders (disable button).
-
+	//	Remove "click" listener to avoid 
+	//	multipe uploaders (disable button).
 		uploadTextures.off("click"); // important!
 
 	//	TODO: Get textures direct from editor.materials???
@@ -324,8 +328,10 @@ Sidebar.Project = function ( editor ) {
 				//	Avoid multiple uploads.
 					clearTimeout( this.interval );
 
-				//	Reset "#imgur" checkbox value.
-					imgur.setValue( false ); // important!
+				//	Reset config "project/imgur" value. // important!
+					config.setKey( "project/imgur", false ); 
+				//	Update imgur checkbox value from config.
+					imgur.setValue( config.getKey("project/imgur") );
 
 					this.interval = setTimeout( uploader, 250 );
 
@@ -335,8 +341,10 @@ Sidebar.Project = function ( editor ) {
 
 					row.addClass("fade","out");
 
-				//	Reset "#imgur" checkbox value.
-					imgur.setValue( false ); // important!
+				//	Reset config "project/imgur" value. // important!
+					config.setKey( "project/imgur", false ); 
+				//	Update imgur checkbox value from config.
+					imgur.setValue( config.getKey("project/imgur") );
 
 					setTimeout(function(){
 						row.dom.remove();

@@ -320,6 +320,8 @@ Sidebar.Project = function ( editor ) {
 
 				function enableButton(){
 					if (uploadPanel.dom.childElementCount) return;
+					play.dom.remove();
+					SaveRow.dom.remove();
 					uploadTextures.onClick( createUploads );
 				}
 
@@ -530,36 +532,6 @@ Sidebar.Project = function ( editor ) {
 		}
 
 
-	//	Play.
-
-	//	var isPlaying = false; // global!
-
-		var play = new UI.Button( "Play" ).setWidth("100%").onClick( function(){
-			
-			if ( isPlaying === false ) {
-
-				isPlaying = true;
-				play.setTextContent( "Stop" );
-				signals.startPlayer.dispatch( json );
-
-			} else {
-
-				isPlaying = false;
-				play.setTextContent( "Play" );
-				signals.stopPlayer.dispatch();
-
-			}
-
-		});
-
-		if ( isPlaying === true ) 
-			play.setTextContent( "Stop" );
-		else 
-			play.setTextContent( "Play" );
-
-		container.add( play );
-		container.add( new UI.HorizontalRule() );
-
 	//	Save.
 
 		var save = new UI.Button( "Save" ).setWidth("49%").onClick( function(){
@@ -612,10 +584,38 @@ Sidebar.Project = function ( editor ) {
 
 		});
 
+
 		var SaveRow = new UI.Row();
 		SaveRow.add( save );
 		SaveRow.add( saveAs );
 		container.add( SaveRow );
+
+	//	Play.
+
+		var play = new UI.Button( "Play" ).setWidth("100%").setMarginTop("10px").onClick( function(){
+			
+			if ( isPlaying === false ) {
+
+				isPlaying = true;
+				play.setTextContent( "Stop" );
+				signals.startPlayer.dispatch( json );
+
+			} else {
+
+				isPlaying = false;
+				play.setTextContent( "Play" );
+				signals.stopPlayer.dispatch();
+
+			}
+
+		});
+
+		if ( isPlaying === true ) 
+			play.setTextContent( "Stop" );
+		else 
+			play.setTextContent( "Play" );
+
+		container.add( play );
 
 	}
 

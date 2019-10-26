@@ -109,20 +109,6 @@ Sidebar.Project = function ( editor ) {
 
 	container.add( cacheRow );
 
-//	Imgur.
-
-	var imgurRow = new UI.Row();
-	var imgur = new UI.Checkbox( config.getKey( false ) ).setId("imgur").setLeft( "100px" ).onChange( function () {
-
-		config.setKey( "project/imgur", this.getValue() );
-
-	});
-
-	imgurRow.add( new UI.Text( "Imgur" ).setWidth( "90px" ) );
-	imgurRow.add( imgur );
-
-	container.add( imgurRow );
-
 //	Editable.
 
 	var editableRow = new UI.Row();
@@ -136,6 +122,20 @@ Sidebar.Project = function ( editor ) {
 	editableRow.add( editable );
 
 	container.add( editableRow );
+
+//	Imgur.
+
+	var imgurRow = new UI.Row();
+	var imgur = new UI.Checkbox( config.getKey( false ) ).setId("imgur").setLeft( "100px" ).onChange( function () {
+
+		config.setKey( "project/imgur", this.getValue() );
+
+	});
+
+	imgurRow.add( new UI.Text( "Imgur" ).setWidth( "90px" ) );
+	imgurRow.add( imgur );
+
+	container.add( imgurRow );
 
 //	VR.
 
@@ -372,6 +372,11 @@ Sidebar.Project = function ( editor ) {
 				}
 
 				function uploader(){
+
+				//	Reset config "project/imgur" value. // important!
+					config.setKey( "project/imgur", false ); 
+				//	Update imgur checkbox value from config.
+					imgur.setValue( config.getKey("project/imgur") );
 
 				//	Remove "click" listener to avoid 
 				//	multiply uploads (disable button).

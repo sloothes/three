@@ -543,6 +543,11 @@ Sidebar.Project = function ( editor ) {
 
 			clearTimeout( save.interval );
 
+		//	Reset config "project/imgur" value. // important!
+			config.setKey( "project/imgur", false ); 
+		//	Update imgur checkbox value from config.
+			imgur.setValue( config.getKey("project/imgur") );
+
 			save.interval = setTimeout( function () {
 
 				editor.signals.savingStarted.dispatch();
@@ -570,6 +575,11 @@ Sidebar.Project = function ( editor ) {
 
 		var saveAs = new UI.Button( "Save As File" ).setWidth("49%").setFloat("right").onClick( function(){
 
+		//	Reset config "project/imgur" value. // important!
+			config.setKey( "project/imgur", false ); 
+		//	Update imgur checkbox value from config.
+			imgur.setValue( config.getKey("project/imgur") );
+
 			var output = json;
 			output.metadata.type = "App";
 			delete output.history;
@@ -593,7 +603,12 @@ Sidebar.Project = function ( editor ) {
 	//	Play.
 
 		var play = new UI.Button( "Play" ).setWidth("100%").setMarginTop("10px").onClick( function(){
-			
+
+		//	Reset config "project/imgur" value. // important!
+			config.setKey( "project/imgur", false ); 
+		//	Update imgur checkbox value from config.
+			imgur.setValue( config.getKey("project/imgur") );
+
 			if ( isPlaying === false ) {
 
 				isPlaying = true;

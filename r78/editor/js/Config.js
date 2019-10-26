@@ -11,7 +11,7 @@ var Config = function ( name ) {
 
 		"project/vr": false,
 		"project/cache":false,
-		"project/upload": false,
+		"project/imgur": false,
 		"project/editable": false,
         "project/debugMode": true,
 		"project/renderer/shadows": true,
@@ -41,10 +41,6 @@ var Config = function ( name ) {
 
 	}
 
-//	on Startup update from "json.project" in app.js.
-//	debugMode = storage["project/debugMode"];
-//	THREE.Cache.enabled = storage["project/cache"];
-
 	return {
 
 		getKey: function ( key ) {
@@ -63,6 +59,7 @@ var Config = function ( name ) {
 
 		//  Update.
 
+		//	on Startup update from "json.project" in app.js.
 			debugMode = storage["project/debugMode"];
 			THREE.Cache.enabled = storage["project/cache"];
 

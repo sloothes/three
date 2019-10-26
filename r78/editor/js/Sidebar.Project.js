@@ -109,19 +109,19 @@ Sidebar.Project = function ( editor ) {
 
 	container.add( cacheRow );
 
-//	Upload.
+//	Imgur.
 
-	var uploadRow = new UI.Row();
-	var upload = new UI.Checkbox( config.getKey( "project/upload" ) ).setId("imgur").setLeft( "100px" ).onChange( function () {
+	var imgurRow = new UI.Row();
+	var imgur = new UI.Checkbox( config.getKey( "project/imgur" ) ).setId("imgur").setLeft( "100px" ).onChange( function () {
 
-		config.setKey( "project/upload", this.getValue() );
+		config.setKey( "project/imgur", this.getValue() );
 
 	});
 
-	uploadRow.add( new UI.Text( "Upload" ).setWidth( "90px" ) );
-	uploadRow.add( upload );
+	imgurRow.add( new UI.Text( "Imgur" ).setWidth( "90px" ) );
+	imgurRow.add( imgur );
 
-	container.add( uploadRow );
+	container.add( imgurRow );
 
 //	Editable.
 
@@ -143,7 +143,7 @@ Sidebar.Project = function ( editor ) {
 	var vr = new UI.Checkbox( config.getKey( "project/vr" ) ).setLeft( "100px" ).onChange( function () {
 
 		config.setKey( "project/vr", this.getValue() );
-		// updateRenderer();
+	//	updateRenderer();
 
 	});
 
@@ -251,11 +251,11 @@ Sidebar.Project = function ( editor ) {
 
 	//	"#imgur" must be checked to allow uploading.
 
-		if ( ImgUpload.getValue() === false ) return;
+		if ( imgur.getValue() === false ) return;
 
 	//	Reset "#imgur" checkbox value.
 
-		ImgUpload.setValue( false ); // important!
+		imgur.setValue( false ); // important!
 
 	//	Remove "click" listener to avoid multipe uploaders (disable button).
 
@@ -289,8 +289,8 @@ Sidebar.Project = function ( editor ) {
 				var url = image.url;
 				var uuid = image.uuid;
 
-			//  Find editor material and
-			//  texture that image belong.
+			//  TODO: Find editor material and
+			//  editor texture that image belong.
 
 				var row = new UI.Row();
 				var upload = new UI.Button( "Upload" );
@@ -325,7 +325,7 @@ Sidebar.Project = function ( editor ) {
 					clearTimeout( this.interval );
 
 				//	Reset "#imgur" checkbox value.
-					ImgUpload.setValue( false ); // important!
+					imgur.setValue( false ); // important!
 
 					this.interval = setTimeout( uploader, 250 );
 
@@ -336,7 +336,7 @@ Sidebar.Project = function ( editor ) {
 					row.addClass("fade","out");
 
 				//	Reset "#imgur" checkbox value.
-					ImgUpload.setValue( false ); // important!
+					imgur.setValue( false ); // important!
 
 					setTimeout(function(){
 						row.dom.remove();

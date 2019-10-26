@@ -320,7 +320,7 @@ Sidebar.Project = function ( editor ) {
 
 				function enableButton(){
 					if (uploadPanel.dom.childElementCount) return;
-					play.dom.remove();
+					SaveRow.remove();
 					SaveRow.dom.remove();
 					uploadTextures.onClick( createUploads );
 				}
@@ -585,11 +585,6 @@ Sidebar.Project = function ( editor ) {
 		});
 
 
-		var SaveRow = new UI.Row();
-		SaveRow.add( save );
-		SaveRow.add( saveAs );
-		container.add( SaveRow );
-
 	//	Play.
 
 		var play = new UI.Button( "Play" ).setWidth("100%").setMarginTop("10px").onClick( function(){
@@ -615,7 +610,12 @@ Sidebar.Project = function ( editor ) {
 		else 
 			play.setTextContent( "Play" );
 
-		container.add( play );
+
+		var SaveRow = new UI.Row().setMargin("10px");
+		SaveRow.add( save );
+		SaveRow.add( saveAs );
+		SaveRow.add( play );
+		container.add( SaveRow );
 
 	}
 

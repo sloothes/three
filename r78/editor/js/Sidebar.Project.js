@@ -239,25 +239,23 @@ Sidebar.Project = function ( editor ) {
 	const endpoint = "https://api.imgur.com/3/image";
 	const clientID = "06217f601180652";  // sloothes app Client-ID.
 
-	function resetImgurCheckbox(){
-
-	//	Reset config "project/imgur" value. // important!
-		config.setKey( "project/imgur", false ); 
-
-	//	Update imgur checkbox value from config.
-		imgur.setValue( config.getKey("project/imgur") );
-
-	}
-
 	var uploadPanel = new UI.Panel().setId("upload-panel");
 	container.add( uploadPanel );
 
-//	var uploadTextures = new UI.Button( "Upload Texture images" ).setWidth("100%");
+//	Reset and update imgur checkbox via "project/imgur" config value.
+	function resetImgurCheckbox(){
+	//	Reset config "project/imgur" value. // important!
+		config.setKey( "project/imgur", false ); 
+	//	Update imgur checkbox value from config.
+		imgur.setValue( config.getKey("project/imgur") );
+	}
+
 	var uploadTextures = document.createElement("button");
 	uploadTextures.textContent = "Upload Texture images";
-	uploadTextures.style.marginLeft = "20px";
 	uploadTextures.style.width = "250px";
+	uploadTextures.style.marginLeft = "20px";
 	uploadTextures.addEventListener( "click", createUploads );
+	uploadTextures.addEventListener( "click", resetImgurCheckbox ); // important!
 	container.dom.appendChild( uploadTextures );
 
 	function createUploads() {
@@ -265,16 +263,10 @@ Sidebar.Project = function ( editor ) {
 	//	config "project/imgur" must be true to allow uploading.
 		if ( config.getKey("project/imgur") === false ) return;
 
-	//	"#imgur" must be checked to allow uploading.
-	//	if ( imgur.getValue() === false ) return;
-
-	//	Reset and update imgur checkbox via "project/imgur" config value.
-
-		resetImgurCheckbox(); // important!
-
 	//	Remove "click" listener to avoid multipe uploaders (disable button).
 		uploadTextures.style.display = "none";
 		uploadTextures.removeEventListener( "click", createUploads ); // important!
+		uploadTextures.removeEventListener( "click", resetImgurCheckbox ); // important!
 
 	//	TODO: Get textures direct from editor.materials???
 
@@ -290,6 +282,7 @@ Sidebar.Project = function ( editor ) {
 
 			uploadTextures.style.display = "";
 			uploadTextures.addEventListener( "click", createUploads );
+			uploadTextures.addEventListener( "click", resetImgurCheckbox ); // important!
 
 			return;
 		}
@@ -312,6 +305,7 @@ Sidebar.Project = function ( editor ) {
 
 				var upload = document.createElement("button");
 				upload.textContent = "Upload";
+				upload.addEventListener( "click", resetImgurCheckbox ); // important!
 				upload.addEventListener( "click", uploadHandler );
 
 				var progress = new UI.Span();
@@ -320,11 +314,13 @@ Sidebar.Project = function ( editor ) {
 				var remove = document.createElement("button");
 				remove.textContent = "Remove";
 				remove.style.float = "right";
+				remove.addEventListener( "click", resetImgurCheckbox ); // important!
 				remove.addEventListener( "click", removeUploader );
 
 				var del = document.createElement("button");
 				del.textContent = "Delete";
 				del.style.display = "none";
+				del.addEventListener( "click", resetImgurCheckbox ); // important!
 				del.addEventListener( "click", deleteUploaded );
 
 				var bar = document.createElement( "input" );
@@ -345,6 +341,8 @@ Sidebar.Project = function ( editor ) {
 					SaveRow.remove().dom.remove();
 					uploadTextures.style.display = "";
 					uploadTextures.addEventListener( "click", createUploads );
+					uploadTextures.addEventListener( "click", resetImgurCheckbox ); // important!
+
 				}
 
 				function uploadHandler(){
@@ -554,6 +552,7 @@ Sidebar.Project = function ( editor ) {
 		var saveButton = document.createElement("button");
 		saveButton.textContent = "Save";
 		saveButton.style.width = "49%";
+		saveButton.addEventListener( "click", resetImgurCheckbox ); // important!
 		saveButton.addEventListener( "click", function(){
 
 			clearTimeout( this.interval );
@@ -590,6 +589,7 @@ Sidebar.Project = function ( editor ) {
 		saveAsButton.textContent = "Save As File";
 		saveAsButton.style.width = "49%";
 		saveAsButton.style.float = "right";
+		saveAsButton.addEventListener( "click", resetImgurCheckbox ); // important!
 		saveAsButton.addEventListener( "click", function(){
 
 		//	Reset and update imgur checkbox via "project/imgur" config value.
@@ -620,6 +620,7 @@ Sidebar.Project = function ( editor ) {
 		playButton.textContent = "Play";
 		playButton.style.width = "100%";
 		playButton.style.marginTop = "10px";
+		playButton.addEventListener( "click", resetImgurCheckbox ); // important!
 		playButton.addEventListener( "click", function(){
 
 		//	Reset and update imgur checkbox via "project/imgur" config value.

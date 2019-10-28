@@ -255,8 +255,8 @@ Sidebar.Project = function ( editor ) {
 //	var uploadTextures = new UI.Button( "Upload Texture images" ).setWidth("100%");
 	var uploadTextures = document.createElement("button");
 	uploadTextures.textContent = "Upload Texture images";
-	uploadTextures.style.margin = "20px";
-	uploadTextures.style.width = "100%";
+	uploadTextures.style.marginLeft = "20px";
+	uploadTextures.style.width = "230px";
 	uploadTextures.addEventListener( "click", createUploads );
 	container.dom.appendChild( uploadTextures );
 
@@ -620,7 +620,7 @@ Sidebar.Project = function ( editor ) {
 		var playButton = document.createElement("button");
 		playButton.textContent = "Play";
 		playButton.style.width = "100%";
-		playButton.style.marginTop = "10px%";
+		playButton.style.marginTop = "10px";
 		playButton.addEventListener( "click", function(){
 
 		//	Reset and update imgur checkbox via "project/imgur" config value.

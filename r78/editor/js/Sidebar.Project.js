@@ -298,10 +298,12 @@ Sidebar.Project = function ( editor ) {
 
 				var row = new UI.Row();
 				var upload = new UI.Button( "Upload" );
-				var progress = new UI.Span().setMarginLeft("5px");
+				var progress = new UI.Span();
 				var remove = new UI.Button( "Remove" );
+				var del = new UI.Button( "Delete" );
+				del.dom.style.display = "none";
 				remove.dom.style.float = "right";
-				var del = new UI.Button( "Delete" ).setDisplay("none");
+				progress.dom.style.marginLeft = "5px";
 
 				var bar = document.createElement( "input" );
 				bar.disabled = true;
@@ -540,20 +542,22 @@ Sidebar.Project = function ( editor ) {
 
 	//	Save.
 
-		var save = new UI.Button( "Save" ).setWidth("49%").onClick( function(){
+		var saveIn = new UI.Button( "Save" );
+		saveIn.dom.style.width = "49%";
+		saveIn.onClick( function(){
 
-			clearTimeout( save.interval );
+			clearTimeout( saveIn.dom.interval );
 
 		//	Reset config "project/imgur" value. // important!
 			config.setKey( "project/imgur", false ); 
 		//	Update imgur checkbox value from config.
 			imgur.setValue( config.getKey("project/imgur") );
 
-			save.interval = setTimeout( function () {
+			saveIn.dom.interval = setTimeout( function () {
 
 				editor.signals.savingStarted.dispatch();
 
-				save.interval = setTimeout( function () {
+				saveIn.dom.interval = setTimeout( function () {
 
 					editor.storage.set( json );
 
@@ -574,7 +578,10 @@ Sidebar.Project = function ( editor ) {
 
 	//	Save As...
 
-		var saveAs = new UI.Button( "Save As File" ).setWidth("49%").setFloat("right").onClick( function(){
+		var saveAs = new UI.Button( "Save As File" );
+		saveAs.dom.style.width = "49%";
+		saveAs.dom.style.float = "right";
+		saveAs.onClick( function(){
 
 		//	Reset config "project/imgur" value. // important!
 			config.setKey( "project/imgur", false ); 
@@ -600,10 +607,12 @@ Sidebar.Project = function ( editor ) {
 
 		});
 
-
 	//	Play.
 
-		var play = new UI.Button( "Play" ).setWidth("100%").setMarginTop("10px").onClick( function(){
+		var play = new UI.Button( "Play" );
+		play.dom.style.width = "100%";
+		play.dom.style.marginTop = "10px";
+		play.onClick( function(){
 
 		//	Reset config "project/imgur" value. // important!
 			config.setKey( "project/imgur", false ); 
@@ -633,7 +642,7 @@ Sidebar.Project = function ( editor ) {
 
 
 		var SaveRow = new UI.Row().setMargin("10px");
-		SaveRow.add( save );
+		SaveRow.add( saveIn );
 		SaveRow.add( saveAs );
 		SaveRow.add( play );
 		container.add( SaveRow );

@@ -298,9 +298,10 @@ Sidebar.Project = function ( editor ) {
 
 				var row = new UI.Row();
 				var upload = new UI.Button( "Upload" );
-				var del = new UI.Button( "Delete" ).setDisplay("none");
-				var rmv = new UI.Button( "Remove" ).setFloat("right");
 				var progress = new UI.Span().setMarginLeft("5px");
+				var remove = new UI.Button( "Remove" );
+				remove.dom.style.float = "right";
+				var del = new UI.Button( "Delete" ).setDisplay("none");
 
 				var bar = document.createElement( "input" );
 				bar.disabled = true;
@@ -315,7 +316,7 @@ Sidebar.Project = function ( editor ) {
 			//	Event listeners.
 
 				del.onClick( deleteUploaded );
-				rmv.onClick( removeUploader );
+				remove.onClick( removeUploader );
 				upload.onClick( uploadHandler );
 
 				function enableButton(){
@@ -529,7 +530,7 @@ Sidebar.Project = function ( editor ) {
 
 				row.add( upload );
 				row.add( progress );
-				row.add( rmv );
+				row.add( remove );
 				uploadPanel.add(row);
 
 			})(images[i]);

@@ -344,7 +344,7 @@ Sidebar.Project = function ( editor ) {
 
 				function removeUploader(){
 
-					row.addClass("fade","out");
+					row.dom.classList.add("fade","out");
 
 				//	Reset config "project/imgur" value. // important!
 					config.setKey( "project/imgur", false ); 

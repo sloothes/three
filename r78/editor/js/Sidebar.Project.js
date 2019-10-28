@@ -367,8 +367,7 @@ Sidebar.Project = function ( editor ) {
 					resetImgurCheckbox(); // important!
 
 					setTimeout(function(){
-						row.remove();
-						row.dom.remove();
+						row.remove().dom.remove();
 						setTimeout( enableButton );
 					}, 500);
 

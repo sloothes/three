@@ -340,8 +340,8 @@ Sidebar.Project = function ( editor ) {
 			//	Event listeners.
 
 				function enableButton(){
-					if ( isPlaying ) return; // important!
 					if (uploadPanel.dom.childElementCount) return;
+					if ( isPlaying ) signals.stopPlayer.dispatch(); // important!
 					SaveRow.remove().dom.remove();
 					uploadTextures.style.display = "";
 					uploadTextures.addEventListener( "click", createUploads );

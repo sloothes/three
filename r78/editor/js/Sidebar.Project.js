@@ -299,7 +299,7 @@ Sidebar.Project = function ( editor ) {
 				var row = new UI.Row();
 				var upload = new UI.Button( "Upload" );
 				var del = new UI.Button( "Delete" ).setDisplay("none");
-				var remove = new UI.Button( "Remove" ).setFloat("right");
+				var rmv = new UI.Button( "Remove" ).setFloat("right");
 				var progress = new UI.Span().setMarginLeft("5px");
 
 				var bar = document.createElement( "input" );
@@ -315,8 +315,8 @@ Sidebar.Project = function ( editor ) {
 			//	Event listeners.
 
 				del.onClick( deleteUploaded );
+				rmv.onClick( removeUploader );
 				upload.onClick( uploadHandler );
-				remove.onClick( removeUploader );
 
 				function enableButton(){
 					if (uploadPanel.dom.childElementCount) return;

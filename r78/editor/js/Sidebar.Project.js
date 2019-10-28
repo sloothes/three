@@ -234,18 +234,31 @@ Sidebar.Project = function ( editor ) {
 	container.add( clearLibrariesRow );
 
 
-//	Texture upload.
+//	Imgur upload.
 
 	const endpoint = "https://api.imgur.com/3/image";
 	const clientID = "06217f601180652";  // sloothes app Client-ID.
 
+	function resetImgurCheckbox(){
+
+	//	Reset config "project/imgur" value. // important!
+		config.setKey( "project/imgur", false ); 
+
+	//	Update imgur checkbox value from config.
+		imgur.setValue( config.getKey("project/imgur") );
+
+	}
+
 	var uploadPanel = new UI.Panel().setId("upload-panel");
-	var uploadTextures = new UI.Button( "Upload Texture images" ).setWidth("100%");
-
-	uploadTextures.onClick( createUploads );
-
 	container.add( uploadPanel );
-	container.add( uploadTextures );
+
+//	var uploadTextures = new UI.Button( "Upload Texture images" ).setWidth("100%");
+	var uploadTextures document.createElement("button");
+	uploadTextures.textContent = "Upload Texture images";
+	uploadTextures.style.margin = "20px";
+	uploadTextures.style.width = "100%";
+	uploadTextures.addEventListener( "click", createUploads );
+	container.dom.appendChild( uploadTextures );
 
 	function createUploads() {
 
@@ -255,15 +268,13 @@ Sidebar.Project = function ( editor ) {
 	//	"#imgur" must be checked to allow uploading.
 	//	if ( imgur.getValue() === false ) return;
 
-	//	Reset config "project/imgur" value.
-		config.setKey( "project/imgur", false ); // important!
+	//	Reset and update imgur checkbox via "project/imgur" config value.
 
-	//	Update imgur checkbox value from config.
-		imgur.setValue( config.getKey("project/imgur") );
+		resetImgurCheckbox(); // important!
 
-	//	Remove "click" listener to avoid 
-	//	multipe uploaders (disable button).
-		uploadTextures.off("click"); // important!
+	//	Remove "click" listener to avoid multipe uploaders (disable button).
+		uploadTextures.style.display = "none";
+		uploadTextures.removeEventListener( "click", createUploads ); // important!
 
 	//	TODO: Get textures direct from editor.materials???
 
@@ -277,7 +288,8 @@ Sidebar.Project = function ( editor ) {
 
 			console.warn( "[Editor]:", "There are not images for upload.", images );
 
-			uploadTextures.onClick( createUploads );
+			uploadTextures.style.display = "";
+			uploadTextures.addEventListener( "click", createUploads );
 
 			return;
 		}
@@ -297,13 +309,23 @@ Sidebar.Project = function ( editor ) {
 			//  editor texture that image belong.
 
 				var row = new UI.Row();
-				var upload = new UI.Button( "Upload" );
+
+				var upload = document.createElement("button");
+				upload.textContent = "Upload";
+				upload.addEventListener( "click", uploadHandler );
+
 				var progress = new UI.Span();
-				var remove = new UI.Button( "Remove" );
-				var del = new UI.Button( "Delete" );
-				del.dom.style.display = "none";
-				remove.dom.style.float = "right";
 				progress.dom.style.marginLeft = "5px";
+
+				var remove = document.createElement("button");
+				remove.textContent = "Remove";
+				remove.style.float = "right";
+				remove.addEventListener( "click", removeUploader );
+
+				var del = document.createElement("button");
+				del.textContent = "Delete";
+				del.style.display = "none";
+				del.addEventListener( "click", deleteUploaded );
 
 				var bar = document.createElement( "input" );
 				bar.disabled = true;
@@ -317,15 +339,12 @@ Sidebar.Project = function ( editor ) {
 
 			//	Event listeners.
 
-				del.onClick( deleteUploaded );
-				remove.onClick( removeUploader );
-				upload.onClick( uploadHandler );
-
 				function enableButton(){
 					if (uploadPanel.dom.childElementCount) return;
 					SaveRow.remove();
 					SaveRow.dom.remove();
-					uploadTextures.onClick( createUploads );
+					uploadTextures.style.display = "";
+					uploadTextures.addEventListener( "click", createUploads );
 				}
 
 				function uploadHandler(){
@@ -333,10 +352,8 @@ Sidebar.Project = function ( editor ) {
 				//	Avoid multiple uploads.
 					clearTimeout( this.interval );
 
-				//	Reset config "project/imgur" value. // important!
-					config.setKey( "project/imgur", false ); 
-				//	Update imgur checkbox value from config.
-					imgur.setValue( config.getKey("project/imgur") );
+				//	Reset and update imgur checkbox via "project/imgur" config value.
+					resetImgurCheckbox(); // important!
 
 					this.interval = setTimeout( uploader, 250 );
 
@@ -346,12 +363,11 @@ Sidebar.Project = function ( editor ) {
 
 					row.dom.classList.add("fade","out");
 
-				//	Reset config "project/imgur" value. // important!
-					config.setKey( "project/imgur", false ); 
-				//	Update imgur checkbox value from config.
-					imgur.setValue( config.getKey("project/imgur") );
+				//	Reset and update imgur checkbox via "project/imgur" config value.
+					resetImgurCheckbox(); // important!
 
 					setTimeout(function(){
+						row.remove();
 						row.dom.remove();
 						setTimeout( enableButton );
 					}, 500);
@@ -361,9 +377,6 @@ Sidebar.Project = function ( editor ) {
 				function deleteUploaded(){
 
 					if ( this.data === undefined ) return;
-
-				//	Avoid multiple clicks.
-					clearTimeout( this.interval );
 
 					if ( confirm("Are you sure?") ) {
 						var data = this.data;
@@ -376,19 +389,13 @@ Sidebar.Project = function ( editor ) {
 
 				function uploader(){
 
-				//	Reset config "project/imgur" value. // important!
-					config.setKey( "project/imgur", false ); 
-				//	Update imgur checkbox value from config.
-					imgur.setValue( config.getKey("project/imgur") );
+					resetImgurCheckbox(); // important!
 
-				//	Remove "click" listener to avoid 
-				//	multiply uploads (disable button).
-
-					upload.off("click"); // important!
+				//	Remove "click" listener to avoid multiply uploads (disable button).
+					upload.removeEventListener( "click", uploadHandler ); // important!
 
 				//	For upload to imgur.com, "data" must be pure dataURL,
 				//	without prefix "data:image/[type];base64," so we replace it.
-
 					var array = url.replace("data:", "").split(";base64,");
 
 				//  Validate.
@@ -508,7 +515,9 @@ Sidebar.Project = function ( editor ) {
 						return new Promise( function( resolve, reject ){
 							loader.load( data.link, function( texture ){
 								debugMode && console.log( "texture:", texture );
-								editor.textures[ texture.uuid ] = texture;
+							//	TODO: Find editor textures this image  belong and 
+							//	replace editor texture.image.src with "data.link"
+								editor.textures[ texture.uuid ] = texture; // ???
 								resolve( texture );
 							});
 
@@ -530,10 +539,11 @@ Sidebar.Project = function ( editor ) {
 	
 				}
 
-				row.add( upload );
-				row.add( progress );
-				row.add( remove );
-				uploadPanel.add(row);
+				row.dom.appendChild( upload );
+				row.add( progress ); // UI.Element!
+				row.dom.appendChild( remove );
+				row.dom.appendChild( del );
+				uploadPanel.add(row); // UI.Element!
 
 			})(images[i]);
 
@@ -542,22 +552,21 @@ Sidebar.Project = function ( editor ) {
 
 	//	Save.
 
-		var saveIn = new UI.Button( "Save" );
-		saveIn.dom.style.width = "49%";
-		saveIn.onClick( function(){
+		var saveButton = document.createElement("button");
+		saveButton.textContent = "Save";
+		saveButton.style.width = "49%";
+		saveButton.addEventListener( "click", function(){
 
-			clearTimeout( saveIn.dom.interval );
+			clearTimeout( this.interval );
 
-		//	Reset config "project/imgur" value. // important!
-			config.setKey( "project/imgur", false ); 
-		//	Update imgur checkbox value from config.
-			imgur.setValue( config.getKey("project/imgur") );
+		//	Reset and update imgur checkbox via "project/imgur" config value.
+			resetImgurCheckbox(); // important!
 
-			saveIn.dom.interval = setTimeout( function () {
+			this.interval = setTimeout( function () {
 
 				editor.signals.savingStarted.dispatch();
 
-				saveIn.dom.interval = setTimeout( function () {
+				saveButton.interval = setTimeout( function () {
 
 					editor.storage.set( json );
 
@@ -578,15 +587,14 @@ Sidebar.Project = function ( editor ) {
 
 	//	Save As...
 
-		var saveAs = new UI.Button( "Save As File" );
-		saveAs.dom.style.width = "49%";
-		saveAs.dom.style.float = "right";
-		saveAs.onClick( function(){
+		var saveAsButton = document.createElement("button");
+		saveAsButton.textContent = "Save As File";
+		saveAsButton.style.width = "49%";
+		saveAsButton.style.float = "right";
+		saveAsButton.addEventListener( "click", function(){
 
-		//	Reset config "project/imgur" value. // important!
-			config.setKey( "project/imgur", false ); 
-		//	Update imgur checkbox value from config.
-			imgur.setValue( config.getKey("project/imgur") );
+		//	Reset and update imgur checkbox via "project/imgur" config value.
+			resetImgurCheckbox(); // important!
 
 			var output = json;
 			output.metadata.type = "App";
@@ -609,43 +617,45 @@ Sidebar.Project = function ( editor ) {
 
 	//	Play.
 
-		var play = new UI.Button( "Play" );
-		play.dom.style.width = "100%";
-		play.dom.style.marginTop = "10px";
-		play.onClick( function(){
+		var playButton = document.createElement("button");
+		playButton.textContent = "Play";
+		playButton.style.width = "100%";
+		playButton.style.marginTop = "10px%";
+		playButton.addEventListener( "click", function(){
 
-		//	Reset config "project/imgur" value. // important!
-			config.setKey( "project/imgur", false ); 
-		//	Update imgur checkbox value from config.
-			imgur.setValue( config.getKey("project/imgur") );
+		//	Reset and update imgur checkbox via "project/imgur" config value.
+			resetImgurCheckbox(); // important!
 
 			if ( isPlaying === false ) {
 
 				isPlaying = true;
-				play.setTextContent( "Stop" );
+				this.textContent = "Stop";
 				signals.startPlayer.dispatch( json );
 
 			} else {
 
 				isPlaying = false;
-				play.setTextContent( "Play" );
+				this.textContent = "Play";
 				signals.stopPlayer.dispatch();
 
 			}
 
 		});
 
-		if ( isPlaying === true ) 
-			play.setTextContent( "Stop" );
-		else 
-			play.setTextContent( "Play" );
-
+	//	Initial textContent.
+	//
+	//	if ( isPlaying === true ) 
+	//		playButton.textContent = "Stop";
+	//	else 
+	//		playButton.textContent = "Play";
+	//
 
 		var SaveRow = new UI.Row().setMargin("10px");
-		SaveRow.add( saveIn );
-		SaveRow.add( saveAs );
-		SaveRow.add( play );
-		container.add( SaveRow );
+		SaveRow.dom.appendChild( saveButton );
+		SaveRow.dom.appendChild( saveAsButton );
+		SaveRow.dom.appendChild( playButton );
+
+		container.add( SaveRow ); // UI.Element!
 
 	}
 
@@ -671,7 +681,7 @@ Sidebar.Project = function ( editor ) {
 
 	}
 
-/*
+
 	function uploadDataURL(data, type, name){
 
 	//  Returns a resolved promise with record data from imgur.com.
@@ -749,8 +759,6 @@ Sidebar.Project = function ( editor ) {
 		});
 
 	}
-
-*/
 
 //
 

@@ -529,7 +529,7 @@ Sidebar.Project = function ( editor ) {
 
 				row.add( upload );
 				row.add( progress );
-				row.add( remove );
+				row.add( rmv );
 				uploadPanel.add(row);
 
 			})(images[i]);

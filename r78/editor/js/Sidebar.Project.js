@@ -256,7 +256,7 @@ Sidebar.Project = function ( editor ) {
 	var uploadTextures = document.createElement("button");
 	uploadTextures.textContent = "Upload Texture images";
 	uploadTextures.style.marginLeft = "20px";
-	uploadTextures.style.width = "230px";
+	uploadTextures.style.width = "250px";
 	uploadTextures.addEventListener( "click", createUploads );
 	container.dom.appendChild( uploadTextures );
 

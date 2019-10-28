@@ -253,7 +253,7 @@ Sidebar.Project = function ( editor ) {
 	container.add( uploadPanel );
 
 //	var uploadTextures = new UI.Button( "Upload Texture images" ).setWidth("100%");
-	var uploadTextures document.createElement("button");
+	var uploadTextures = document.createElement("button");
 	uploadTextures.textContent = "Upload Texture images";
 	uploadTextures.style.margin = "20px";
 	uploadTextures.style.width = "100%";

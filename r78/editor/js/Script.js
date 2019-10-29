@@ -156,7 +156,7 @@ var Script = function ( editor ) {
 
 			}
 
-			//
+		//
 
 			switch ( currentMode ) {
 
@@ -314,7 +314,7 @@ var Script = function ( editor ) {
 
 	};
 
-//	tern js autocomplete. (disactivated)
+//	tern js autocomplete. (disabled)
 /*
 	var server = new CodeMirror.TernServer( {
 		caseInsensitive: true,
@@ -441,6 +441,8 @@ var Script = function ( editor ) {
 		title.setValue( object.name + " / " + script.name );
 		codemirror.setValue( script.source );
 
+		console.log( "cursorPosition:", cursorPosition ); // var lineNumber = Math.max( error.lineNumber, 0 );
+ 
 		if ( cursorPosition !== undefined ) {
 
 			codemirror.setCursor( cursorPosition );

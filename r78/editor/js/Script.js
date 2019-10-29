@@ -441,12 +441,9 @@ var Script = function ( editor ) {
 		title.setValue( object.name + " / " + script.name );
 		codemirror.setValue( script.source );
 
- 
-		if ( cursorPosition !== undefined ) {
+ 		if ( cursorPosition !== undefined ) {
 
-			cursorPosition.line = Math.max( cursorPosition.line, 0 );
 			codemirror.setCursor( cursorPosition );
-			console.log( "cursorPosition:", cursorPosition );
 
 		}
 

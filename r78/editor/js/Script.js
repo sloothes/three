@@ -443,7 +443,7 @@ var Script = function ( editor ) {
 
 		if ( cursorPosition !== undefined ) {
 
-		//	codemirror.setCursor( cursorPosition );
+			codemirror.setCursor( cursorPosition );
 
 		}
 

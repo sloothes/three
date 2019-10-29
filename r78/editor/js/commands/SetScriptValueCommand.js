@@ -52,8 +52,8 @@ SetScriptValueCommand.prototype = {
 
 	update: function ( cmd ) {
 
-	//	this.cursorPosition = cmd.cursorPosition;
 		this.newValue = cmd.newValue;
+		this.cursorPosition = cmd.cursorPosition;
 
 	},
 

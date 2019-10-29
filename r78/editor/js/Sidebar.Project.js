@@ -336,11 +336,18 @@ Sidebar.Project = function ( editor ) {
 			//	Event listeners.
 
 				function enableButton(){
+
 					if (uploadPanel.dom.childElementCount) return;
+
 					SaveRow.remove().dom.remove();
+
+					if ( isPlaying ) {
+						isPlaying = false; // important!
+						signals.stopPlayer.dispatch();
+					}
+
 					uploadTextures.style.display = "";
 					uploadTextures.addEventListener( "click", createUploads );
-					if ( isPlaying ) signals.stopPlayer.dispatch(); // important!
 				}
 
 				function uploadHandler(){

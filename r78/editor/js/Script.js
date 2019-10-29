@@ -7,41 +7,43 @@ var Script = function ( editor ) {
 	var signals = editor.signals;
 
 	var container = new UI.Panel();
-	container.setId( 'script' );
-	container.setPosition( 'absolute' );
-	container.setBackgroundColor( '#272822' );
-	container.setDisplay( 'none' );
+	container.setId( "script" );
+	container.setPosition( "absolute" );
+	container.setBackgroundColor( "#272822" );
+	container.setDisplay( "none" );
 
 	var header = new UI.Panel();
-	header.setPadding( '10px' );
+	header.setPadding( "10px" );
 	container.add( header );
 
-	var title = new UI.Text().setColor( '#fff' );
+	var title = new UI.Text().setColor( "#fff" );
 	header.add( title );
 
 	var buttonSVG = ( function () {
-		var svg = document.createElementNS( 'http://www.w3.org/2000/svg', 'svg' );
-		svg.setAttribute( 'width', 32 );
-		svg.setAttribute( 'height', 32 );
-		var path = document.createElementNS( 'http://www.w3.org/2000/svg', 'path' );
-		path.setAttribute( 'd', 'M 12,12 L 22,22 M 22,12 12,22' );
-		path.setAttribute( 'stroke', '#fff' );
+		var svg = document.createElementNS( "http://www.w3.org/2000/svg", "svg" );
+		svg.setAttribute( "width", 32 );
+		svg.setAttribute( "height", 32 );
+		var path = document.createElementNS( "http://www.w3.org/2000/svg", "path" );
+		path.setAttribute( "d", "M 12,12 L 22,22 M 22,12 12,22" );
+		path.setAttribute( "stroke", "#fff" );
 		svg.appendChild( path );
 		return svg;
-	} )();
+	})();
 
 	var close = new UI.Element( buttonSVG );
-	close.setPosition( 'absolute' );
-	close.setTop( '3px' );
-	close.setRight( '1px' );
-	close.setCursor( 'pointer' );
+	close.setPosition( "absolute" );
+	close.setTop( "3px" );
+	close.setRight( "1px" );
+	close.setCursor( "pointer" );
 	close.onClick( function () {
 
-		container.setDisplay( 'none' );
+		container.setDisplay( "none" );
 
-	} );
+	});
+
 	header.add( close );
 
+//
 
 	var renderer;
 
@@ -49,7 +51,7 @@ var Script = function ( editor ) {
 
 		renderer = newRenderer;
 
-	} );
+	});
 
 
 	var delay;
@@ -58,7 +60,7 @@ var Script = function ( editor ) {
 	var currentObject;
 
 	var codemirror = CodeMirror( container.dom, {
-		value: '',
+		value: "",
 		lineNumbers: true,
 		matchBrackets: true,
 		indentWithTabs: true,
@@ -67,9 +69,10 @@ var Script = function ( editor ) {
 		hintOptions: {
 			completeSingle: false
 		}
-	} );
-	codemirror.setOption( 'theme', 'monokai' );
-	codemirror.on( 'change', function () {
+	});
+
+	codemirror.setOption( "theme", "monokai" );
+	codemirror.on( "change", function () {
 
 		if ( codemirror.state.focused === false ) return;
 
@@ -80,37 +83,38 @@ var Script = function ( editor ) {
 
 			if ( ! validate( value ) ) return;
 
-			if ( typeof( currentScript ) === 'object' ) {
+			if ( typeof( currentScript ) === "object" ) {
 
 				if ( value !== currentScript.source ) {
 
-					editor.execute( new SetScriptValueCommand( currentObject, currentScript, 'source', value, codemirror.getCursor() ) );
+					editor.execute( new SetScriptValueCommand( currentObject, currentScript, "source", value, codemirror.getCursor() ) );
 
 				}
+
 				return;
 			}
 
-			if ( currentScript !== 'programInfo' ) return;
+			if ( currentScript !== "programInfo" ) return;
 
 			var json = JSON.parse( value );
 
 			if ( JSON.stringify( currentObject.material.defines ) !== JSON.stringify( json.defines ) ) {
 
-				var cmd = new SetMaterialValueCommand( currentObject, 'defines', json.defines );
+				var cmd = new SetMaterialValueCommand( currentObject, "defines", json.defines );
 				cmd.updatable = false;
 				editor.execute( cmd );
 
 			}
 			if ( JSON.stringify( currentObject.material.uniforms ) !== JSON.stringify( json.uniforms ) ) {
 
-				var cmd = new SetMaterialValueCommand( currentObject, 'uniforms', json.uniforms );
+				var cmd = new SetMaterialValueCommand( currentObject, "uniforms", json.uniforms );
 				cmd.updatable = false;
 				editor.execute( cmd );
 
 			}
 			if ( JSON.stringify( currentObject.material.attributes ) !== JSON.stringify( json.attributes ) ) {
 
-				var cmd = new SetMaterialValueCommand( currentObject, 'attributes', json.attributes );
+				var cmd = new SetMaterialValueCommand( currentObject, "attributes", json.attributes );
 				cmd.updatable = false;
 				editor.execute( cmd );
 
@@ -120,18 +124,18 @@ var Script = function ( editor ) {
 
 	});
 
-	// prevent backspace from deleting objects
+//	Prevent backspace from deleting objects.
 	var wrapper = codemirror.getWrapperElement();
-	wrapper.addEventListener( 'keydown', function ( event ) {
+	wrapper.addEventListener( "keydown", function ( event ) {
 
 		event.stopPropagation();
 
-	} );
+	});
 
-	// validate
+//	Validate.
 
-	var errorLines = [];
 	var widgets = [];
+	var errorLines = [];
 
 	var validate = function ( string ) {
 
@@ -142,7 +146,7 @@ var Script = function ( editor ) {
 
 			while ( errorLines.length > 0 ) {
 
-				codemirror.removeLineClass( errorLines.shift(), 'background', 'errorLine' );
+				codemirror.removeLineClass( errorLines.shift(), "background", "errorLine" );
 
 			}
 
@@ -156,11 +160,11 @@ var Script = function ( editor ) {
 
 			switch ( currentMode ) {
 
-				case 'javascript':
+				case "javascript":
 
 					try {
 
-						var syntax = esprima.parse( string, { tolerant: true } );
+						var syntax = esprima.parse( string, { tolerant: true });
 						errors = syntax.errors;
 
 					} catch ( error ) {
@@ -170,33 +174,33 @@ var Script = function ( editor ) {
 							lineNumber: error.lineNumber - 1,
 							message: error.message
 
-						} );
+						});
 
 					}
 
 					for ( var i = 0; i < errors.length; i ++ ) {
 
 						var error = errors[ i ];
-						error.message = error.message.replace(/Line [0-9]+: /, '');
+						error.message = error.message.replace(/Line [0-9]+: /, "");
 
 					}
 
-					break;
+				break;
 
-				case 'json':
+				case "json":
 
 					errors = [];
 
 					jsonlint.parseError = function ( message, info ) {
 
-						message = message.split('\n')[3];
+						message = message.split("\n")[3];
 
 						errors.push( {
 
 							lineNumber: info.loc.first_line - 1,
 							message: message
 
-						} );
+						});
 
 					};
 
@@ -210,14 +214,13 @@ var Script = function ( editor ) {
 
 					}
 
-					break;
+				break;
 
-				case 'glsl':
+				case "glsl":
 
 					try {
 
-						var shaderType = currentScript === 'vertexShader' ?
-								glslprep.Shader.VERTEX : glslprep.Shader.FRAGMENT;
+						var shaderType = currentScript === "vertexShader" ? glslprep.Shader.VERTEX : glslprep.Shader.FRAGMENT;
 
 						glslprep.parseGlsl( string, shaderType );
 
@@ -230,7 +233,7 @@ var Script = function ( editor ) {
 								lineNumber: error.line,
 								message: "Syntax Error: " + error.message
 
-							} );
+							});
 
 						} else {
 
@@ -274,28 +277,30 @@ var Script = function ( editor ) {
 								lineNumber: parseResult[ 1 ] - lineOffset,
 								message: parseResult[ 2 ]
 
-							} );
+							});
 
-						} // messages
+						} // messages.
 
 						break;
 
-					} // programs
+					} // programs.
 
-			} // mode switch
+				break;
+
+			} // switch.
 
 			for ( var i = 0; i < errors.length; i ++ ) {
 
 				var error = errors[ i ];
 
-				var message = document.createElement( 'div' );
-				message.className = 'esprima-error';
+				var message = document.createElement( "div" );
+				message.className = "esprima-error";
 				message.textContent = error.message;
 
 				var lineNumber = Math.max( error.lineNumber, 0 );
 				errorLines.push( lineNumber );
 
-				codemirror.addLineClass( lineNumber, 'background', 'errorLine' );
+				codemirror.addLineClass( lineNumber, "background", "errorLine" );
 
 				var widget = codemirror.addLineWidget( lineNumber, message );
 
@@ -309,33 +314,33 @@ var Script = function ( editor ) {
 
 	};
 
-	// tern js autocomplete
-
+//	tern js autocomplete. (disactivated)
+/*
 	var server = new CodeMirror.TernServer( {
 		caseInsensitive: true,
 		plugins: { threejs: null }
-	} );
+	});
 
-	codemirror.setOption( 'extraKeys', {
-		'Ctrl-Space': function(cm) { server.complete(cm); },
-		'Ctrl-I': function(cm) { server.showType(cm); },
-		'Ctrl-O': function(cm) { server.showDocs(cm); },
-		'Alt-.': function(cm) { server.jumpToDef(cm); },
-		'Alt-,': function(cm) { server.jumpBack(cm); },
-		'Ctrl-Q': function(cm) { server.rename(cm); },
-		'Ctrl-.': function(cm) { server.selectName(cm); }
-	} );
+	codemirror.setOption( "extraKeys", {
+		"Ctrl-Space": function(cm) { server.complete(cm); },
+		"Ctrl-I": function(cm) { server.showType(cm); },
+		"Ctrl-O": function(cm) { server.showDocs(cm); },
+		"Alt-.": function(cm) { server.jumpToDef(cm); },
+		"Alt-,": function(cm) { server.jumpBack(cm); },
+		"Ctrl-Q": function(cm) { server.rename(cm); },
+		"Ctrl-.": function(cm) { server.selectName(cm); }
+	});
 
-	codemirror.on( 'cursorActivity', function( cm ) {
+	codemirror.on( "cursorActivity", function( cm ) {
 
-		if ( currentMode !== 'javascript' ) return;
+		if ( currentMode !== "javascript" ) return;
 		server.updateArgHints( cm );
 
-	} );
+	});
 
-	codemirror.on( 'keypress', function( cm, kb ) {
+	codemirror.on( "keypress", function( cm, kb ) {
 
-		if ( currentMode !== 'javascript' ) return;
+		if ( currentMode !== "javascript" ) return;
 		var typed = String.fromCharCode( kb.which || kb.keyCode );
 		if ( /[\w\.]/.exec( typed ) ) {
 
@@ -343,61 +348,65 @@ var Script = function ( editor ) {
 
 		}
 
-	} );
+	});
+*/
 
-
-	//
+//
 
 	signals.editorCleared.add( function () {
 
-		container.setDisplay( 'none' );
+		container.setDisplay( "none" );
 
-	} );
+	});
 
 	signals.editScript.add( function ( object, script ) {
 
 		var mode, name, source;
 
-		if ( typeof( script ) === 'object' ) {
+		if ( typeof( script ) === "object" ) {
 
-			mode = 'javascript';
+			mode = "javascript";
 			name = script.name;
 			source = script.source;
-			title.setValue( object.name + ' / ' + name );
+			title.setValue( object.name + " / " + name );
 
 		} else {
 
 			switch ( script ) {
 
-				case 'vertexShader':
+				case "vertexShader":
 
-					mode = 'glsl';
-					name = 'Vertex Shader';
+					mode = "glsl";
+					name = "Vertex Shader";
 					source = object.material.vertexShader || "";
 
-					break;
+				break;
 
-				case 'fragmentShader':
+				case "fragmentShader":
 
-					mode = 'glsl';
-					name = 'Fragment Shader';
+					mode = "glsl";
+					name = "Fragment Shader";
 					source = object.material.fragmentShader || "";
 
-					break;
+				break;
 
-				case 'programInfo':
+				case "programInfo":
 
-					mode = 'json';
-					name = 'Program Properties';
+					mode = "json";
+					name = "Program Properties";
 					var json = {
 						defines: object.material.defines,
 						uniforms: object.material.uniforms,
 						attributes: object.material.attributes
 					};
-					source = JSON.stringify( json, null, '\t' );
+
+					source = JSON.stringify( json, null, "\t" );
+
+				break;
 
 			}
-			title.setValue( object.material.name + ' / ' + name );
+
+			title.setValue( object.material.name + " / " + name );
 
 		}
 
@@ -405,31 +414,31 @@ var Script = function ( editor ) {
 		currentScript = script;
 		currentObject = object;
 
-		container.setDisplay( '' );
+		container.setDisplay( "" );
 		codemirror.setValue( source );
-		if (mode === 'json' ) mode = { name: 'javascript', json: true };
-		codemirror.setOption( 'mode', mode );
+		if (mode === "json" ) mode = { name: "javascript", json: true };
+		codemirror.setOption( "mode", mode );
 
-	} );
+	});
 
 	signals.scriptRemoved.add( function ( script ) {
 
 		if ( currentScript === script ) {
 
-			container.setDisplay( 'none' );
+			container.setDisplay( "none" );
 
 		}
 
-	} );
+	});
 
 	signals.refreshScriptEditor.add( function ( object, script, cursorPosition ) {
 
 		if ( currentScript !== script ) return;
 
-		// copying the codemirror history because "codemirror.setValue(...)" alters its history
+	//	copying the codemirror history because "codemirror.setValue(...)" alters its history.
 
 		var history = codemirror.getHistory();
-		title.setValue( object.name + ' / ' + script.name );
+		title.setValue( object.name + " / " + script.name );
 		codemirror.setValue( script.source );
 
 		if ( cursorPosition !== undefined ) {
@@ -437,9 +446,10 @@ var Script = function ( editor ) {
 			codemirror.setCursor( cursorPosition );
 
 		}
+
 		codemirror.setHistory( history ); // setting the history to previous state
 
-	} );
+	});
 
 	return container;
 

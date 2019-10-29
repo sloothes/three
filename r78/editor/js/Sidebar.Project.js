@@ -242,7 +242,6 @@ Sidebar.Project = function ( editor ) {
 	var uploadPanel = new UI.Panel().setId("upload-panel");
 	container.add( uploadPanel );
 
-//	Reset and update imgur checkbox via "project/imgur" config value.
 	function resetImgurCheckbox(){
 	//	Reset config "project/imgur" value. // important!
 		config.setKey( "project/imgur", false ); 
@@ -255,7 +254,6 @@ Sidebar.Project = function ( editor ) {
 	uploadTextures.style.width = "250px";
 	uploadTextures.style.marginLeft = "20px";
 	uploadTextures.addEventListener( "click", createUploads );
-	uploadTextures.addEventListener( "click", resetImgurCheckbox ); // important!
 	container.dom.appendChild( uploadTextures );
 
 	function createUploads() {
@@ -263,10 +261,13 @@ Sidebar.Project = function ( editor ) {
 	//	config "project/imgur" must be true to allow uploading.
 		if ( config.getKey("project/imgur") === false ) return;
 
+	//	Reset and update imgur checkbox via "project/imgur" config value.
+
+		resetImgurCheckbox(); // important!
+
 	//	Remove "click" listener to avoid multipe uploaders (disable button).
 		uploadTextures.style.display = "none";
 		uploadTextures.removeEventListener( "click", createUploads ); // important!
-		uploadTextures.removeEventListener( "click", resetImgurCheckbox ); // important!
 
 	//	TODO: Get textures direct from editor.materials???
 
@@ -282,7 +283,6 @@ Sidebar.Project = function ( editor ) {
 
 			uploadTextures.style.display = "";
 			uploadTextures.addEventListener( "click", createUploads );
-			uploadTextures.addEventListener( "click", resetImgurCheckbox ); // important!
 
 			return;
 		}
@@ -305,8 +305,8 @@ Sidebar.Project = function ( editor ) {
 
 				var upload = document.createElement("button");
 				upload.textContent = "Upload";
-				upload.addEventListener( "click", resetImgurCheckbox ); // important!
 				upload.addEventListener( "click", uploadHandler );
+				upload.addEventListener( "click", resetImgurCheckbox ); // important!
 
 				var progress = new UI.Span();
 				progress.dom.style.marginLeft = "5px";
@@ -314,14 +314,14 @@ Sidebar.Project = function ( editor ) {
 				var remove = document.createElement("button");
 				remove.textContent = "Remove";
 				remove.style.float = "right";
-				remove.addEventListener( "click", resetImgurCheckbox ); // important!
 				remove.addEventListener( "click", removeUploader );
+				remove.addEventListener( "click", resetImgurCheckbox ); // important!
 
 				var del = document.createElement("button");
 				del.textContent = "Delete";
 				del.style.display = "none";
-				del.addEventListener( "click", resetImgurCheckbox ); // important!
 				del.addEventListener( "click", deleteUploaded );
+				del.addEventListener( "click", resetImgurCheckbox ); // important!
 
 				var bar = document.createElement( "input" );
 				bar.disabled = true;
@@ -337,21 +337,16 @@ Sidebar.Project = function ( editor ) {
 
 				function enableButton(){
 					if (uploadPanel.dom.childElementCount) return;
-					if ( isPlaying ) signals.stopPlayer.dispatch(); // important!
 					SaveRow.remove().dom.remove();
 					uploadTextures.style.display = "";
 					uploadTextures.addEventListener( "click", createUploads );
-					uploadTextures.addEventListener( "click", resetImgurCheckbox ); // important!
-
+					if ( isPlaying ) signals.stopPlayer.dispatch(); // important!
 				}
 
 				function uploadHandler(){
 
 				//	Avoid multiple uploads.
 					clearTimeout( this.interval );
-
-				//	Reset and update imgur checkbox via "project/imgur" config value.
-					resetImgurCheckbox(); // important!
 
 					this.interval = setTimeout( uploader, 250 );
 
@@ -360,9 +355,6 @@ Sidebar.Project = function ( editor ) {
 				function removeUploader(){
 
 					row.dom.classList.add("fade","out");
-
-				//	Reset and update imgur checkbox via "project/imgur" config value.
-					resetImgurCheckbox(); // important!
 
 					setTimeout(function(){
 						row.remove().dom.remove();
@@ -385,8 +377,6 @@ Sidebar.Project = function ( editor ) {
 				}
 
 				function uploader(){
-
-					resetImgurCheckbox(); // important!
 
 				//	Remove "click" listener to avoid multiply uploads (disable button).
 					upload.removeEventListener( "click", uploadHandler ); // important!
@@ -416,13 +406,16 @@ Sidebar.Project = function ( editor ) {
 						var xhttp = new XMLHttpRequest();
 
                         xhttp.upload.onloadstart = function(){
+
 							bar.value = "0%"; 
 							bar.style.width = "0px";
 							bar.style.background = "##18b91b";
+
                             debugMode && console.log("Starting upload of", name);
                         };
 
                         xhttp.upload.onprogress = function( event ){
+
                             if ( event.lengthComputable ) {
                                 var percentComplete = event.loaded / event.total * 100;
                                 var width = parseInt(percentComplete);
@@ -433,28 +426,35 @@ Sidebar.Project = function ( editor ) {
 								bar.value = "Uploading..."; 
 								bar.style.width = width + "px"; 
                             }
+
                         };
 
                         xhttp.upload.onload = function() {
+
 							bar.value = "Completed"; 
 							bar.style.width = "100px";
 							bar.style.background = "##18b91b";
+
                             debugMode && console.log(name, "Upload completed.");
                         };
 
                         xhttp.upload.onerror = function() {
+
                             var err = "An error occurred while uploading " + name;
 							bar.value = "Failed"; 
 							bar.style.width = "100px";
 							bar.style.background = "##ee0404";
+
                             throw Error(err);
                         };
 
                         xhttp.upload.onabort = function() {
+
                             var err = "Upload has been canceled by the user.";
 							bar.value = "Canceled"; 
 							bar.style.width = "100px";
 							bar.style.background = "##ee0404";
+
                             throw Error(err);
                         };
 
@@ -532,6 +532,7 @@ Sidebar.Project = function ( editor ) {
 
 					}).catch(function(err){
 						console.error(err);
+						upload.addEventListener( "click", uploadHandler ); // important!
 					});
 	
 				}
@@ -556,9 +557,6 @@ Sidebar.Project = function ( editor ) {
 		saveButton.addEventListener( "click", function(){
 
 			clearTimeout( this.interval );
-
-		//	Reset and update imgur checkbox via "project/imgur" config value.
-			resetImgurCheckbox(); // important!
 
 			this.interval = setTimeout( function () {
 
@@ -592,9 +590,6 @@ Sidebar.Project = function ( editor ) {
 		saveAsButton.addEventListener( "click", resetImgurCheckbox ); // important!
 		saveAsButton.addEventListener( "click", function(){
 
-		//	Reset and update imgur checkbox via "project/imgur" config value.
-			resetImgurCheckbox(); // important!
-
 			var output = json;
 			output.metadata.type = "App";
 			delete output.history;
@@ -622,9 +617,6 @@ Sidebar.Project = function ( editor ) {
 		playButton.style.marginTop = "10px";
 		playButton.addEventListener( "click", resetImgurCheckbox ); // important!
 		playButton.addEventListener( "click", function(){
-
-		//	Reset and update imgur checkbox via "project/imgur" config value.
-			resetImgurCheckbox(); // important!
 
 			if ( isPlaying === false ) {
 

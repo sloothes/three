@@ -128,7 +128,7 @@ var Editor = function () {
 
 //	Move array item from one position to another position.
 //	https://stackoverflow.com/questions/5306680/move-an-array-element-from-one-array-position-to-another.
-	
+
 	this.javascripts.move = function ( old_index, new_index ) {
 
 		var arr = this;

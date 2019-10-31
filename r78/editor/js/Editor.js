@@ -131,18 +131,16 @@ var Editor = function () {
 
 	this.javascripts.move = function ( old_index, new_index ) {
 
-		var arr = this;
-
-		if (new_index >= arr.length) {
-			var k = new_index - arr.length + 1;
+		if (new_index >= this.length) {
+			var k = new_index - this.length + 1;
 			while (k--) {
-				arr.push(undefined);
+				this.push(undefined);
 			}
 		}
 
-		arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
+		this.splice(new_index, 0, this.splice(old_index, 1)[0]);
 
-		debugMode && console.log( arr );
+		debugMode && console.log( this );
 	};
 
 //	Upload texture imate to imgur.com.

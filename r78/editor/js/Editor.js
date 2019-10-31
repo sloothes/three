@@ -652,6 +652,24 @@ Editor.prototype = {
 			this.javascripts = json.javascripts;
 		}
 
+	//	Move array item from one position to another position.
+	//	https://stackoverflow.com/questions/5306680/move-an-array-element-from-one-array-position-to-another.
+
+		this.javascripts.move = function ( old_index, new_index ) {
+
+			if (new_index >= this.length) {
+				var k = new_index - this.length + 1;
+				while (k--) {
+					this.push(undefined);
+				}
+			}
+
+			this.splice(new_index, 0, this.splice(old_index, 1)[0]);
+
+			debugMode && console.log( this );
+		};
+
+
 	//	uploaded images.
 
 		if ( json.images === undefined ) {

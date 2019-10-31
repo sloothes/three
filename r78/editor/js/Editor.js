@@ -129,7 +129,7 @@ var Editor = function () {
 //	Move array item from one position to another position.
 //	https://stackoverflow.com/questions/5306680/move-an-array-element-from-one-array-position-to-another.
 
-	var move = function array_move( old_index, new_index ) {
+	this.javascripts.move = function ( old_index, new_index ) {
 
 		var arr = this;
 
@@ -142,10 +142,8 @@ var Editor = function () {
 
 		arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
 
-		console.log( arr );
+		debugMode && console.log( arr );
 	};
-
-	move.bind( this.javascripts );
 
 //	Upload texture imate to imgur.com.
 

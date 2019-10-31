@@ -619,7 +619,12 @@ Sidebar.Project = function ( editor ) {
 	//	Play.
 
 		var playButton = document.createElement("button");
-		playButton.textContent = "Play";
+
+		if ( isPlaying ) 
+			playButton.textContent = "Play";
+		else
+			playButton.textContent = "Stop";
+
 		playButton.style.width = "100%";
 		playButton.style.marginTop = "10px";
 		playButton.addEventListener( "click", resetImgurCheckbox ); // important!
@@ -641,12 +646,6 @@ Sidebar.Project = function ( editor ) {
 
 		});
 
-	//	Initial textContent.
-	//
-	//	if ( isPlaying === true ) 
-	//		playButton.textContent = "Stop";
-	//	else 
-	//		playButton.textContent = "Play";
 	//
 
 		var SaveRow = new UI.Row().setMargin("10px");

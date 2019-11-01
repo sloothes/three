@@ -126,10 +126,6 @@ var Editor = function () {
 	this.stylesheets = [];	// hacking! TODO.
 	this.javascripts = [];	// hacking! DONE.
 
-//	Move array item from one position to another position.
-//	https://stackoverflow.com/questions/5306680/move-an-array-element-from-one-array-position-to-another.
-//	javascripts_move.bind( this.javascripts ); 
-
 //	Upload texture imate to imgur.com.
 
 	this.uploadImage = function uploadDataURL(dataURL, type, name){
@@ -639,11 +635,6 @@ Editor.prototype = {
 			this.javascripts = json.javascripts;
 		}
 
-	//	Move array item from one position to another position.
-	//	https://stackoverflow.com/questions/5306680/move-an-array-element-from-one-array-position-to-another.
-
-		javascripts_move.bind( this.javascripts ); 
-
 	//	uploaded images.
 
 		if ( json.images === undefined ) {
@@ -756,20 +747,21 @@ Editor.prototype = {
 };
 
 
-function javascripts_move( from_index, to_index ) {
+//	Move array item from one position to another position.
+//	https://stackoverflow.com/questions/5306680/move-an-array-element-from-one-array-position-to-another.
 
-	debugMode && console.log( this );
+function array_move( array, from_index, to_index ) {
 
-	if (to_index >= this.length) {
-		var k = to_index - this.length + 1;
+	if (to_index >= array.length) {
+		var k = to_index - array.length + 1;
 		while (k--) {
-			this.push(undefined);
+			array.push(undefined);
 		}
 	}
 
-	this.splice(to_index, 0, this.splice(from_index, 1)[0]);
+	array.splice(to_index, 0, array.splice(from_index, 1)[0]);
 
-	debugMode && console.log( this );
+	debugMode && console.log( array );
 }
 
 /*

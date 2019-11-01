@@ -129,21 +129,7 @@ var Editor = function () {
 //	https://stackoverflow.com/questions/5306680/move-an-array-element-from-one-array-position-to-another.
 
 	this.javascripts = [];	// hacking! DONE.
-	array_move.bind( this.javascripts ); 
-
-	function array_move( from_index, to_index ) {
-
-		if (to_index >= this.length) {
-			var k = to_index - this.length + 1;
-			while (k--) {
-				this.push(undefined);
-			}
-		}
-
-		this.splice(to_index, 0, this.splice(from_index, 1)[0]);
-
-		debugMode && console.log( this );
-	}
+	javascripts_move.bind( this.javascripts ); 
 
 //	Upload texture imate to imgur.com.
 
@@ -657,7 +643,7 @@ Editor.prototype = {
 	//	Move array item from one position to another position.
 	//	https://stackoverflow.com/questions/5306680/move-an-array-element-from-one-array-position-to-another.
 
-		array_move.bind( this.javascripts ); 
+		javascripts_move.bind( this.javascripts ); 
 
 	//	uploaded images.
 
@@ -770,7 +756,8 @@ Editor.prototype = {
 
 };
 
-function array_move( from_index, to_index ) {
+
+function javascripts_move( from_index, to_index ) {
 
 	if (to_index >= this.length) {
 		var k = to_index - this.length + 1;

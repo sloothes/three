@@ -124,12 +124,11 @@ var Editor = function () {
 
 	this.functions   = [];	// hacking! TODO.
 	this.stylesheets = [];	// hacking! TODO.
+	this.javascripts = [];	// hacking! DONE.
 
 //	Move array item from one position to another position.
 //	https://stackoverflow.com/questions/5306680/move-an-array-element-from-one-array-position-to-another.
-
-	this.javascripts = [];	// hacking! DONE.
-	javascripts_move.bind( this.javascripts ); 
+//	javascripts_move.bind( this.javascripts ); 
 
 //	Upload texture imate to imgur.com.
 
@@ -758,6 +757,8 @@ Editor.prototype = {
 
 
 function javascripts_move( from_index, to_index ) {
+
+	debugMode && console.log( this );
 
 	if (to_index >= this.length) {
 		var k = to_index - this.length + 1;

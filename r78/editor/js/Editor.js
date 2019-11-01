@@ -125,11 +125,11 @@ var Editor = function () {
 	this.functions   = [];	// hacking! TODO.
 	this.stylesheets = [];	// hacking! TODO.
 
-	this.javascripts = [];	// hacking! DONE.
-	this.javascripts.move = array_move; 
-
 //	Move array item from one position to another position.
 //	https://stackoverflow.com/questions/5306680/move-an-array-element-from-one-array-position-to-another.
+
+	this.javascripts = [];	// hacking! DONE.
+	array_move.bind( this.javascripts ); 
 
 	function array_move( from_index, to_index ) {
 
@@ -657,7 +657,7 @@ Editor.prototype = {
 	//	Move array item from one position to another position.
 	//	https://stackoverflow.com/questions/5306680/move-an-array-element-from-one-array-position-to-another.
 
-		this.javascripts.move = array_move; // important!
+		array_move.bind( this.javascripts ); 
 
 	//	uploaded images.
 

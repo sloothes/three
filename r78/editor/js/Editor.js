@@ -770,6 +770,19 @@ Editor.prototype = {
 
 };
 
+function array_move( from_index, to_index ) {
+
+	if (to_index >= this.length) {
+		var k = to_index - this.length + 1;
+		while (k--) {
+			this.push(undefined);
+		}
+	}
+
+	this.splice(to_index, 0, this.splice(from_index, 1)[0]);
+
+	debugMode && console.log( this );
+}
 
 /*
 	//	javascript functions toJSON.

@@ -519,9 +519,10 @@ Sidebar.Project = function ( editor ) {
 						return new Promise( function( resolve, reject ){
 							loader.load( data.link, function( texture ){
 								debugMode && console.log( "texture:", texture );
+								texture.sourceFile = data.link;
+								editor.textures[ texture.uuid ] = texture; // ???
 							//	TODO: Find editor textures this image  belong and 
 							//	replace editor texture.image.src with "data.link"
-								editor.textures[ texture.uuid ] = texture; // ???
 								resolve( texture );
 							});
 

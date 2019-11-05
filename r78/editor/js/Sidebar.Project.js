@@ -621,9 +621,9 @@ Sidebar.Project = function ( editor ) {
 		var playButton = document.createElement("button");
 
 		if ( isPlaying ) 
-			playButton.textContent = "Play";
-		else
 			playButton.textContent = "Stop";
+		else
+			playButton.textContent = "Play";
 
 		playButton.style.width = "100%";
 		playButton.style.marginTop = "10px";

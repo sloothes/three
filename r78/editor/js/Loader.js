@@ -534,9 +534,30 @@ var Loader = function ( editor ) {
 
 				if ( data.bones && data.skinIndices && data.skinWeights ) {
 
+					var mesh = new THREE.Object3D();
+
 				//	mesh = new THREE.SkinnedMesh( geometry, material ); // TODO: .toJSON().
 
-					mesh = new THREE.Mesh( geometry, material );
+				//	mesh = new THREE.Mesh( geometry, material );
+
+				//
+
+				//	remove-this.js
+
+					var source = (function(){
+
+						var source = "scene.remove( this );";
+
+						return source;
+
+					})();
+
+					editor.addScript( mesh, {
+
+						name: "remove-this.js",
+						source: source,
+
+					});
 
 				//  skinned-mesh.js
 
@@ -573,7 +594,8 @@ var Loader = function ( editor ) {
 						if (data.metadata) source += "\tmetadata: metadata,\n";
 						if (data.bones) source += "\tbones: bones,\n";
 						if (data.influencesPerVertex) source += "\tinfluencesPerVertex: " + data.influencesPerVertex + "\n";
-						source += "};\n\n\n";
+						source += "};\n\n";
+						source += "//\tGeometries.push( json );\n\n";
 
 					//  loader.
 
@@ -600,9 +622,8 @@ var Loader = function ( editor ) {
 						source += "skinned.scale.set( 1, 1, 1 );\n";
 						source += "skinned.castShadow = true;\n";
 						source += "skinned.name = this.name;\n\n\n\n";
-
+				/*
 					//	on stop.
-
 						source += "function stop(){\n\n";
 						source += "//\tremove.\n\n";
 						source += "\tscene.remove( skinned );\n\n";
@@ -611,7 +632,7 @@ var Loader = function ( editor ) {
 						source += "//\tdelete.\n\n";
 						source += "\tdelete skinned;\n\n";
 						source += "}";
-
+				*/
 						return source;
 
 					})();
@@ -623,7 +644,7 @@ var Loader = function ( editor ) {
 
 					});
 
-
+			/*
 				//  dispose.js
 
 					var source = (function(){
@@ -652,16 +673,16 @@ var Loader = function ( editor ) {
 						source: source,
 
 					});
+			*/
 
 				} else {
 
 					mesh = new THREE.Mesh( geometry, material );
+					mesh.geometry.name = filename;
+					mesh.geometry.sourceFile = filename;
+					mesh.name = filename.replace(".json", "");
 
 				}
-
-				mesh.geometry.name = filename;
-				mesh.geometry.sourceFile = filename;
-				mesh.name = filename.replace(".json", "");
 
 				editor.execute( new AddObjectCommand( mesh ) );
 

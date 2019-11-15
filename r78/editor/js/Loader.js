@@ -536,9 +536,9 @@ var Loader = function ( editor ) {
 
 					var mesh = new THREE.Object3D();
 
-				//	mesh = new THREE.SkinnedMesh( geometry, material ); // TODO: .toJSON().
-
 				//	mesh = new THREE.Mesh( geometry, material );
+
+				//	mesh = new THREE.SkinnedMesh( geometry, material );
 
 				//
 
@@ -609,10 +609,9 @@ var Loader = function ( editor ) {
 						source += "geometry.computeBoundingBox();\n";
 						source += "geometry.computeBoundingSphere();\n";
 						source += "geometry.sourceType = \"ascii\";\n";
-						source += "geometry.sourceFile = JSON.stringify(json); // this.geometry.sourceFile;\n\n";
+						source += "geometry.sourceFile = JSON.stringify(json);\n\n";
 						source += "//\tmaterial.\n\n";
-						source += "this.material.skinning = true;\n\n";
-						source += "var material = this.material.clone(); // important!\n\n";
+						source += "var material = new THREE.MeshStandardMaterial({skinning:true});\n\n";
 						source += "//\tskinned.\n\n";
 						source += "var skinned = new THREE.SkinnedMesh( geometry, material );\n\n";
 						source += "skinned.renderDepth = 1;\n";
@@ -621,7 +620,7 @@ var Loader = function ( editor ) {
 						source += "skinned.rotation.set( 0, 0, 0 );\n";
 						source += "skinned.scale.set( 1, 1, 1 );\n";
 						source += "skinned.castShadow = true;\n";
-						source += "skinned.name = this.name;\n\n\n\n";
+						source += "skinned.name = data.name;\n\n\n\n";
 				/*
 					//	on stop.
 						source += "function stop(){\n\n";
@@ -680,9 +679,10 @@ var Loader = function ( editor ) {
 					mesh = new THREE.Mesh( geometry, material );
 					mesh.geometry.name = filename;
 					mesh.geometry.sourceFile = filename;
-					mesh.name = filename.replace(".json", "");
 
 				}
+
+				mesh.name = filename.replace(".json", "");
 
 				editor.execute( new AddObjectCommand( mesh ) );
 

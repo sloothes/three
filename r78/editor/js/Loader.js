@@ -540,7 +540,7 @@ var Loader = function ( editor ) {
 
 				//	mesh = new THREE.SkinnedMesh( geometry, material );
 
-				//
+					mesh.name = filename.replace(".json", "") + " (skinned)";
 
 				//	remove-this.js
 
@@ -635,10 +635,9 @@ var Loader = function ( editor ) {
 					mesh = new THREE.Mesh( geometry, material );
 					mesh.geometry.name = filename;
 					mesh.geometry.sourceFile = filename;
+					mesh.name = filename.replace(".json", "");
 
 				}
-
-				mesh.name = filename.replace(".json", "");
 
 				editor.execute( new AddObjectCommand( mesh ) );
 

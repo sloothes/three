@@ -595,6 +595,7 @@ Editor.prototype = {
 
 };
 
+//	================================================================  //
 
 //	Move array item from one position to another position.
 //	https://stackoverflow.com/questions/5306680/move-an-array-element-from-one-array-position-to-another.
@@ -613,6 +614,8 @@ function array_move( array, from_index, to_index ) {
 	debugMode && console.log( array );
 }
 
+//	================================================================  //
+
 /*
 	//	javascript functions toJSON.
 
@@ -623,6 +626,7 @@ function array_move( array, from_index, to_index ) {
 			return JSON.stringify( code );	// important!
 		});
 */
+//	================================================================  //
 
 /*
 //	Upload texture imate to imgur.com.
@@ -670,6 +674,8 @@ function array_move( array, from_index, to_index ) {
 
 	}
 
+//	================================================================  //
+
 //	Delete uploaded image from imgur.com 
 
 //	Usage:
@@ -715,3 +721,5 @@ function array_move( array, from_index, to_index ) {
 
 	}
 */
+
+//	================================================================  //

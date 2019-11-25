@@ -15,7 +15,7 @@ var APP = {
 
 		var loader = new THREE.ObjectLoader();
 
-	//	var vr, effect;
+	//	var vr, controls, effect;
 	//	var camera, scene, renderer;
 
 		var events = {};

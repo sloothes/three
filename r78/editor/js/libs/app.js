@@ -2,6 +2,11 @@
  * @author mrdoob / http://mrdoob.com/
  */
 
+
+var debugMode;
+var vr, controls, effect;    //	global for debug.
+var camera, scene, renderer; //	global for debug.
+
 var APP = {
 
 	Player: function () {
@@ -9,14 +14,9 @@ var APP = {
 		var scope = this;
 
 		var loader = new THREE.ObjectLoader();
-	//
-		camera = null;   // (global for debugging)
-		scene = null;    // (global for debugging)
-		renderer = null; // (global for debugging)
 
+	//	var vr, effect;
 	//	var camera, scene, renderer;
-
-		var vr, effect;
 
 		var events = {};
 

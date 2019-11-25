@@ -424,7 +424,6 @@ Editor.prototype = {
 		this.storage.clear();
 
 		this.camera.copy( this.DEFAULT_CAMERA );
-		this.lights.copy( this.DEFAULT_CAMERA_LIGHT );
 
 	//	Scene.
 

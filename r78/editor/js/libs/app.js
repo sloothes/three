@@ -6,19 +6,19 @@ var APP = {
 
 	Player: function () {
 
-		app = this; // global!
+		app = this; // (player == app) global!
 
 		var scope = this;
 
 		var loader = new THREE.ObjectLoader();
-
-	//	var camera, scene, renderer;
-
+	//
 		camera = null;   // (global for debugging)
 		scene = null;    // (global for debugging)
 		renderer = null; // (global for debugging)
 
-		var vr, controls, effect, center;
+	//	var camera, scene, renderer;
+
+		var vr, effect;
 
 		var events = {};
 
@@ -40,7 +40,7 @@ var APP = {
 			THREE.Cache.enabled = json.project.cache; // important!
 			console.log({ "vr": vr, "debugMode": debugMode, "cache": THREE.Cache.enabled });
 
-		//	Load external javascirpt libraries.
+		//	Load external javascirpt libraries (backward).
 
 			if ( json.javascripts && json.javascripts.length > 0 ) {
 
@@ -65,11 +65,36 @@ var APP = {
 
 			}
 
+		//	Load external javascirpt libraries.
 
-		//	TODO: immiplicate for global functions.
+			if ( json.jslibraries && json.jslibraries.length > 0 ) {
+
+				var scripts = json.jslibraries.map( parseScript );
+				debugMode && console.log( "scripts:", scripts );
+
+				function parseScript( item ){ 
+					return {
+						name: item.name,
+						source: JSON.parse( item.source ) // important!
+					};
+				}
+
+				while ( scripts.length ) {
+
+					var object = scripts.shift(); // important!
+					var script = new Function( "scope", object.source );
+					script.bind( window ).call(); // bind and execute.
+					console.log("Library", object.name, "loaded.");
+
+				}
+
+			}
 
 
-		//	renderer (global: for debugging).
+		//	TODO: immiplication for global functions.
+
+
+		//	Caution: renderer is global for debugging!
 
 			renderer = new THREE.WebGLRenderer({ 
 				antialias: true,
@@ -90,8 +115,6 @@ var APP = {
 			this.setScene( loader.parse( json.scene ) );
 			this.setCamera( loader.parse( json.camera ) );
 
-        //  If editor controls (at runtime) "always after" setCamera(); important!
-
 			events = {
 				init: [],
 				start: [],
@@ -107,7 +130,7 @@ var APP = {
 				update: [],
 			};
 
-			var scriptWrapParams = "player,renderer,scene,camera,controls";
+			var scriptWrapParams = "player,renderer,scene,camera";
 			var scriptWrapResultObj = {};
 
 			for ( var eventKey in events ) {
@@ -119,7 +142,8 @@ var APP = {
 
 			var scriptWrapResult = JSON.stringify( scriptWrapResultObj ).replace( /\"/g, "" );
 
-		//	TODO: Initialize orphan scripts.
+
+		//	TODO: Initialize orphan scripts?
 
 		//	for ( var uuid in json.scripts ) {
 
@@ -128,7 +152,7 @@ var APP = {
 
 				if ( object === undefined ) {
 
-					console.warn( "APP.Player: Script without object.", uuid ); 
+					console.warn( "APP.Player: Script of uuid:", uuid, "are orphan." ); 
 
 				//	continue;
 
@@ -136,6 +160,7 @@ var APP = {
 		*/
 
 		//	...
+
 
 		//  Initialize scene object scripts first.
 
@@ -149,7 +174,7 @@ var APP = {
 
 					var script = scripts[ i ];
 
-					var functions = ( new Function( scriptWrapParams, script.source + "\nreturn " + scriptWrapResult + ";" ).bind( object ) )( this, renderer, scene, camera, controls );
+					var functions = ( new Function( scriptWrapParams, script.source + "\nreturn " + scriptWrapResult + ";" ).bind( object ) )( this, renderer, scene, camera );
 
 					for ( var name in functions ) {
 
@@ -189,7 +214,7 @@ var APP = {
 
 						var script = scripts[ i ];
 
-						var functions = ( new Function( scriptWrapParams, script.source + "\nreturn " + scriptWrapResult + ";" ).bind( object ) )( this, renderer, scene, camera, controls );
+						var functions = ( new Function( scriptWrapParams, script.source + "\nreturn " + scriptWrapResult + ";" ).bind( object ) )( this, renderer, scene, camera );
 
 						for ( var name in functions ) {
 
@@ -223,7 +248,7 @@ var APP = {
 
 		this.setLibrary = function() {
 
-		//  arguments: soucre code (text) only.
+		//  arguments: soucre code (text).
 
 			for (var i in arguments){
 
@@ -460,6 +485,7 @@ var APP = {
 
 
 
+//	=========================================================================================  //
 
 /*
 	for ( var i = 0; i < json.javascripts.length; i ++ ) {
@@ -477,6 +503,7 @@ var APP = {
 
 	}
 */
+//	=========================================================================================  //
 
 /*
 	for (var i = 0; i < scripts.length; i++ ){
@@ -487,11 +514,15 @@ var APP = {
 
 	}
 */
+//	=========================================================================================  //
 
 /*
 	while ( scripts.length ) {
 		console.log( "Script", ( new Function("scope", scripts.shift() )( window ), "executed.");
 	}
 */
+//	=========================================================================================  //
 
 //	this.setLibrary.apply( this, json.javascripts.map( parseJSON ) );
+
+//	=========================================================================================  //

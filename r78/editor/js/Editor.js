@@ -11,11 +11,6 @@ var Editor = function () {
 	this.DEFAULT_CAMERA.position.set( 20, 10, 20 );
 	this.DEFAULT_CAMERA.lookAt( new THREE.Vector3() );
 
-	this.DEFAULT_CAMERA_LIGHT = new THREE.DirectionalLight( 0xffffff, 1 );
-	this.DEFAULT_CAMERA_LIGHT.name = "Default Camera Light";
-	this.DEFAULT_CAMERA_LIGHT.position.copy( this.DEFAULT_CAMERA.position );
-
-
 	var Signal = signals.Signal;
 
 	this.signals = {
@@ -83,26 +78,12 @@ var Editor = function () {
 
 //
 
-//	App (hacking).
-//	var app = new THREE.Group();
-//	app.name = "Application";
-//	this.app = app; // group.
-
-//
-
 	this.config = new Config( "threejs-editor" );
 	this.history = new History( this );
 	this.storage = new Storage();
 	this.loader = new Loader( this );
 
 	this.camera = this.DEFAULT_CAMERA.clone();
-
-	this.lights = this.DEFAULT_CAMERA_LIGHT.clone(); // hacking!
-
-//  Camera light is added in editor scene "only after" 
-//  editor has been cleared: this.clear() => 
-//  this.signals.editorCleared.dispatch(); => 
-//  Viewport.js => editor.signals.editorCleared.add();
 
 	this.scene = new THREE.Scene();
 	this.scene.name = "Scene";
@@ -122,100 +103,9 @@ var Editor = function () {
 	this.helpers = {};
 	this.selected = null;
 
-	this.functions   = [];	// hacking! TODO.
-	this.stylesheets = [];	// hacking! TODO.
-	this.javascripts = [];	// hacking! DONE.
-
-//	Upload texture imate to imgur.com.
-
-	this.uploadImage = function uploadDataURL(dataURL, type, name){
-
-	//	Remove prefix "data:image/<ext>;base64," before upload image.
-	// "dataURL" must be pure data without "data:image/<ext>;base64,"
-	//  Returns a resolved promise with record data from imgur.com.
-
-		debugMode && console.log("uploading", name);
-
-		var formdata = new FormData();
-		formdata.append("name",  name);
-		formdata.append("type",  type);
-		formdata.append("image", dataURL);
-
-		var endpoint = "https://api.imgur.com/3/image";
-		var clientID = "06217f601180652";  // sloothes app Client-ID.
-
-		return new Promise(function( resolve, reject ){
-
-			var xhttp = new XMLHttpRequest();
-			xhttp.open("POST", endpoint, true);
-			xhttp.setRequestHeader("Authorization", "Client-ID " + clientID);
-			xhttp.onreadystatechange = function () {
-				if (this.readyState === 4) {
-					var response = "";
-					if (this.status >= 200 && this.status < 300) {
-						response = JSON.parse(this.responseText);
-						debugMode && console.log(response.data);
-						resolve(response.data); // resolve promise.
-					} else {
-						var err = JSON.parse(this.responseText).data.error;
-						console.error( err.type, err );
-						throw err;
-					}
-				}
-			};
-
-			xhttp.send(formdata);
-			xhttp = null;
-
-		});
-
-	}
-
-//	Delete uploaded image from imgur.com 
-
-//	Usage:
-//
-//		var json = editor.toJSON();
-//		for (var i = 0; i < json.images.length; i++ ) {
-//			editor.deleteImage( json.images[i] );
-//		}
-//
-
-	this.deleteImage = function deleteUploadedImage( data ){
-
-	//  Returns a resolved promise with success data from imgur.com.
-		debugMode && console.log("deleting", data.name);
-
-		var endpoint = data.endpoint || "https://api.imgur.com/3/image";
-		var clientID = data.clientID || "06217f601180652"; // sloothes app Client-ID.
-		var deletepoint = data.deletepoint || "https://api.imgur.com/3/image/" + data.deletehash;
-
-		return new Promise(function( resolve, reject ){
-
-			xhttp = new XMLHttpRequest();
-			xhttp.open("DELETE", deletepoint, true);
-			xhttp.setRequestHeader("Authorization", "Client-ID " + clientID);
-			xhttp.onreadystatechange = function () {
-				if (this.readyState === 4) {
-					var response = "";
-					if (this.status > 199 && this.status < 300) {
-						response = JSON.parse(this.responseText);
-						debugMode && console.log(response);
-						resolve(response); // resolve promise.
-					} else {
-						var err = JSON.parse(this.responseText).data.error;
-						console.error( err.type, err );
-						throw err;
-					}
-				}
-			};
-
-			xhttp.send();
-			xhttp = null;
-
-		});
-
-	}
+	this.gbfunctions = [];
+	this.jslibraries = [];
+	this.stylesheets = [];
 
 };
 
@@ -229,27 +119,7 @@ Editor.prototype = {
 
 	},
 
-/*
-
-	setApp: function( app ) {
-
-		this.app.uuid = app.uuid;
-		this.app.name = app.name;
-		this.app.userData = JSON.parse( JSON.stringify( app.userData ) );
-
-	//	avoid refreshUI per object.
-		this.signals.sceneGraphChanged.active = false; 
-
-		while ( app.children && app.children.length > 0 ) {
-			this.app.add( app.children[ 0 ] );
-		}
-
-		this.signals.sceneGraphChanged.active = true;
-		this.signals.sceneGraphChanged.dispatch();
-
-	},
-
-*/
+//
 
 	setScene: function ( scene ) {
 
@@ -329,9 +199,7 @@ Editor.prototype = {
 
 	//	avoid deleting the camera or scene.
 
-		//	if ( object.parent === null ) return; 
-
-	//
+	//	if ( object.parent === null ) return; // not need!!!
 
 		var scope = this;
 
@@ -552,12 +420,6 @@ Editor.prototype = {
 
 	clear: function () {
 
-	//	App (hacking).
-	//	var children = this.app.children;
-	//	while ( children && children.length) {
-	//		this.app.remove( children[0] );
-	//	}
-
 		this.history.clear();
 		this.storage.clear();
 
@@ -574,11 +436,11 @@ Editor.prototype = {
 
 		}
 
-		this.functions = [];
+		this.gbfunctions = [];
+		this.jslibraries = [];
 		this.stylesheets = [];
-		this.javascripts = [];
 
-		this.images = [];
+		this.images = {};
 
 		this.scripts = {};
 		this.textures = {};
@@ -600,7 +462,6 @@ Editor.prototype = {
 		var scope = this;
 
 		var loader = new THREE.ObjectLoader();
-	//	var jsonLoader = new THREE.JSONLoader();
 
 	//  backwards.
 
@@ -612,11 +473,6 @@ Editor.prototype = {
 
 		}
 
-
-	//	App (hacking).
-	//	this.setApp( loader.parse( json.application ) );
-
-
 	//	Camera.
 
 		var camera = loader.parse( json.camera );
@@ -624,26 +480,25 @@ Editor.prototype = {
 		this.camera.aspect = this.DEFAULT_CAMERA.aspect;
 		this.camera.updateProjectionMatrix();
 
-	//	TODO: stylesheet css.
-	//	TODO: global functions.
-
 	//  js libraries.
 
-		if ( json.javascripts === undefined ) {
-			this.javascripts = []; // important!
+		if ( json.javascripts ) {
+			this.jslibraries = json.javascripts; // backward.
+		} else if ( json.jslibraries ) {
+			this.jslibraries = json.jslibraries;
 		} else {
-			this.javascripts = json.javascripts;
+			this.jslibraries = []; // important!
 		}
 
-	//	uploaded images.
+	//	editor images.
 
 		if ( json.images === undefined ) {
-			this.images = []; // important!
+			this.images = {}; // important!
 		} else {
 			this.images = json.images;
 		}
 
-	//	application scripts.
+	//	scene scripts.
 
 		if ( json.scripts === undefined ) {
 			this.scripts = {}; // important!
@@ -676,8 +531,6 @@ Editor.prototype = {
 
 			var script = scripts[ key ];
 
-		//	if ( script.length === 0 ) delete scripts[ key ];
-
 			if ( script.length === 0 || scene.getObjectByProperty( "uuid", key ) === undefined ) {
 
 				delete scripts[ key ]; 
@@ -702,19 +555,16 @@ Editor.prototype = {
 
 			},
 
-			functions: this.functions,
+			gbfunctions: this.gbfunctions,
+			jslibraries: this.jslibraries,
 			stylesheets: this.stylesheets,
-			javascripts: this.javascripts,
 
 			images: this.images,
 
 			scripts: this.scripts,
 			camera: this.camera.toJSON(),
-			scene: this.scene.toJSON(), // TODO: SkinnedMesh toJSON for JSONLoader.
+			scene: this.scene.toJSON(),
 			history: this.history.toJSON(),
-
-		//  App (hack).
-		//	application: this.app.toJSON()
 
 		};
 
@@ -767,12 +617,102 @@ function array_move( array, from_index, to_index ) {
 /*
 	//	javascript functions toJSON.
 
-		var javascripts = [];
-
-		this.javascripts.forEach(function( script ){
+		var jslibraries = this.jslibraries.map(function( script ){
 		//  because script is in function, first we convert 
 		//	function to string and then we stringify to json.
-			var code = script.toString();				// important!
-			javascripts.push( JSON.stringify( code ) );	// important!
+			var code = script.toString();	// important!
+			return JSON.stringify( code );	// important!
 		});
+*/
+
+/*
+//	Upload texture imate to imgur.com.
+
+	this.uploadImage = function uploadDataURL(dataURL, type, name){
+
+	//	Remove prefix "data:image/<ext>;base64," before upload image.
+	// "dataURL" must be pure data without "data:image/<ext>;base64,"
+	//  Returns a resolved promise with record data from imgur.com.
+
+		debugMode && console.log("uploading", name);
+
+		var formdata = new FormData();
+		formdata.append("name",  name);
+		formdata.append("type",  type);
+		formdata.append("image", dataURL);
+
+		var endpoint = "https://api.imgur.com/3/image";
+		var clientID = "06217f601180652";  // sloothes app Client-ID.
+
+		return new Promise(function( resolve, reject ){
+
+			var xhttp = new XMLHttpRequest();
+			xhttp.open("POST", endpoint, true);
+			xhttp.setRequestHeader("Authorization", "Client-ID " + clientID);
+			xhttp.onreadystatechange = function () {
+				if (this.readyState === 4) {
+					var response = "";
+					if (this.status >= 200 && this.status < 300) {
+						response = JSON.parse(this.responseText);
+						debugMode && console.log(response.data);
+						resolve(response.data); // resolve promise.
+					} else {
+						var err = JSON.parse(this.responseText).data.error;
+						console.error( err.type, err );
+						throw err;
+					}
+				}
+			};
+
+			xhttp.send(formdata);
+			xhttp = null;
+
+		});
+
+	}
+
+//	Delete uploaded image from imgur.com 
+
+//	Usage:
+//
+//		var json = editor.toJSON();
+//		for (var i = 0; i < json.images.length; i++ ) {
+//			editor.deleteImage( json.images[i] );
+//		}
+//
+	this.deleteImage = function deleteUploadedImage( data ){
+
+	//  Returns a resolved promise with success data from imgur.com.
+		debugMode && console.log("deleting", data.name);
+
+		var endpoint = data.endpoint || "https://api.imgur.com/3/image";
+		var clientID = data.clientID || "06217f601180652"; // sloothes app Client-ID.
+		var deletepoint = data.deletepoint || "https://api.imgur.com/3/image/" + data.deletehash;
+
+		return new Promise(function( resolve, reject ){
+
+			xhttp = new XMLHttpRequest();
+			xhttp.open("DELETE", deletepoint, true);
+			xhttp.setRequestHeader("Authorization", "Client-ID " + clientID);
+			xhttp.onreadystatechange = function () {
+				if (this.readyState === 4) {
+					var response = "";
+					if (this.status > 199 && this.status < 300) {
+						response = JSON.parse(this.responseText);
+						debugMode && console.log(response);
+						resolve(response); // resolve promise.
+					} else {
+						var err = JSON.parse(this.responseText).data.error;
+						console.error( err.type, err );
+						throw err;
+					}
+				}
+			};
+
+			xhttp.send();
+			xhttp = null;
+
+		});
+
+	}
 */

@@ -123,20 +123,6 @@ Sidebar.Project = function ( editor ) {
 
 	container.add( editableRow );
 
-//	Imgur.
-
-	var imgurRow = new UI.Row();
-	var imgur = new UI.Checkbox( config.getKey( false ) ).setId("imgur").setLeft( "100px" ).onChange( function () {
-
-		config.setKey( "project/imgur", this.getValue() );
-
-	});
-
-	imgurRow.add( new UI.Text( "Imgur" ).setWidth( "90px" ) );
-	imgurRow.add( imgur );
-
-	container.add( imgurRow );
-
 //	VR.
 
 	var vrRow = new UI.Row();
@@ -152,6 +138,62 @@ Sidebar.Project = function ( editor ) {
 
 	container.add( vrRow );
 
+//
+
+	function updateRenderer() {
+
+		createRenderer( rendererType.getValue(), rendererAntialias.getValue(), rendererShadows.getValue() );
+
+	}
+
+	function createRenderer( type, antialias, shadows ) {
+
+		if ( type === "WebGLRenderer" && System.support.webgl === false ) {
+
+			type = "CanvasRenderer";
+
+		}
+
+		rendererPropertiesRow.setDisplay( type === "WebGLRenderer" ? "" : "none" );
+
+		var renderer = new rendererTypes[ type ]( { antialias: antialias } );
+
+		if ( shadows && renderer.shadowMap ) {
+
+			renderer.shadowMap.enabled = true;
+		//	renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+		}
+
+		signals.rendererChanged.dispatch( renderer );
+
+	}
+
+	createRenderer( config.getKey( "project/renderer" ), config.getKey( "project/renderer/antialias" ), config.getKey( "project/renderer/shadows" ) );
+
+	return container;
+
+};
+
+
+
+//	=================================================================================================================  //
+/*
+//	Imgur.
+
+	var imgurRow = new UI.Row();
+	var imgur = new UI.Checkbox( config.getKey( false ) ).setId("imgur").setLeft( "100px" ).onChange( function () {
+
+		config.setKey( "project/imgur", this.getValue() );
+
+	});
+
+	imgurRow.add( new UI.Text( "Imgur" ).setWidth( "90px" ) );
+	imgurRow.add( imgur );
+
+	container.add( imgurRow );
+
+//	=================================================================================================================  //
 
 //	Import js libraries.
 
@@ -182,7 +224,7 @@ Sidebar.Project = function ( editor ) {
 						"source": JSON.stringify( reader.result ),
 					}
 
-					editor.javascripts.push( script );
+					editor.jslibraries.push( script );
 					debugMode && console.log( "script:", script );
 
 				});
@@ -217,7 +259,7 @@ Sidebar.Project = function ( editor ) {
 
 		if ( confirm("Are you sure?") ) {
 
-			editor.javascripts.length = 0;
+			editor.jslibraries.length = 0;
 
 			var dom = document.createElement("h4");
 			var dialog = new UI.Element( dom ).setTextAlign("center");
@@ -232,7 +274,6 @@ Sidebar.Project = function ( editor ) {
 	clearLibrariesRow.add( clearLibraries );
 
 	container.add( clearLibrariesRow );
-
 
 //	Imgur upload.
 
@@ -759,47 +800,9 @@ Sidebar.Project = function ( editor ) {
 
 	}
 
-//
-
-	function updateRenderer() {
-
-		createRenderer( rendererType.getValue(), rendererAntialias.getValue(), rendererShadows.getValue() );
-
-	}
-
-	function createRenderer( type, antialias, shadows ) {
-
-		if ( type === "WebGLRenderer" && System.support.webgl === false ) {
-
-			type = "CanvasRenderer";
-
-		}
-
-		rendererPropertiesRow.setDisplay( type === "WebGLRenderer" ? "" : "none" );
-
-		var renderer = new rendererTypes[ type ]( { antialias: antialias } );
-
-		if ( shadows && renderer.shadowMap ) {
-
-			renderer.shadowMap.enabled = true;
-		//	renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-
-		}
-
-		signals.rendererChanged.dispatch( renderer );
-
-	}
-
-	createRenderer( config.getKey( "project/renderer" ), config.getKey( "project/renderer/antialias" ), config.getKey( "project/renderer/shadows" ) );
-
-	return container;
-
-};
+*/
 
 /*
-
-//	Demo.
-
 	function fakeProgress(requestID){ 
 
 		while ( bar.offsetWidth < 100 ){
@@ -820,26 +823,4 @@ Sidebar.Project = function ( editor ) {
 	var requestID = requestAnimationFrame(fakeProgress); // demo!
 */
 
-/*
-
-	var texture;
-	var img = new Image();
-	img.crossOrigin = "anonymous"; // important!
-	new Promise( function( resolve, reject ){
-
-		img.addEventListener("load", function(){ 
-			texture = new THREE.Texture( img );
-			debugMode && console.log( "texture:", texture );
-			editor.textures[ texture.uuid ] = texture;
-			resolve( texture.image.src = data.link ); // important!
-		});
-
-		img.src = data.link;
-
-	}).then(function( result ){
-		debugMode && console.log( result );
-	}).catch( function(err){
-		console.error(err);
-	});
-*/
-
+//	=================================================================================================================  //

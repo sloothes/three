@@ -11,7 +11,6 @@ var Config = function ( name ) {
 
 		"project/vr": false,
 		"project/cache":false,
-		"project/imgur": false,
 		"project/editable": false,
         "project/debugMode": true,
 		"project/renderer/shadows": true,

@@ -30,7 +30,7 @@ var Viewport = function ( editor ) {
 
 //  Libraries.
 
-	var javascripts = editor.javascripts;
+	var jslibraries = editor.jslibraries; // ???
 
 //
 	var selectionBox = new THREE.BoxHelper();
@@ -270,21 +270,9 @@ var Viewport = function ( editor ) {
 	//	Editor controls need to be added "after" main logic,
 	//	otherwise controls.enabled doesn't work. important!
 
-//	Editor Controls.
-
 	var controls = new THREE.EditorControls( camera, container.dom );
 
-//  Passing controls center to player controls on startup.
-	editor.config.setKey( "controls/center", controls.center ); 
-
 	controls.addEventListener( "change", function () {
-
-	//	Update light position (by name) important!
-	//	var light = scene.getObjectByName( editor.lights.name );
-	//	if ( light ) light.position.copy( camera.position );
-
-    //	Update center.
-	//	editor.config.setKey( "controls/center", controls.center );
 
 		transformControls.update();
 		signals.cameraChanged.dispatch( camera );
@@ -297,30 +285,7 @@ var Viewport = function ( editor ) {
 	signals.editorCleared.add( function () {
 
 		controls.center.set( 0, 0, 0 );
-/*
-	//	Add camera directional light.
-        editor.addObject( editor.lights );
 
-	//	Get default camera light (by uuid).
-		var uuid = editor.lights.uuid;
-		var light = editor.objectByUuid( uuid );
-
-		if ( light ) {
-
-			var script = {
-				name: "camera-light.js",
-				source: "var light = this; if (!controls) controls = new THREE.EditorControls(camera, renderer.domElement);\n"
-				+ "if (controls) controls.addEventListener(\"change\", function(){ light.position.copy(camera.position);});\n"
-			}
-
-		//  Add default camera light script.
-			editor.addScript( light, script);
-
-		//	Update camera light position (by uuid).
-			light.position.copy( camera.position );
-
-		}
-*/
 		render();
 
 	});

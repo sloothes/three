@@ -6,8 +6,6 @@ var APP = {
 
 	Player: function () {
 
-		app = this; // (player == app) global!
-
 		var scope = this;
 
 		var loader = new THREE.ObjectLoader();
@@ -57,7 +55,7 @@ var APP = {
 				while ( scripts.length ) {
 
 					var object = scripts.shift(); // important!
-					var script = new Function( "scope", object.source );
+					var script = new Function( object.source );
 					script.bind( window ).call(); // bind and execute.
 					console.log("Library", object.name, "loaded.");
 
@@ -82,7 +80,7 @@ var APP = {
 				while ( scripts.length ) {
 
 					var object = scripts.shift(); // important!
-					var script = new Function( "scope", object.source );
+					var script = new Function( object.source );
 					script.bind( window ).call(); // bind and execute.
 					console.log("Library", object.name, "loaded.");
 

@@ -28,10 +28,6 @@ var Viewport = function ( editor ) {
 
 	var camera = editor.camera;
 
-//  Libraries.
-
-	var jslibraries = editor.jslibraries; // ???
-
 //
 	var selectionBox = new THREE.BoxHelper();
 	selectionBox.material.depthTest = false;
@@ -215,10 +211,6 @@ var Viewport = function ( editor ) {
 		handleClick();
 
 		document.removeEventListener( "mouseup", onMouseUp, false );
-
-	//	Update controls center config.
-
-		editor.config.setKey( "controls/center", controls.center );
 
 	}
 

@@ -94,7 +94,6 @@ var Editor = function () {
 //	Editor.
 
 	this.object = {};
-	this.images = {};
 	this.scripts = {};
 	this.textures = {};
 	this.materials = {};
@@ -439,8 +438,6 @@ Editor.prototype = {
 		this.jslibraries = [];
 		this.stylesheets = [];
 
-		this.images = {};
-
 		this.scripts = {};
 		this.textures = {};
 		this.materials = {};
@@ -522,7 +519,6 @@ Editor.prototype = {
 
 	//	scripts clean up.
 
-		var app = this.app;
 		var scene = this.scene;
 		var scripts = this.scripts;
 
@@ -557,8 +553,6 @@ Editor.prototype = {
 			gbfunctions: this.gbfunctions,
 			jslibraries: this.jslibraries,
 			stylesheets: this.stylesheets,
-
-			images: this.images,
 
 			scripts: this.scripts,
 			camera: this.camera.toJSON(),

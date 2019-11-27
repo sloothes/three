@@ -71,6 +71,55 @@
 
 				var json = JSON.parse( text );
 
+			//	Load external javascirpt libraries.
+
+				function parseScript( item ){ 
+					return {
+						name: item.name,
+						source: JSON.parse( item.source ) // important!
+					};
+				}
+
+				//	backward.
+
+				if ( json.javascripts && json.javascripts.length > 0 ) {
+
+					var scripts = json.javascripts.map( parseScript );
+					debugMode && console.log( "scripts:", scripts );
+
+					while ( scripts.length ) {
+
+						var object = scripts.shift(); // important!
+						var script = new Function( object.source );
+						script.bind( window ).call(); // bind and execute.
+						console.log("Library", object.name, "loaded.");
+
+					}
+
+				}
+
+				//	current.
+
+				if ( json.jslibraries && json.jslibraries.length > 0 ) {
+
+					var scripts = json.jslibraries.map( parseScript );
+					debugMode && console.log( "scripts:", scripts );
+
+					while ( scripts.length ) {
+
+						var object = scripts.shift(); // important!
+						var script = new Function( object.source );
+						script.bind( window ).call(); // bind and execute.
+						console.log("Library", object.name, "loaded.");
+
+					}
+
+				}
+
+		//	TODO: immiplication for global functions.
+
+			//
+
 				var player = new APP.Player();
 
 				player.load( json );

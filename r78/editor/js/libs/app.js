@@ -37,7 +37,7 @@ var APP = {
 			debugMode = json.project.debugMode; // global! 
 			THREE.Cache.enabled = json.project.cache; // important!
 			console.log({ "vr": vr, "debugMode": debugMode, "cache": THREE.Cache.enabled });
-
+	/*
 		//	Load external javascirpt libraries (backward).
 
 			if ( json.javascripts && json.javascripts.length > 0 ) {
@@ -87,7 +87,7 @@ var APP = {
 				}
 
 			}
-
+	*/
 
 		//	TODO: immiplication for global functions.
 

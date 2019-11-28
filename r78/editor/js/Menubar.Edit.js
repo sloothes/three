@@ -111,9 +111,11 @@ Menubar.Edit = function ( editor ) {
 
 	//	avoid deleting object with scripts.
 
-		if ( editor.scripts[ object.uuid ] && editor.scripts[ object.uuid ].length ) {
-			return alert( "Object must not contain scripts in due to be deleted!" ); 
-		}
+		object.traverse( function ( child ) {
+			if ( editor.scripts[ child.uuid ] && editor.scripts[ child.uuid ].length ) {
+				return alert( "Object must not contain scripts in due to be deleted!" ); 
+			}
+		});
 
 		if ( confirm( 'Delete ' + object.name + '?' ) === false ) return;
 

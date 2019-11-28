@@ -499,6 +499,8 @@ var Viewport = function ( editor ) {
 
 			if ( child.skeleton ) child.skeleton.boneTexture.dispose();
 
+		//	Remove child from editor objects.
+
 			objects.splice( objects.indexOf( child ), 1 );
 
 		});

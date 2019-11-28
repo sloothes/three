@@ -198,15 +198,7 @@ Editor.prototype = {
 
 	//	avoid deleting the camera or scene.
 
-		if ( object.parent === null ) return; // not need?
-
-	//	avoid deleting object with scripts.
-
-		if ( this.scripts[ object.uuid ] && this.scripts[ object.uuid ].length ) {
-			return alert( "Object must not contain scripts in due to be deleted!" ); 
-		}
-
-	//
+	//	if ( object.parent === null ) return; // not need?
 
 		var scope = this;
 
@@ -536,7 +528,7 @@ Editor.prototype = {
 
 			if ( script.length === 0 ) delete scripts[ key ];
 	/*
-		//	Do not delete orphan scripts!
+		//	Do not delete orphan scripts?
 
 			if ( scene.getObjectByProperty( "uuid", key ) === undefined ) {
 

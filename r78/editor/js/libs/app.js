@@ -89,9 +89,6 @@ var APP = {
 			}
 	*/
 
-		//	TODO: immiplication for global functions.
-
-
 		//	Caution: renderer is global for debugging!
 
 			renderer = new THREE.WebGLRenderer({ 

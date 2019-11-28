@@ -140,26 +140,50 @@ var APP = {
 
 			var scriptWrapResult = JSON.stringify( scriptWrapResultObj ).replace( /\"/g, "" );
 
+		//
 
-		//	TODO: Initialize orphan scripts?
+			for ( var uuid in json.scripts ) {
 
-		//	for ( var uuid in json.scripts ) {
+				var object = scene.getObjectByProperty( "uuid", uuid, true ); // important!
 
-		/*	
-				var object = scene.getObjectByProperty( "uuid", uuid, true );
+			//	Initialize orphan scripts.
 
 				if ( object === undefined ) {
 
-					console.warn( "Player Loader: Scripts of uuid:", uuid, "are orphan." ); 
-
-				//	continue;
+				//	if "object" is "null", "this" of "functions" will become the "window". important!
+					console.warn( "Scripts of uuid:", uuid, "are orphan, will become global." ); // continue;
 
 				}
-		*/
 
-		//	...
+				var scripts = json.scripts[ uuid ]; 
 
+				for ( var i = 0; i < scripts.length; i ++ ) {
 
+					var script = scripts[ i ];
+
+					var functions = ( new Function( scriptWrapParams, script.source + "\nreturn " + scriptWrapResult + ";" ).bind( object ) )( this, renderer, scene, camera );
+
+					for ( var name in functions ) {
+
+						if ( functions[ name ] === undefined ) continue;
+
+						if ( events[ name ] === undefined ) {
+
+							console.warn( "APP.Player: Event type not supported (", name, ")" ); 
+
+							continue;
+
+						}
+
+						events[ name ].push( functions[ name ].bind( object ) );
+
+					}
+
+				}
+
+			}
+			
+/*
 		//  Initialize scene object scripts first.
 
 			var uuid = json.scene.object.uuid; // important!
@@ -235,7 +259,7 @@ var APP = {
 				}
 
 			}
-
+*/
 			dispatch( events.init, arguments );
 
 		};

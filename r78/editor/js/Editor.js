@@ -528,7 +528,7 @@ Editor.prototype = {
 
 			if ( script.length === 0 ) delete scripts[ key ];
 	/*
-		//	Do not delete orphan scripts?
+		//	Do not delete orphan scripts? Orphan scripts gets "window" as "this".
 
 			if ( scene.getObjectByProperty( "uuid", key ) === undefined ) {
 

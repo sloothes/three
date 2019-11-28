@@ -203,7 +203,7 @@ Editor.prototype = {
 	//	avoid deleting object with scripts.
 
 		if ( this.scripts[ object.uuid ] && this.scripts[ object.uuid ].length ) {
-			throw "Object must not contain scripts in due to deleted!"; return;
+			return alert( "Object must not contain scripts in due to be deleted!" ); 
 		}
 
 	//

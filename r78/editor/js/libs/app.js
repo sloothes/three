@@ -148,7 +148,7 @@ var APP = {
 				if ( object === undefined ) {
 
 				//	if "object" is "null", "this" of "functions" will become the "window". important!
-					console.warn( "Scripts of uuid:", uuid, "are orphan, will become global." ); // continue;
+					console.warn( "Scripts of uuid:", uuid, "are orphan. \"this\" of \"functions\" will become the \"window\"." ); // continue;
 
 				}
 

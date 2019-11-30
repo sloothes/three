@@ -604,8 +604,8 @@ var Loader = function ( editor ) {
 						source += "geometry.computeVertexNormals();\n";
 						source += "geometry.computeBoundingBox();\n";
 						source += "geometry.computeBoundingSphere();\n";
-						source += "geometry.sourceType = \"ascii\";\n";
-						source += "geometry.sourceFile = JSON.stringify(json);\n\n";
+						source += "geometry.sourceType = \"json\";\n";
+						source += "geometry.sourceFile = json;\n\n";
 						source += "//\tmaterial.\n\n";
 						source += "var material = new THREE.MeshStandardMaterial({skinning:true});\n\n";
 						source += "//\tskinned.\n\n";

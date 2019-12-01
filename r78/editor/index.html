@@ -12,6 +12,8 @@
 
 		<script src="/js/Objectid.js"></script>
 		<script src="/js/zangodb.min.js"></script>
+		<script src="/js/rawinflate.js"></script>
+		<script src="/js/rawdeflate.js"></script>
 
 		<script src="/three/three.js"></script>
 		<script src="/three/system.min.js"></script>
@@ -442,5 +444,18 @@
 		*/
 
 		</script>
+
+		<script>
+
+			function encode( string ) {
+				return window.btoa( RawDeflate.deflate( string ) );
+			}
+
+			function decode( string ) {
+				return RawDeflate.inflate( window.atob( string ) );
+			}
+
+		</script>
+
 	</body>
 </html>

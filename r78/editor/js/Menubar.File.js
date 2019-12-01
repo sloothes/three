@@ -431,6 +431,18 @@ Menubar.File = function ( editor ) {
 
 		});
 
+		loader.load( "/js/rawdeflate.js", function ( content ) {
+
+			zip.file( "js/rawdeflate.js", content );
+
+		});
+
+		loader.load( "/js/rawinflate.js", function ( content ) {
+
+			zip.file( "js/rawinflate.js", content );
+
+		});
+
 		loader.load( "/js/ui.js", function ( content ) {
 
 			zip.file( "js/ui.js", content );

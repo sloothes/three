@@ -33,6 +33,9 @@
 
 		</style>
 
+		<script src="/js/rawinflate.js"></script>
+		<script src="/js/rawdeflate.js"></script>
+
 	</head>
 
 	<body ontouchstart="">
@@ -156,6 +159,12 @@
 				}, 1000);
 
 			});
+
+		//	Decode.
+
+			function decode( string ) {
+				return RawDeflate.inflate( window.atob( string ) );
+			}
 
 		</script>
 	</body>

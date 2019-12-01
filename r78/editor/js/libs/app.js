@@ -37,57 +37,6 @@ var APP = {
 			debugMode = json.project.debugMode; // global! 
 			THREE.Cache.enabled = json.project.cache; // important!
 			console.log({ "vr": vr, "debugMode": debugMode, "cache": THREE.Cache.enabled });
-	/*
-		//	Load external javascirpt libraries (backward).
-
-			if ( json.javascripts && json.javascripts.length > 0 ) {
-
-				var scripts = json.javascripts.map( parseScript );
-				debugMode && console.log( "scripts:", scripts );
-
-				function parseScript( item ){ 
-					return {
-						name: item.name,
-						source: JSON.parse( item.source ) // important!
-					};
-				}
-
-				while ( scripts.length ) {
-
-					var object = scripts.shift(); // important!
-					var script = new Function( object.source );
-					script.bind( window ).call(); // bind and execute.
-					console.log("Library", object.name, "loaded.");
-
-				}
-
-			}
-
-		//	Load external javascirpt libraries.
-
-			if ( json.jslibraries && json.jslibraries.length > 0 ) {
-
-				var scripts = json.jslibraries.map( parseScript );
-				debugMode && console.log( "scripts:", scripts );
-
-				function parseScript( item ){ 
-					return {
-						name: item.name,
-						source: JSON.parse( item.source ) // important!
-					};
-				}
-
-				while ( scripts.length ) {
-
-					var object = scripts.shift(); // important!
-					var script = new Function( object.source );
-					script.bind( window ).call(); // bind and execute.
-					console.log("Library", object.name, "loaded.");
-
-				}
-
-			}
-	*/
 
 		//	Caution: renderer is global for debugging!
 
@@ -166,7 +115,7 @@ var APP = {
 
 						if ( events[ name ] === undefined ) {
 
-							console.warn( "APP.Player: Event type not supported (", name, ")" ); 
+							console.warn( "APP: Event type not supported (", name, ")" ); 
 
 							continue;
 
@@ -180,83 +129,6 @@ var APP = {
 
 			}
 			
-/*
-		//  Initialize scene object scripts first.
-
-			var uuid = json.scene.object.uuid; // important!
-
-			var scripts = json.scripts[ uuid ]; 
-
-			if ( scripts && scripts.length ) {
-
-				for ( var i = 0; i < scripts.length; i ++ ) {
-
-					var script = scripts[ i ];
-
-					var functions = ( new Function( scriptWrapParams, script.source + "\nreturn " + scriptWrapResult + ";" ).bind( scene ) )( this, renderer, scene, camera );
-
-					for ( var name in functions ) {
-
-						if ( functions[ name ] === undefined ) continue;
-
-						if ( events[ name ] === undefined ) {
-
-							console.warn( "APP.Player: Event type not supported (", name, ")" ); 
-
-							continue;
-
-						}
-
-						events[ name ].push( functions[ name ].bind( scene ) );
-
-					}
-
-				}
-
-			}
-
-		//  Initialize objects scripts by scene children order.
-
-			if ( json.scene.object.children && json.scene.object.children.length ) {
-
-				for ( var j = 0; j < json.scene.object.children.length; j ++ ) {
-
-					var uuid = json.scene.object.children[ j ].uuid;
-
-					var object = scene.getObjectByProperty( "uuid", uuid, true ); // important!
-
-					var scripts = json.scripts[ uuid ];
-
-					if ( scripts == undefined || scripts.length == 0 ) continue; // important!
-
-					for ( var i = 0; i < scripts.length; i ++ ) {
-
-						var script = scripts[ i ];
-
-						var functions = ( new Function( scriptWrapParams, script.source + "\nreturn " + scriptWrapResult + ";" ).bind( object ) )( this, renderer, scene, camera );
-
-						for ( var name in functions ) {
-
-							if ( functions[ name ] === undefined ) continue;
-
-							if ( events[ name ] === undefined ) {
-
-								console.warn( "APP.Player: Event type not supported (", name, ")" ); 
-
-								continue;
-
-							}
-
-							events[ name ].push( functions[ name ].bind( object ) );
-
-						}
-
-					}
-
-				}
-
-			}
-*/
 			dispatch( events.init, arguments );
 
 		};
@@ -503,6 +375,140 @@ var APP = {
 };
 
 
+
+
+
+//	=========================================================================================  //
+
+/*
+		//	Load external javascirpt libraries (backward).
+
+			if ( json.javascripts && json.javascripts.length > 0 ) {
+
+				var scripts = json.javascripts.map( parseScript );
+				debugMode && console.log( "scripts:", scripts );
+
+				function parseScript( item ){ 
+					return {
+						name: item.name,
+						source: JSON.parse( item.source ) // important!
+					};
+				}
+
+				while ( scripts.length ) {
+
+					var object = scripts.shift(); // important!
+					var script = new Function( object.source );
+					script.bind( window ).call(); // bind and execute.
+					console.log("Library", object.name, "loaded.");
+
+				}
+
+			}
+
+		//	Load external javascirpt libraries.
+
+			if ( json.jslibraries && json.jslibraries.length > 0 ) {
+
+				var scripts = json.jslibraries.map( parseScript );
+				debugMode && console.log( "scripts:", scripts );
+
+				function parseScript( item ){ 
+					return {
+						name: item.name,
+						source: JSON.parse( item.source ) // important!
+					};
+				}
+
+				while ( scripts.length ) {
+
+					var object = scripts.shift(); // important!
+					var script = new Function( object.source );
+					script.bind( window ).call(); // bind and execute.
+					console.log("Library", object.name, "loaded.");
+
+				}
+
+			}
+*/
+
+/*
+		//  Initialize scene object scripts first.
+
+			var uuid = json.scene.object.uuid; // important!
+
+			var scripts = json.scripts[ uuid ]; 
+
+			if ( scripts && scripts.length ) {
+
+				for ( var i = 0; i < scripts.length; i ++ ) {
+
+					var script = scripts[ i ];
+
+					var functions = ( new Function( scriptWrapParams, script.source + "\nreturn " + scriptWrapResult + ";" ).bind( scene ) )( this, renderer, scene, camera );
+
+					for ( var name in functions ) {
+
+						if ( functions[ name ] === undefined ) continue;
+
+						if ( events[ name ] === undefined ) {
+
+							console.warn( "APP: Event type not supported (", name, ")" ); 
+
+							continue;
+
+						}
+
+						events[ name ].push( functions[ name ].bind( scene ) );
+
+					}
+
+				}
+
+			}
+
+		//  Initialize objects scripts by scene children order.
+
+			if ( json.scene.object.children && json.scene.object.children.length ) {
+
+				for ( var j = 0; j < json.scene.object.children.length; j ++ ) {
+
+					var uuid = json.scene.object.children[ j ].uuid;
+
+					var object = scene.getObjectByProperty( "uuid", uuid, true ); // important!
+
+					var scripts = json.scripts[ uuid ];
+
+					if ( scripts == undefined || scripts.length == 0 ) continue; // important!
+
+					for ( var i = 0; i < scripts.length; i ++ ) {
+
+						var script = scripts[ i ];
+
+						var functions = ( new Function( scriptWrapParams, script.source + "\nreturn " + scriptWrapResult + ";" ).bind( object ) )( this, renderer, scene, camera );
+
+						for ( var name in functions ) {
+
+							if ( functions[ name ] === undefined ) continue;
+
+							if ( events[ name ] === undefined ) {
+
+								console.warn( "APP: Event type not supported (", name, ")" ); 
+
+								continue;
+
+							}
+
+							events[ name ].push( functions[ name ].bind( object ) );
+
+						}
+
+					}
+
+				}
+
+			}
+*/
 
 //	=========================================================================================  //
 

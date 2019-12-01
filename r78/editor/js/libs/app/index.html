@@ -116,17 +116,17 @@
 
 				}
 
-		//	TODO: immiplication for global functions.
+		//	TODO: immiplication for global functions?
 
 			//
 
-				var player = new APP.Player();
+				var app = new APP.Player();
 
-				player.load( json );
-				player.setSize( window.innerWidth, window.innerHeight );
-				player.play();
+				app.load( json );
+				app.setSize( window.innerWidth, window.innerHeight );
+				app.play();
 
-				document.body.appendChild( player.dom );
+				document.body.appendChild( app.dom );
 
 				if ( json.project.editable === true ) {
 
@@ -147,7 +147,7 @@
 		//
 
 				window.addEventListener( "resize", function () {
-					player.setSize( window.innerWidth, window.innerHeight );
+					app.setSize( window.innerWidth, window.innerHeight );
 				});
 
 		//

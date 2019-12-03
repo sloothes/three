@@ -542,7 +542,7 @@ var Loader = function ( editor ) {
 					mesh.name = filename.replace(".json", "") + " (skinned)";
 
 				//	remove-this.js
-
+			/*
 					var source = (function(){
 
 						var source = "scene.remove( this );";
@@ -557,7 +557,7 @@ var Loader = function ( editor ) {
 						source: source,
 
 					});
-
+			*/
 				//  skinned-mesh.js
 
 					var source = (function(){

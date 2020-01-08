@@ -121,13 +121,13 @@
 
 		//	TODO: immiplication for global functions?
 
-				var app = new APP.Player();
+				var player = new APP.Player();
 
-				app.load( json );
-				app.setSize( window.innerWidth, window.innerHeight );
-				app.play();
+				player.load( json );
+				player.setSize( window.innerWidth, window.innerHeight );
+				player.play();
 
-				document.body.appendChild( app.dom );
+				document.body.appendChild( player.dom );
 
 				if ( json.project.editable === true ) {
 
@@ -148,7 +148,7 @@
 		//
 
 				window.addEventListener( "resize", function () {
-					app.setSize( window.innerWidth, window.innerHeight );
+					player.setSize( window.innerWidth, window.innerHeight );
 				});
 
 		//

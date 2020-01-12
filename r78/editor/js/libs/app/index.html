@@ -83,7 +83,7 @@
 					};
 				}
 
-				//	backward.
+				//	current.
 
 				if ( json.javascripts && json.javascripts.length > 0 ) {
 
@@ -101,9 +101,9 @@
 
 				}
 
-				//	current.
+				//	backward.
 
-				if ( json.jslibraries && json.jslibraries.length > 0 ) {
+				else if ( json.jslibraries && json.jslibraries.length > 0 ) {
 
 					var scripts = json.jslibraries.map( parseScript );
 					debugMode && console.log( "scripts:", scripts );
@@ -119,7 +119,25 @@
 
 				}
 
-		//	TODO: immiplication for global functions?
+			//	Bind global functions.
+
+				if ( json.functions && json.functions.length > 0 ) {
+
+					var functions = json.functions.map( parseScript );
+					debugMode && console.log( "functions:", functions );
+
+					while ( functions.length ) {
+
+						var object = functions.shift(); // important!
+						var script = new Function( object.source );
+						script.bind( window ).call(); // bind and call.
+						console.log("Function", object.name, "binded.");
+
+					}
+
+				}
+
+			//
 
 				var player = new APP.Player();
 

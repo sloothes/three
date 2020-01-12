@@ -102,8 +102,8 @@ var Editor = function () {
 	this.helpers = {};
 	this.selected = null;
 
-	this.gbfunctions = [];
-	this.jslibraries = [];
+	this.functions = [];
+	this.javascripts = [];
 	this.stylesheets = [];
 
 };
@@ -476,14 +476,26 @@ Editor.prototype = {
 		this.camera.aspect = this.DEFAULT_CAMERA.aspect;
 		this.camera.updateProjectionMatrix();
 
+	//	css.
+		
+		if ( json.stylesheets ) {
+			this.stylesheets = json.stylesheets;
+		}
+
 	//  js libraries.
 
 		if ( json.javascripts ) {
-			this.jslibraries = json.javascripts; // backward.
+			this.javascripts = json.javascripts;
 		} else if ( json.jslibraries ) {
-			this.jslibraries = json.jslibraries;
-		} else {
-			this.jslibraries = []; // important!
+			this.javascripts = json.jslibraries; // backward.
+		}
+
+	//	js functions.
+
+		if ( json.functions ) {
+			this.functions = json.functions;
+		} else if ( json.gbfunctions ) {
+			this.functions = json.gbfunctions; // backward.
 		}
 
 	//	editor images.
@@ -554,8 +566,8 @@ Editor.prototype = {
 
 			},
 
-			gbfunctions: this.gbfunctions,
-			jslibraries: this.jslibraries,
+			functions: this.functions,
+			javascripts: this.javascripts,
 			stylesheets: this.stylesheets,
 
 			scripts: this.scripts,

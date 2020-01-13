@@ -563,6 +563,10 @@ Menubar.File = function ( editor ) {
 
 	//	URL.revokeObjectURL( url ); breaks Firefox...
 
+		setTimeout(function(){
+			URL.revokeObjectURL( link.href );
+		});
+
 	}
 
 	function saveString( text, filename ) {

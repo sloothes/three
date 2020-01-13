@@ -434,9 +434,9 @@ Editor.prototype = {
 
 		}
 
-		this.gbfunctions = [];
-		this.jslibraries = [];
-		this.stylesheets = [];
+	//	this.functions = [];
+	//	this.javascripts = [];
+	//	this.stylesheets = [];
 
 		this.scripts = {};
 		this.textures = {};
